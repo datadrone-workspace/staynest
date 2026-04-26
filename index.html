@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StayNest — Unique places to stay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  SEGMENT  — swap YOUR_WRITE_KEY     ║
+     ╚══════════════════════════════════════╝ -->
+<script>
+!function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/"+key+"/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="YOUR_SEGMENT_WRITE_KEY";analytics.SNIPPET_VERSION="5.2.0";
+analytics.load("YOUR_SEGMENT_WRITE_KEY");
+}}();
+</script>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  POSTHOG  — swap YOUR_POSTHOG_KEY   ║
+     ╚══════════════════════════════════════╝ -->
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('YOUR_POSTHOG_KEY',{api_host:'https://us.i.posthog.com', person_profiles: 'identified_only'});
+</script>
+
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOKENS
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --ink:       #1a1a1a;
+  --ink-2:     #444;
+  --ink-3:     #888;
+  --ink-4:     #bbb;
+  --surface:   #ffffff;
+  --surface-2: #f7f7f7;
+  --surface-3: #efefef;
+  --border:    #e0e0e0;
+  --rose:      #e8533f;
+  --rose-dk:   #c9432f;
+  --rose-lt:   #fdf1ef;
+  --teal:      #0a7c6b;
+  --teal-lt:   #eaf4f2;
+  --amber:     #f59e0b;
+  --amber-lt:  #fffbeb;
+  --r4: 4px; --r8: 8px; --r12: 12px; --r16: 16px; --r24: 24px; --r99: 999px;
+  --shadow-s: 0 1px 4px rgba(0,0,0,.08);
+  --shadow-m: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-l: 0 12px 40px rgba(0,0,0,.13);
+  --font-d: 'Playfair Display', Georgia, serif;
+  --font-b: 'Outfit', sans-serif;
+  --nav-h: 72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-b);color:var(--ink);background:var(--surface);font-size:15px;line-height:1.6;min-height:100vh}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--font-b)}
+input,select,textarea{font-family:var(--font-b)}
+a{color:inherit;text-decoration:none}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LAYOUT UTILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.page{display:none}.page.active{display:block}
+.flex{display:flex}.flex-col{flex-direction:column}
+.gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.gap-24{gap:24px}
+.items-center{align-items:center}.justify-between{justify-content:space-between}
+.text-sm{font-size:13px}.text-xs{font-size:11px}.text-ink2{color:var(--ink-2)}.text-ink3{color:var(--ink-3)}
+.font-600{font-weight:600}.mt-4{margin-top:4px}.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
+.w-full{width:100%}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAV
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:var(--nav-h);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.logo{
+  font-family:var(--font-d);font-size:1.55rem;font-weight:700;
+  color:var(--rose);letter-spacing:-.01em;cursor:pointer;white-space:nowrap;
+  display:flex;align-items:center;gap:8px;
+}
+.logo-icon{
+  width:32px;height:32px;background:var(--rose);border-radius:50% 50% 50% 4px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:16px;flex-shrink:0;
+}
+
+/* Nav search (compact) */
+.nav-search{
+  flex:1;max-width:420px;
+  border:1.5px solid var(--border);border-radius:var(--r99);
+  display:flex;align-items:center;height:44px;
+  padding:0 4px 0 16px;
+  box-shadow:var(--shadow-s);
+  cursor:pointer;transition:box-shadow .2s;
+}
+.nav-search:hover{box-shadow:var(--shadow-m)}
+.nav-search-text{font-size:14px;color:var(--ink-3);flex:1}
+.nav-search-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--rose);border:none;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:background .2s;flex-shrink:0;
+}
+.nav-search-btn:hover{background:var(--rose-dk)}
+
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-link{
+  background:none;border:none;padding:8px 14px;border-radius:var(--r99);
+  font-size:14px;font-weight:500;color:var(--ink);transition:background .15s;white-space:nowrap;
+}
+.nav-link:hover{background:var(--surface-2)}
+.nav-user{
+  border:1.5px solid var(--border);border-radius:var(--r99);
+  padding:6px 6px 6px 12px;display:flex;align-items:center;gap:8px;
+  background:var(--surface);transition:box-shadow .2s;
+}
+.nav-user:hover{box-shadow:var(--shadow-m)}
+.nav-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BUTTONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 24px;border-radius:var(--r8);border:none;
+  font-family:var(--font-b);font-size:15px;font-weight:500;
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.btn-rose{background:var(--rose);color:#fff}
+.btn-rose:hover{background:var(--rose-dk);transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,83,63,.3)}
+.btn-outline{background:none;border:1.5px solid var(--ink);color:var(--ink)}
+.btn-outline:hover{background:var(--ink);color:#fff}
+.btn-ghost{background:none;border:1.5px solid var(--border);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover{background:#086055;transform:translateY(-1px)}
+.btn-sm{padding:9px 18px;font-size:13px}
+.btn-xs{padding:6px 14px;font-size:12px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — HERO SEARCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero{
+  padding:48px 24px 0;
+  max-width:1200px;margin:0 auto;
+}
+.hero-tagline{
+  font-family:var(--font-d);
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;line-height:1.18;
+  margin-bottom:8px;
+}
+.hero-tagline em{font-style:italic;color:var(--rose)}
+.hero-sub{color:var(--ink-3);font-size:16px;margin-bottom:32px}
+
+/* Search widget */
+.search-widget{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:var(--r16);
+  box-shadow:var(--shadow-l);
+  display:flex;align-items:stretch;
+  margin-bottom:0;overflow:hidden;
+}
+.sw-field{
+  flex:1;padding:18px 20px;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:2px;min-width:0;cursor:pointer;
+  transition:background .15s;
+}
+.sw-field:last-of-type{border-right:none}
+.sw-field:hover{background:var(--surface-2)}
+.sw-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.sw-input{
+  border:none;outline:none;background:none;
+  font-family:var(--font-b);font-size:15px;color:var(--ink-2);
+  width:100%;
+}
+.sw-input::placeholder{color:var(--ink-4)}
+.sw-input[type=date]{color:var(--ink-2)}
+.sw-search-btn{
+  margin:8px;padding:0 28px;
+  background:var(--rose);color:#fff;border:none;
+  border-radius:var(--r12);font-family:var(--font-b);
+  font-size:15px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  transition:background .2s;white-space:nowrap;
+}
+.sw-search-btn:hover{background:var(--rose-dk)}
+
+/* Category pills */
+.category-row{
+  display:flex;gap:8px;padding:24px 0 0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.category-row::-webkit-scrollbar{display:none}
+.cat-pill{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:12px 20px;border-radius:var(--r12);
+  border:1.5px solid var(--border);background:var(--surface);
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+  font-size:13px;font-weight:500;color:var(--ink-2);
+  flex-shrink:0;
+}
+.cat-pill .icon{font-size:20px}
+.cat-pill:hover{border-color:var(--ink);color:var(--ink);background:var(--surface-2)}
+.cat-pill.active{border-color:var(--ink);background:var(--ink);color:#fff}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LISTINGS GRID
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.listings-section{padding:32px 0 80px}
+.section-title{font-family:var(--font-d);font-size:1.5rem;font-weight:600;margin-bottom:4px}
+.section-sub{color:var(--ink-3);font-size:14px;margin-bottom:24px}
+
+.listings-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:24px;
+}
+
+/* Card */
+.card{cursor:pointer;border-radius:var(--r12);overflow:hidden;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card-img{
+  aspect-ratio:4/3;background:var(--surface-3);
+  position:relative;overflow:hidden;border-radius:var(--r12);
+}
+.card-img .placeholder{
+  width:100%;height:100%;display:flex;align-items:center;
+  justify-content:center;font-size:64px;
+}
+.card-img.booked{filter:grayscale(.4)}
+.sold-out-banner{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.45);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--r12);
+}
+.sold-out-tag{
+  background:#fff;color:var(--ink);
+  font-size:13px;font-weight:600;
+  padding:8px 18px;border-radius:var(--r99);
+  letter-spacing:.02em;
+}
+.wish-btn{
+  position:absolute;top:12px;right:12px;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.85);border:none;
+  font-size:16px;backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;color:var(--ink);
+}
+.wish-btn:hover{background:#fff;transform:scale(1.1)}
+.wish-btn.wishlisted{color:var(--rose)}
+.superhost-badge{
+  position:absolute;top:12px;left:12px;
+  background:#fff;color:var(--ink);
+  font-size:11px;font-weight:600;
+  padding:4px 10px;border-radius:var(--r99);
+  display:flex;align-items:center;gap:4px;
+}
+.card-body{padding:12px 2px 0}
+.card-location{font-size:13px;color:var(--ink-3);margin-bottom:2px}
+.card-title{font-weight:600;font-size:15px;margin-bottom:2px}
+.card-dates{font-size:13px;color:var(--ink-3)}
+.card-price{margin-top:6px;font-size:15px}
+.card-price strong{font-weight:600}
+.card-price span{color:var(--ink-3);font-size:13px}
+.card-rating{display:flex;align-items:center;gap:4px;font-size:13px;float:right;margin-top:6px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LISTING DETAIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.detail-wrap{max-width:1100px;margin:0 auto;padding:24px 24px 80px}
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:none;border:none;color:var(--ink);font-size:14px;
+  padding:0;margin-bottom:20px;font-weight:500;
+  text-decoration:underline;text-underline-offset:3px;
+}
+.back-link:hover{color:var(--rose)}
+.detail-title{font-family:var(--font-d);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;margin-bottom:8px}
+.detail-meta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--ink-2);margin-bottom:20px}
+.detail-meta-row .stars{display:flex;align-items:center;gap:4px;font-weight:600}
+
+/* Photo grid */
+.photo-grid{
+  display:grid;grid-template-columns:2fr 1fr;
+  grid-template-rows:280px 200px;gap:8px;
+  border-radius:var(--r16);overflow:hidden;margin-bottom:40px;
+}
+.photo-cell{background:var(--surface-3);overflow:hidden}
+.photo-cell:first-child{grid-row:1/3}
+.photo-cell .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:80px}
+
+.detail-grid{display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:start}
+.detail-left h3{font-family:var(--font-d);font-size:1.2rem;font-weight:600;margin-bottom:12px}
+.divider{border:none;border-top:1px solid var(--border);margin:28px 0}
+
+/* Amenities */
+.amenity-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.amenity{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2)}
+
+/* Host row */
+.host-row{display:flex;align-items:center;gap:16px;padding:20px;background:var(--surface-2);border-radius:var(--r12)}
+.host-av{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.3rem;font-weight:700;flex-shrink:0}
+
+/* Booking widget */
+.book-widget{
+  position:sticky;top:calc(var(--nav-h) + 24px);
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r16);padding:28px;box-shadow:var(--shadow-m);
+}
+.widget-price{margin-bottom:20px}
+.widget-price .amount{font-family:var(--font-d);font-size:1.8rem;font-weight:700}
+.widget-price .per{font-size:14px;color:var(--ink-3)}
+.date-grid{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--border);border-radius:var(--r12);overflow:hidden;margin-bottom:8px}
+.date-cell{padding:12px 14px;border-right:1px solid var(--border)}
+.date-cell:last-child{border-right:none}
+.date-cell label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
+.date-cell input{border:none;outline:none;background:none;font-family:var(--font-b);font-size:14px;color:var(--ink-2);width:100%}
+.guest-row{
+  border:1.5px solid var(--border);border-radius:var(--r12);
+  padding:12px 14px;margin-bottom:16px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.guest-row label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
+.guest-ctrl{display:flex;align-items:center;gap:12px}
+.guest-ctrl button{
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid var(--border);background:none;
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:border-color .2s;
+}
+.guest-ctrl button:hover{border-color:var(--ink)}
+.reserve-btn{
+  width:100%;padding:16px;
+  background:var(--rose);color:#fff;border:none;
+  border-radius:var(--r12);font-family:var(--font-b);
+  font-size:16px;font-weight:600;cursor:pointer;
+  transition:background .2s;margin-bottom:10px;
+}
+.reserve-btn:hover{background:var(--rose-dk)}
+.no-charge{text-align:center;font-size:13px;color:var(--ink-3);margin-bottom:16px}
+.price-breakdown{border-top:1px solid var(--border);padding-top:16px}
+.pb-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px}
+.pb-row.total{font-weight:600;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;font-size:15px}
+
+/* Unavailable widget */
+.unavail-widget{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r16);padding:28px;box-shadow:var(--shadow-m);
+}
+.unavail-banner{
+  background:var(--surface-2);border-radius:var(--r12);
+  padding:20px;text-align:center;margin-bottom:20px;
+}
+.unavail-icon{font-size:32px;margin-bottom:8px}
+.unavail-title{font-family:var(--font-d);font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.unavail-sub{font-size:13px;color:var(--ink-3)}
+.waitlist-form{display:flex;flex-direction:column;gap:10px}
+.waitlist-input{
+  border:1.5px solid var(--border);border-radius:var(--r8);
+  padding:12px 14px;font-family:var(--font-b);font-size:14px;
+  outline:none;transition:border-color .2s;
+}
+.waitlist-input:focus{border-color:var(--rose)}
+.waitlist-btn{
+  width:100%;padding:14px;background:var(--teal);color:#fff;
+  border:none;border-radius:var(--r8);font-family:var(--font-b);
+  font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;
+}
+.waitlist-btn:hover{background:#086055}
+.waitlist-success{
+  background:var(--teal-lt);border:1.5px solid var(--teal);
+  border-radius:var(--r12);padding:20px;text-align:center;
+}
+.waitlist-success h4{color:var(--teal);font-family:var(--font-d);font-size:1.1rem;margin-bottom:6px}
+.waitlist-success p{font-size:13px;color:var(--ink-2)}
+.alt-section{margin-top:24px}
+.alt-section h4{font-weight:600;font-size:14px;margin-bottom:12px}
+.alt-card{
+  display:flex;gap:12px;align-items:center;
+  padding:12px;border:1.5px solid var(--border);border-radius:var(--r12);
+  cursor:pointer;transition:all .2s;margin-bottom:8px;
+}
+.alt-card:hover{border-color:var(--rose);box-shadow:var(--shadow-s)}
+.alt-thumb{width:52px;height:52px;border-radius:var(--r8);background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.alt-info{flex:1;min-width:0}
+.alt-name{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alt-loc{font-size:12px;color:var(--ink-3)}
+.alt-price{font-size:13px;font-weight:600;white-space:nowrap}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CHECKOUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.checkout-wrap{max-width:960px;margin:0 auto;padding:40px 24px 80px}
+.checkout-grid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start}
+.checkout-step{margin-bottom:32px}
+.step-label{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.step-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;flex-shrink:0;
+}
+.step-title{font-family:var(--font-d);font-size:1.15rem;font-weight:600}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2)}
+.form-field input,.form-field select{
+  border:1.5px solid var(--border);border-radius:var(--r8);
+  padding:12px 14px;font-family:var(--font-b);font-size:15px;
+  outline:none;transition:border-color .2s;background:var(--surface);color:var(--ink);
+}
+.form-field input:focus,.form-field select:focus{border-color:var(--rose)}
+.checkout-summary{
+  position:sticky;top:calc(var(--nav-h)+24px);
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r16);padding:24px;box-shadow:var(--shadow-m);
+}
+.co-listing-thumb{
+  width:100%;aspect-ratio:3/2;border-radius:var(--r12);
+  background:var(--surface-3);display:flex;align-items:center;justify-content:center;
+  font-size:56px;margin-bottom:16px;overflow:hidden;
+}
+.confirm-btn{
+  width:100%;padding:16px;background:var(--rose);color:#fff;
+  border:none;border-radius:var(--r12);font-family:var(--font-b);
+  font-size:16px;font-weight:600;cursor:pointer;
+  margin-top:20px;transition:background .2s;
+}
+.confirm-btn:hover{background:var(--rose-dk)}
+.confirm-btn:disabled{background:var(--ink-4);cursor:not-allowed}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONFIRMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.confirm-wrap{max-width:600px;margin:0 auto;padding:80px 24px;text-align:center}
+.confirm-icon{font-size:64px;margin-bottom:24px}
+.confirm-wrap h2{font-family:var(--font-d);font-size:2rem;margin-bottom:12px}
+.confirm-wrap p{color:var(--ink-2);font-size:16px;line-height:1.7;margin-bottom:8px}
+.booking-ref{
+  background:var(--surface-2);border-radius:var(--r12);
+  padding:20px;margin:24px 0;font-size:14px;
+}
+.booking-ref strong{display:block;font-size:1.1rem;font-family:var(--font-d);margin-bottom:4px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DASHBOARD (GUEST)
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.dash-wrap{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
+.dash-grid{display:grid;grid-template-columns:220px 1fr;gap:40px}
+.dash-nav{list-style:none}
+.dash-nav li{margin-bottom:2px}
+.dash-nav button{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:10px 14px;border-radius:var(--r8);border:none;
+  background:none;font-family:var(--font-b);font-size:14px;
+  color:var(--ink-2);cursor:pointer;transition:all .15s;text-align:left;
+}
+.dash-nav button:hover{background:var(--surface-2);color:var(--ink)}
+.dash-nav button.active{background:var(--surface-2);color:var(--ink);font-weight:600}
+.dash-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.stat-box{background:var(--surface-2);border-radius:var(--r12);padding:20px}
+.stat-box .num{font-family:var(--font-d);font-size:1.8rem;font-weight:700}
+.stat-box .lbl{font-size:13px;color:var(--ink-3);margin-top:2px}
+.trip-card{
+  display:flex;gap:16px;align-items:center;
+  border:1.5px solid var(--border);border-radius:var(--r12);
+  padding:18px;margin-bottom:12px;
+}
+.trip-thumb{width:72px;height:72px;border-radius:var(--r8);background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
+.trip-info{flex:1}
+.trip-name{font-weight:600;font-size:15px}
+.trip-dates{font-size:13px;color:var(--ink-3)}
+.trip-status{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:var(--r99);margin-top:6px}
+.status-upcoming{background:var(--amber-lt);color:var(--amber)}
+.status-completed{background:var(--surface-2);color:var(--ink-3)}
+.trip-actions{display:flex;gap:8px;align-items:center}
+
+/* Wishlist */
+.wishlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.wl-card{border:1.5px solid var(--border);border-radius:var(--r12);overflow:hidden;cursor:pointer;transition:all .2s}
+.wl-card:hover{box-shadow:var(--shadow-m);border-color:var(--ink-4)}
+.wl-thumb{aspect-ratio:4/3;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:48px}
+.wl-body{padding:12px}
+.wl-name{font-weight:600;font-size:14px}
+.wl-loc{font-size:12px;color:var(--ink-3)}
+.wl-price{font-size:13px;margin-top:4px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOST DASHBOARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.host-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.host-listing-card{
+  border:1.5px solid var(--border);border-radius:var(--r12);
+  overflow:hidden;margin-bottom:16px;
+}
+.hlc-header{
+  display:flex;gap:16px;align-items:center;padding:16px;
+}
+.hlc-thumb{width:64px;height:64px;border-radius:var(--r8);background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.hlc-info{flex:1}
+.hlc-name{font-weight:600;font-size:15px}
+.hlc-loc{font-size:13px;color:var(--ink-3)}
+.hlc-stats{display:flex;gap:20px;padding:14px 16px;background:var(--surface-2);border-top:1px solid var(--border)}
+.hlc-stat{font-size:13px;color:var(--ink-2)}
+.hlc-stat strong{display:block;font-weight:600;color:var(--ink);font-size:15px}
+.occ-bar{height:4px;background:var(--surface-3);border-radius:2px;margin-top:6px;overflow:hidden}
+.occ-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .6s}
+
+/* Booking requests */
+.req-card{
+  border:1.5px solid var(--border);border-radius:var(--r12);
+  padding:18px;margin-bottom:12px;
+  display:flex;gap:16px;align-items:center;
+}
+.req-info{flex:1}
+.req-guest{font-weight:600;font-size:14px}
+.req-dates{font-size:13px;color:var(--ink-3)}
+.req-actions{display:flex;gap:8px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AUTH MODAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:500;display:flex;align-items:center;justify-content:center;
+  padding:24px;opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{
+  background:var(--surface);border-radius:var(--r16);
+  padding:32px;max-width:460px;width:100%;
+  box-shadow:var(--shadow-l);
+  transform:translateY(16px);transition:transform .25s;
+}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.modal-title{font-family:var(--font-d);font-size:1.3rem;font-weight:700}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-3);padding:4px;line-height:1}
+.modal-close:hover{color:var(--ink)}
+.modal-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.modal-tab{
+  flex:1;padding:10px;background:none;border:none;
+  font-family:var(--font-b);font-size:15px;font-weight:500;
+  color:var(--ink-3);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:all .2s;
+}
+.modal-tab.active{color:var(--ink);border-color:var(--ink)}
+.modal-form{display:flex;flex-direction:column;gap:12px}
+.modal-field label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);margin-bottom:6px}
+.modal-field input{
+  width:100%;border:1.5px solid var(--border);border-radius:var(--r8);
+  padding:12px 14px;font-family:var(--font-b);font-size:15px;
+  outline:none;transition:border-color .2s;
+}
+.modal-field input:focus{border-color:var(--rose)}
+.modal-submit{
+  width:100%;padding:14px;background:var(--rose);color:#fff;
+  border:none;border-radius:var(--r8);font-family:var(--font-b);
+  font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;
+  transition:background .2s;
+}
+.modal-submit:hover{background:var(--rose-dk)}
+.modal-divider{text-align:center;font-size:13px;color:var(--ink-3);position:relative;margin:4px 0}
+.modal-hint{font-size:13px;color:var(--ink-3);text-align:center;margin-top:8px}
+.modal-hint a{color:var(--rose);cursor:pointer;text-decoration:underline}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOAST
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#toast{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:12px 24px;border-radius:var(--r99);
+  font-size:14px;font-weight:500;box-shadow:var(--shadow-l);
+  opacity:0;transition:all .3s;pointer-events:none;z-index:9999;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:900px){
+  .detail-grid,.checkout-grid,.dash-grid{grid-template-columns:1fr}
+  .photo-grid{grid-template-columns:1fr;grid-template-rows:300px}
+  .photo-cell:not(:first-child){display:none}
+  .photo-cell:first-child{grid-row:auto}
+  .checkout-summary,.book-widget,.unavail-widget{position:static}
+  .host-stat-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .search-widget{flex-direction:column;border-radius:var(--r12)}
+  .sw-field{border-right:none;border-bottom:1px solid var(--border)}
+  .sw-field:last-of-type{border-bottom:none}
+  .hero-tagline{font-size:1.8rem}
+  .form-grid{grid-template-columns:1fr}
+  .nav-search{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ NAV ════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo" onclick="navigate('home')">
+      <div class="logo-icon">⌂</div>
+      StayNest
+    </div>
+    <div class="nav-search" onclick="navigate('home')">
+      <span class="nav-search-text" id="nav-search-text">Anywhere · Any week · Add guests</span>
+      <button class="nav-search-btn">🔍</button>
+    </div>
+    <div class="nav-right">
+      <button class="nav-link" onclick="navigate('host-dashboard')" id="host-nav-btn" style="display:none">Switch to hosting</button>
+      <button class="nav-link" onclick="navigate('host-dashboard')" id="become-host-btn">Become a host</button>
+      <div id="nav-auth">
+        <button class="nav-link" style="border:1.5px solid var(--border);border-radius:var(--r99);padding:8px 16px;display:flex;align-items:center;gap:8px" onclick="openModal('login')">
+          <span>☰</span>
+          <div class="nav-avatar">?</div>
+        </button>
+      </div>
+      <div id="nav-user" style="display:none">
+        <div class="nav-user" onclick="navigate('guest-dashboard')" style="cursor:pointer">
+          <span style="font-size:14px" id="nav-user-name">Hi</span>
+          <div class="nav-avatar" id="nav-avatar">U</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════ HOME ════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero wrap">
+    <h1 class="hero-tagline">Find your next<br/><em>unforgettable</em> stay</h1>
+    <p class="hero-sub">Discover unique homes hosted by locals around the world</p>
+    <div class="search-widget">
+      <div class="sw-field">
+        <span class="sw-label">Where</span>
+        <input class="sw-input" id="sw-where" type="text" placeholder="Search destinations" oninput="onSearchInput(this.value)"/>
+      </div>
+      <div class="sw-field">
+        <span class="sw-label">Check in</span>
+        <input class="sw-input" id="sw-checkin" type="date"/>
+      </div>
+      <div class="sw-field">
+        <span class="sw-label">Check out</span>
+        <input class="sw-input" id="sw-checkout" type="date"/>
+      </div>
+      <div class="sw-field" style="max-width:140px">
+        <span class="sw-label">Guests</span>
+        <input class="sw-input" id="sw-guests" type="number" placeholder="Add guests" min="1" max="16"/>
+      </div>
+      <button class="sw-search-btn" onclick="doSearch()">🔍 Search</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="category-row" id="cat-row"></div>
+    <div class="listings-section">
+      <div class="section-title">Popular destinations</div>
+      <div class="section-sub" id="home-sub">Showing top picks for you</div>
+      <div class="listings-grid" id="home-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ SEARCH RESULTS ════════════ -->
+<div class="page" id="page-results">
+  <div class="wrap" style="padding-top:32px;padding-bottom:80px">
+    <div style="margin-bottom:24px">
+      <h2 class="section-title" id="results-title">Stays for you</h2>
+      <p class="section-sub" id="results-sub">Loading...</p>
+    </div>
+    <div class="category-row" id="results-cat-row" style="margin-bottom:24px"></div>
+    <div class="listings-grid" id="results-grid"></div>
+  </div>
+</div>
+
+<!-- ════════════ LISTING DETAIL ════════════ -->
+<div class="page" id="page-detail">
+  <div class="detail-wrap">
+    <button class="back-link" onclick="goBack()">← Back</button>
+    <h1 class="detail-title" id="d-title"></h1>
+    <div class="detail-meta-row">
+      <span class="stars" id="d-stars"></span>
+      <span id="d-reviews"></span>
+      <span style="color:var(--ink-4)">·</span>
+      <span id="d-superhost-meta"></span>
+      <span style="color:var(--ink-4)">·</span>
+      <span id="d-location-meta"></span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-cell"><div class="placeholder" id="d-emoji1"></div></div>
+      <div class="photo-cell"><div class="placeholder" id="d-emoji2" style="font-size:40px"></div></div>
+      <div class="photo-cell"><div class="placeholder" id="d-emoji3" style="font-size:40px"></div></div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-left">
+        <h3 id="d-host-headline"></h3>
+        <p style="font-size:14px;color:var(--ink-3);margin-bottom:20px" id="d-specs"></p>
+        <p style="color:var(--ink-2);line-height:1.8" id="d-desc"></p>
+        <hr class="divider"/>
+        <h3>What this place offers</h3>
+        <div class="amenity-grid mt-16" id="d-amenities"></div>
+        <hr class="divider"/>
+        <div class="host-row">
+          <div class="host-av" id="d-host-av"></div>
+          <div>
+            <div style="font-weight:600" id="d-host-name"></div>
+            <div style="font-size:13px;color:var(--ink-3)" id="d-host-since"></div>
+            <div style="font-size:13px;margin-top:4px" id="d-host-stat"></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="cdpTrack('Host Profile Viewed',{host_id:state.currentListing?.hostId})">Contact host</button>
+        </div>
+      </div>
+
+      <!-- BOOKING WIDGET (available) -->
+      <div id="widget-available">
+        <div class="book-widget">
+          <div class="widget-price">
+            <span class="amount" id="w-price"></span>
+            <span class="per"> / night</span>
+          </div>
+          <div class="date-grid">
+            <div class="date-cell">
+              <label>Check-in</label>
+              <input type="date" id="w-checkin" onchange="recalcPrice()"/>
+            </div>
+            <div class="date-cell">
+              <label>Check-out</label>
+              <input type="date" id="w-checkout" onchange="recalcPrice()"/>
+            </div>
+          </div>
+          <div class="guest-row">
+            <div>
+              <label>Guests</label>
+              <div id="w-guest-display">1 guest</div>
+            </div>
+            <div class="guest-ctrl">
+              <button onclick="changeGuests(-1)">−</button>
+              <span id="w-guest-count">1</span>
+              <button onclick="changeGuests(1)">+</button>
+            </div>
+          </div>
+          <button class="reserve-btn" onclick="startReserve()">Reserve</button>
+          <div class="no-charge">You won't be charged yet</div>
+          <div class="price-breakdown" id="price-breakdown"></div>
+        </div>
+      </div>
+
+      <!-- WAITLIST WIDGET (unavailable) -->
+      <div id="widget-unavailable" style="display:none">
+        <div class="unavail-widget">
+          <div class="unavail-banner">
+            <div class="unavail-icon">🔒</div>
+            <div class="unavail-title">This listing is fully booked</div>
+            <div class="unavail-sub">Join the waitlist — we'll notify you if dates open up</div>
+          </div>
+          <div id="waitlist-form-area">
+            <div class="waitlist-form">
+              <input class="waitlist-input" type="email" id="wl-email" placeholder="Your email address"/>
+              <input class="waitlist-input" type="date" id="wl-checkin" placeholder="Preferred check-in"/>
+              <input class="waitlist-input" type="date" id="wl-checkout" placeholder="Preferred check-out"/>
+              <button class="waitlist-btn" onclick="joinWaitlist()">Notify me when available</button>
+            </div>
+          </div>
+          <div class="alt-section">
+            <h4>✨ Similar places you might love</h4>
+            <div id="alt-listings"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CHECKOUT ════════════ -->
+<div class="page" id="page-checkout">
+  <div class="checkout-wrap">
+    <button class="back-link" onclick="navigate('detail')">← Back to listing</button>
+    <h2 style="font-family:var(--font-d);font-size:1.8rem;margin-bottom:32px">Confirm and pay</h2>
+    <div class="checkout-grid">
+      <div>
+        <!-- Step 1: Trip details -->
+        <div class="checkout-step">
+          <div class="step-label"><div class="step-num">1</div><h3 class="step-title">Your trip</h3></div>
+          <div style="background:var(--surface-2);border-radius:var(--r12);padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:4px">Dates</div><div id="co-dates" style="font-size:15px"></div></div>
+            <div><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:4px">Guests</div><div id="co-guests-display" style="font-size:15px">1 guest</div></div>
+          </div>
+        </div>
+
+        <!-- Step 2: Personal info -->
+        <div class="checkout-step">
+          <div class="step-label"><div class="step-num">2</div><h3 class="step-title">Your details</h3></div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label>First name</label>
+              <input type="text" id="co-first" placeholder="Alex" oninput="coFieldChange()"/>
+            </div>
+            <div class="form-field">
+              <label>Last name</label>
+              <input type="text" id="co-last" placeholder="Johnson" oninput="coFieldChange()"/>
+            </div>
+            <div class="form-field full">
+              <label>Email</label>
+              <input type="email" id="co-email" placeholder="alex@example.com" oninput="coEmailChange()"/>
+            </div>
+            <div class="form-field full">
+              <label>Phone</label>
+              <input type="tel" id="co-phone" placeholder="+1 (555) 000-0000"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Payment -->
+        <div class="checkout-step">
+          <div class="step-label"><div class="step-num">3</div><h3 class="step-title">Payment</h3></div>
+          <div class="form-grid">
+            <div class="form-field full">
+              <label>Card number</label>
+              <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"/>
+            </div>
+            <div class="form-field">
+              <label>Expiry</label>
+              <input type="text" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)"/>
+            </div>
+            <div class="form-field">
+              <label>CVV</label>
+              <input type="text" placeholder="•••" maxlength="4"/>
+            </div>
+          </div>
+          <button class="confirm-btn" id="confirm-btn" onclick="confirmBooking()">Confirm booking</button>
+          <p style="font-size:12px;color:var(--ink-3);text-align:center;margin-top:10px">By confirming, you agree to our Terms of Service and Privacy Policy</p>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="checkout-summary">
+        <div class="co-listing-thumb" id="co-thumb"></div>
+        <div style="font-size:13px;color:var(--ink-3)" id="co-listing-type"></div>
+        <div style="font-family:var(--font-d);font-size:1.1rem;font-weight:600;margin-top:2px;margin-bottom:12px" id="co-listing-name"></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px">
+          <span id="co-rating-stars"></span>
+        </div>
+        <div class="pb-row" id="co-nightly-row"></div>
+        <div class="pb-row"><span>Cleaning fee</span><span id="co-cleaning">$0</span></div>
+        <div class="pb-row"><span>Service fee (11%)</span><span id="co-fee">$0</span></div>
+        <div class="pb-row total"><span>Total</span><span id="co-total">$0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CONFIRMATION ════════════ -->
+<div class="page" id="page-confirmation">
+  <div class="confirm-wrap">
+    <div class="confirm-icon">🎉</div>
+    <h2>You're all booked!</h2>
+    <p>Your reservation is confirmed. You'll receive a confirmation email shortly with all the details.</p>
+    <div class="booking-ref">
+      <strong id="conf-ref">Booking #SN-000000</strong>
+      <span id="conf-listing"></span> · <span id="conf-dates"></span>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="navigate('guest-dashboard')">View my trips</button>
+      <button class="btn btn-rose" onclick="navigate('home')">Explore more stays</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ GUEST DASHBOARD ════════════ -->
+<div class="page" id="page-guest-dashboard">
+  <div class="dash-wrap">
+    <div style="margin-bottom:32px">
+      <h2 style="font-family:var(--font-d);font-size:1.8rem">Welcome back, <em id="dash-name">traveler</em></h2>
+      <p style="color:var(--ink-3)">Manage your trips and account</p>
+    </div>
+    <div class="dash-grid">
+      <ul class="dash-nav">
+        <li><button class="active" onclick="guestTab('trips',this)">🗺️ Trips</button></li>
+        <li><button onclick="guestTab('wishlist',this)">❤️ Wishlist</button></li>
+        <li><button onclick="guestTab('profile',this)">👤 Profile</button></li>
+        <li><button onclick="navigate('home')">🔍 Explore stays</button></li>
+        <li><button onclick="switchToHost()">🏠 Switch to hosting</button></li>
+        <li><button onclick="logout()" style="color:var(--rose)">→ Log out</button></li>
+      </ul>
+      <div id="guest-tab-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ HOST DASHBOARD ════════════ -->
+<div class="page" id="page-host-dashboard">
+  <div class="dash-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+      <div>
+        <h2 style="font-family:var(--font-d);font-size:1.8rem">Host dashboard</h2>
+        <p style="color:var(--ink-3)">Manage your properties and reservations</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost btn-sm" onclick="navigate('guest-dashboard')">Switch to travelling</button>
+        <button class="btn btn-rose btn-sm" onclick="addListing()">+ Add listing</button>
+      </div>
+    </div>
+    <div class="dash-grid">
+      <ul class="dash-nav">
+        <li><button class="active" onclick="hostTab('overview',this)">📊 Overview</button></li>
+        <li><button onclick="hostTab('listings',this)">🏠 Listings</button></li>
+        <li><button onclick="hostTab('bookings',this)">📅 Reservations</button></li>
+        <li><button onclick="hostTab('earnings',this)">💰 Earnings</button></li>
+        <li><button onclick="logout()" style="color:var(--rose)">→ Log out</button></li>
+      </ul>
+      <div id="host-tab-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ AUTH MODAL ════════════ -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Welcome to StayNest</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchModalTab('login')">Log in</button>
+      <button class="modal-tab" id="tab-signup" onclick="switchModalTab('signup')">Sign up</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+const CATEGORIES = [
+  {id:'all',   icon:'🌍', label:'All'},
+  {id:'beach', icon:'🌊', label:'Beach'},
+  {id:'mountain',icon:'🏔️',label:'Mountain'},
+  {id:'city',  icon:'🏙️', label:'City'},
+  {id:'cabin', icon:'🌲', label:'Cabin'},
+  {id:'unique',icon:'✨', label:'Unique'},
+  {id:'island',icon:'🏝️', label:'Island'},
+  {id:'desert',icon:'🏜️', label:'Desert'},
+];
+
+const LISTINGS = [
+  {
+    id:'L001',emoji:'🏖️',emoji2:'🌅',emoji3:'🛁',
+    title:'Oceanfront Villa with Infinity Pool',
+    location:'Malibu, California',country:'US',
+    type:'beach',price:420,rating:4.92,reviews:128,
+    guests:8,beds:4,baths:3,
+    hostId:'H01',host:'Maria Santos',hostSince:'2019',superhost:true,
+    booked:true,
+    amenities:['🌊 Ocean view','♾️ Infinity pool','🍳 Full kitchen','🚗 Free parking','🐕 Pet friendly','📶 Gigabit WiFi','🎾 Tennis court','🏊 Private pool'],
+    desc:'Wake up to panoramic Pacific views from this stunning clifftop villa. Six-seat infinity pool, chef\'s kitchen with every appliance, and private steps to the beach below. Designed by a local architect — every room frames the ocean.',
+    cleaning:200
+  },
+  {
+    id:'L002',emoji:'🏔️',emoji2:'❄️',emoji3:'🔥',
+    title:'Ski-in Ski-out Alpine Chalet',
+    location:'Aspen, Colorado',country:'US',
+    type:'mountain',price:310,rating:4.88,reviews:94,
+    guests:6,beds:3,baths:2,
+    hostId:'H02',host:'James Kuiper',hostSince:'2020',superhost:true,
+    booked:false,
+    amenities:['🏔️ Mountain view','⛷️ Ski-in/ski-out','🛁 Hot tub','🔥 Fireplace','🍳 Full kitchen','📶 WiFi','🎿 Ski storage','🚗 Parking'],
+    desc:'A cozy alpine chalet steps from the gondola. Spend your mornings on world-class slopes and your evenings in a cedar hot tub watching the stars. Timber interiors, heated floors throughout, and a mudroom built for gear.',
+    cleaning:150
+  },
+  {
+    id:'L003',emoji:'🌆',emoji2:'🌃',emoji3:'🛋️',
+    title:'Designer Penthouse — Skyline Views',
+    location:'New York City, NY',country:'US',
+    type:'city',price:280,rating:4.85,reviews:203,
+    guests:4,beds:2,baths:2,
+    hostId:'H03',host:'Priya Mehta',hostSince:'2018',superhost:false,
+    booked:false,
+    amenities:['🌆 Manhattan skyline','🏋️ Gym access','🤸 Rooftop terrace','📶 Gigabit WiFi','☕ Espresso bar','🚇 Subway at door','🛎️ Concierge','🏊 Rooftop pool'],
+    desc:'Architect-designed penthouse with floor-to-ceiling glass and iconic skyline views from every room. Steps from Central Park, a chef\'s kitchen stocked with essentials, and access to a rooftop pool.',
+    cleaning:120
+  },
+  {
+    id:'L004',emoji:'🌲',emoji2:'🍄',emoji3:'🔥',
+    title:'Off-grid Forest Cabin with Hot Tub',
+    location:'Portland, Oregon',country:'US',
+    type:'cabin',price:165,rating:4.96,reviews:67,
+    guests:4,beds:2,baths:1,
+    hostId:'H04',host:'Lena Thorne',hostSince:'2021',superhost:true,
+    booked:false,
+    amenities:['🌲 Forest seclusion','🛁 Hot tub','🔥 Wood fireplace','🌿 Organic garden','📶 WiFi','🐕 Pet friendly','🚗 Parking','🌙 Stargazing deck'],
+    desc:'Deeply nestled in an old-growth fir forest with complete privacy. Wake to birdsong, spend evenings in a cedar hot tub under the canopy. Solar powered, fully off-grid, yet equipped with everything you need.',
+    cleaning:90
+  },
+  {
+    id:'L005',emoji:'🏝️',emoji2:'🌴',emoji3:'🐚',
+    title:'Overwater Bungalow — Tulum Lagoon',
+    location:'Tulum, Mexico',country:'MX',
+    type:'island',price:380,rating:4.94,reviews:156,
+    guests:2,beds:1,baths:1,
+    hostId:'H05',host:'Carlos Ruiz',hostSince:'2019',superhost:true,
+    booked:true,
+    amenities:['🌊 Overwater deck','🏊 Private plunge pool','🌴 Jungle canopy','🧘 Yoga platform','🤿 Snorkeling gear','🚲 Bikes included','🥭 Welcome basket','📶 WiFi'],
+    desc:'Sleep over the turquoise Tulum lagoon in this palm-thatched bungalow. Glass floor panels reveal the water below. Sunrise paddleboard, cenote access, and a private sundeck.',
+    cleaning:100
+  },
+  {
+    id:'L006',emoji:'🏰',emoji2:'🌸',emoji3:'🍷',
+    title:'17th-Century Manor Estate',
+    location:'Cotswolds, United Kingdom',country:'UK',
+    type:'unique',price:560,rating:4.97,reviews:89,
+    guests:12,beds:6,baths:4,
+    hostId:'H06',host:'Eleanor Hayes',hostSince:'2017',superhost:true,
+    booked:false,
+    amenities:['🏰 Historic architecture','🌸 English gardens','🎱 Billiards room','📚 Library','🍷 Wine cellar','🔥 6 fireplaces','🐴 Equestrian nearby','🚗 Ample parking'],
+    desc:'A lovingly restored 17th-century Cotswolds manor with six ensuite bedrooms, original stone fireplaces, and four acres of manicured gardens. Croquet on the lawn, afternoon tea in the orangery.',
+    cleaning:300
+  },
+  {
+    id:'L007',emoji:'🌊',emoji2:'🪨',emoji3:'🌅',
+    title:'Glass Cottage on Big Sur Cliffs',
+    location:'Big Sur, California',country:'US',
+    type:'beach',price:340,rating:4.90,reviews:112,
+    guests:4,beds:2,baths:2,
+    hostId:'H07',host:'Sam Weston',hostSince:'2020',superhost:false,
+    booked:false,
+    amenities:['🌊 Clifftop ocean views','🪟 Floor-to-ceiling glass','🔥 Firepit','🌅 Sunset terrace','📶 WiFi','🚿 Outdoor shower','🏄 Surfboards','🌿 Herb garden'],
+    desc:'Perched above a dramatic Big Sur coastline, this architect-designed glass cottage makes the Pacific your living room. Sleep to the sound of waves, wake to the sunrise.',
+    cleaning:130
+  },
+  {
+    id:'L008',emoji:'🏜️',emoji2:'⭐',emoji3:'🌵',
+    title:'Desert Adobe — Sedona Red Rocks',
+    location:'Sedona, Arizona',country:'US',
+    type:'desert',price:195,rating:4.89,reviews:78,
+    guests:4,beds:2,baths:2,
+    hostId:'H08',host:'Nina Patel',hostSince:'2021',superhost:true,
+    booked:true,
+    amenities:['🌄 Red rock views','🌡️ Heated pool','⭐ Stargazing deck','🏺 Local art','🧘 Meditation garden','📶 WiFi','🚗 Parking','🦎 Wildlife nearby'],
+    desc:'Handcrafted adobe nestled among Sedona\'s iconic red rock formations. Experience powerful vortex energy, stargazing under pristine skies, and desert silence broken only by coyotes at dusk.',
+    cleaning:100
+  },
+];
+
+const DEMO_TRIPS = [
+  {id:'T001',listingId:'L003',emoji:'🌆',title:'Designer Penthouse',location:'New York, NY',checkin:'2024-11-20',checkout:'2024-11-24',nights:4,total:1272,status:'completed'},
+  {id:'T002',listingId:'L004',emoji:'🌲',title:'Forest Cabin',location:'Portland, OR',checkin:'2025-02-07',checkout:'2025-02-10',nights:3,total:636,status:'completed'},
+];
+
+const HOST_BOOKINGS = [
+  {guest:'Arjun Sharma',listing:'Forest Cabin',dates:'Mar 14–17',nights:3,total:585,status:'confirmed'},
+  {guest:'Sophie Liu',listing:'Forest Cabin',dates:'Mar 21–25',nights:4,total:750,status:'pending'},
+  {guest:'Marc Dumont',listing:'Mountain Escape',dates:'Apr 2–6',nights:4,total:1280,status:'confirmed'},
+];
+
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+const state = {
+  user: null,           // null = anonymous
+  anonymousId: genId('anon'),
+  sessionStart: Date.now(),
+  currentListing: null,
+  previousPage: 'home',
+  currentPage: 'home',
+  activeCategory: 'all',
+  searchQuery: { where:'', checkin:'', checkout:'', guests:1 },
+  wishlist: new Set(),
+  trips: [...DEMO_TRIPS],
+  guestCount: 1,
+  checkoutData: {},
+  hostListings: [LISTINGS[3], LISTINGS[6]], // Portland cabin + Big Sur
+  // UC1 tracking
+  preLoginEvents: [],   // events fired before login (for demo context)
+  loginCount: 0,
+  // UC2 tracking
+  waitlistJoins: [],
+};
+
+function genId(prefix) {
+  return prefix + '_' + Math.random().toString(36).substr(2, 10);
+}
+
+/* ═══════════════════════════════════════════════════
+   SILENT CDP INSTRUMENTATION
+   — No UI element references these. Pure data layer.
+═══════════════════════════════════════════════════ */
+
+// Core wrappers
+function cdpPage(name, props = {}) {
+  const payload = {
+    ...props,
+    session_id: state.sessionStart,
+    is_identified: !!state.user,
+    anonymous_id: state.anonymousId,
+    device_type: getDeviceType(),
+    referrer: document.referrer || 'direct',
+    timestamp: new Date().toISOString(),
+  };
+  analytics.page(name, payload);
+  posthog.capture('$pageview', { page_name: name, ...payload });
+}
+
+function cdpTrack(event, props = {}) {
+  const payload = {
+    ...props,
+    session_id: state.sessionStart,
+    is_identified: !!state.user,
+    anonymous_id: state.anonymousId,
+    device_type: getDeviceType(),
+    timestamp: new Date().toISOString(),
+  };
+  if (state.user) payload.user_id = state.user.id;
+
+  analytics.track(event, payload);
+  posthog.capture(event, payload);
+
+  // Track pre-login events for UC1 attribution
+  if (!state.user) {
+    state.preLoginEvents.push({ event, props: payload });
+  }
+}
+
+function cdpIdentify(userId, traits = {}) {
+  analytics.identify(userId, {
+    ...traits,
+    anonymous_id: state.anonymousId,
+    device_type: getDeviceType(),
+    identified_at: new Date().toISOString(),
+  });
+  posthog.identify(userId, traits);
+}
+
+function cdpAlias(userId, anonId) {
+  // UC1: The stitch moment — merge anonymous journey into identified profile
+  analytics.alias(userId, anonId);
+  // PostHog handles alias differently — we use identify with $anon_distinct_id
+  posthog.identify(userId, {}, { $anon_distinct_id: anonId });
+}
+
+function getDeviceType() {
+  return window.innerWidth < 768 ? 'mobile' : window.innerWidth < 1024 ? 'tablet' : 'desktop';
+}
+
+/* ═══════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════ */
+function navigate(page, skipTrack = false) {
+  const prev = state.currentPage;
+  state.previousPage = prev;
+  state.currentPage = page;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const names = {
+    'home': 'Home', 'results': 'Search Results', 'detail': 'Listing Detail',
+    'checkout': 'Checkout', 'confirmation': 'Booking Confirmation',
+    'guest-dashboard': 'Guest Dashboard', 'host-dashboard': 'Host Dashboard',
+  };
+
+  if (!skipTrack) {
+    cdpPage(names[page] || page, {
+      from_page: names[prev] || prev,
+      listing_id: state.currentListing?.id || null,
+    });
+  }
+
+  // Page-specific init
+  if (page === 'home') initHome();
+  if (page === 'results') initResults();
+  if (page === 'guest-dashboard') initGuestDash();
+  if (page === 'host-dashboard') initHostDash();
+}
+
+function goBack() {
+  navigate(state.previousPage || 'home');
+}
+
+/* ═══════════════════════════════════════════════════
+   SEARCH
+═══════════════════════════════════════════════════ */
+let searchDebounce = null;
+function onSearchInput(val) {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(() => {
+    if (val.length >= 2) {
+      cdpTrack('Search Typed', {
+        query: val,
+        field: 'destination',
+        char_count: val.length,
+      });
+    }
+  }, 600);
+}
+
+function doSearch() {
+  const where = document.getElementById('sw-where').value.trim();
+  const checkin = document.getElementById('sw-checkin').value;
+  const checkout = document.getElementById('sw-checkout').value;
+  const guests = parseInt(document.getElementById('sw-guests').value) || 1;
+
+  state.searchQuery = { where, checkin, checkout, guests };
+
+  // Update nav search text
+  const parts = [where || 'Anywhere', checkin || 'Any dates', guests + ' guest' + (guests > 1 ? 's' : '')];
+  document.getElementById('nav-search-text').textContent = parts.filter(Boolean).join(' · ');
+
+  cdpTrack('Search Submitted', {
+    destination: where || 'anywhere',
+    checkin: checkin || null,
+    checkout: checkout || null,
+    guests,
+    has_dates: !!(checkin && checkout),
+    nights: calcNights(checkin, checkout),
+  });
+
+  navigate('results');
+}
+
+function calcNights(ci, co) {
+  if (!ci || !co) return null;
+  return Math.round((new Date(co) - new Date(ci)) / 86400000);
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER — CARDS
+═══════════════════════════════════════════════════ */
+function renderCard(listing, containerId, source = 'grid') {
+  const wished = state.wishlist.has(listing.id);
+  const booked = listing.booked;
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-img ${booked ? 'booked' : ''}">
+      <div class="placeholder">${listing.emoji}</div>
+      ${booked ? `<div class="sold-out-banner"><div class="sold-out-tag">Fully booked</div></div>` : ''}
+      ${!booked ? `<button class="wish-btn ${wished ? 'wishlisted' : ''}" onclick="toggleWishlist(event,'${listing.id}')" title="${wished ? 'Saved' : 'Save'}">${wished ? '♥' : '♡'}</button>` : ''}
+      ${listing.superhost ? `<div class="superhost-badge">⭐ Superhost</div>` : ''}
+    </div>
+    <div class="card-body">
+      <div class="card-location">${listing.location}</div>
+      <div class="card-title">${listing.title}</div>
+      <div class="card-price">
+        <strong>$${listing.price}</strong><span> / night</span>
+        <div class="card-rating">⭐ ${listing.rating} <span style="color:var(--ink-4)">(${listing.reviews})</span></div>
+      </div>
+    </div>`;
+
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('.wish-btn')) return;
+    viewListing(listing, source);
+  });
+
+  document.getElementById(containerId).appendChild(card);
+}
+
+/* ═══════════════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════════════ */
+function initHome() {
+  // Set default dates
+  const today = new Date();
+  const ci = new Date(today); ci.setDate(today.getDate() + 7);
+  const co = new Date(ci); co.setDate(ci.getDate() + 5);
+  document.getElementById('sw-checkin').value = ci.toISOString().split('T')[0];
+  document.getElementById('sw-checkout').value = co.toISOString().split('T')[0];
+
+  // Category row
+  const catRow = document.getElementById('cat-row');
+  catRow.innerHTML = '';
+  CATEGORIES.forEach(c => {
+    const pill = document.createElement('div');
+    pill.className = 'cat-pill' + (state.activeCategory === c.id ? ' active' : '');
+    pill.innerHTML = `<span class="icon">${c.icon}</span>${c.label}`;
+    pill.onclick = () => { state.activeCategory = c.id; filterHome(c.id); pill.closest('.category-row').querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active')); pill.classList.add('active'); };
+    catRow.appendChild(pill);
+  });
+
+  filterHome(state.activeCategory);
+}
+
+function filterHome(cat) {
+  const grid = document.getElementById('home-grid');
+  grid.innerHTML = '';
+  const filtered = cat === 'all' ? LISTINGS : LISTINGS.filter(l => l.type === cat);
+  const sub = document.getElementById('home-sub');
+  sub.textContent = `${filtered.length} stays${cat !== 'all' ? ' · ' + cat : ''}`;
+  filtered.forEach(l => renderCard(l, 'home-grid', 'home'));
+
+  if (cat !== 'all') {
+    cdpTrack('Category Filtered', { category: cat, results_count: filtered.length });
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   SEARCH RESULTS
+═══════════════════════════════════════════════════ */
+function initResults() {
+  const { where, checkin, checkout, guests } = state.searchQuery;
+
+  document.getElementById('results-title').textContent = where ? `Stays in ${where}` : 'All stays';
+  const nights = calcNights(checkin, checkout);
+  document.getElementById('results-sub').textContent =
+    `${LISTINGS.length} properties available${nights ? ` · ${nights} nights` : ''}`;
+
+  // Category row in results
+  const catRow = document.getElementById('results-cat-row');
+  catRow.innerHTML = '';
+  CATEGORIES.forEach(c => {
+    const pill = document.createElement('div');
+    pill.className = 'cat-pill' + (state.activeCategory === c.id ? ' active' : '');
+    pill.innerHTML = `<span class="icon">${c.icon}</span>${c.label}`;
+    pill.onclick = () => {
+      state.activeCategory = c.id;
+      catRow.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      renderResults(c.id);
+      cdpTrack('Search Results Filtered', { category: c.id });
+    };
+    catRow.appendChild(pill);
+  });
+
+  renderResults(state.activeCategory);
+}
+
+function renderResults(cat) {
+  const grid = document.getElementById('results-grid');
+  grid.innerHTML = '';
+  const filtered = cat === 'all' ? LISTINGS : LISTINGS.filter(l => l.type === cat);
+  filtered.forEach(l => renderCard(l, 'results-grid', 'search_results'));
+}
+
+/* ═══════════════════════════════════════════════════
+   VIEW LISTING
+═══════════════════════════════════════════════════ */
+function viewListing(listing, source = 'unknown') {
+  state.currentListing = listing;
+
+  // Populate detail UI
+  document.getElementById('d-title').textContent = listing.title;
+  document.getElementById('d-stars').innerHTML = `⭐ ${listing.rating}`;
+  document.getElementById('d-reviews').textContent = `${listing.reviews} reviews`;
+  document.getElementById('d-superhost-meta').textContent = listing.superhost ? '🏅 Superhost' : `Hosted by ${listing.host}`;
+  document.getElementById('d-location-meta').textContent = listing.location;
+  document.getElementById('d-emoji1').textContent = listing.emoji;
+  document.getElementById('d-emoji2').textContent = listing.emoji2;
+  document.getElementById('d-emoji3').textContent = listing.emoji3;
+  document.getElementById('d-host-headline').textContent = `Entire ${listing.type} hosted by ${listing.host}`;
+  document.getElementById('d-specs').textContent = `${listing.guests} guests · ${listing.beds} bedrooms · ${listing.baths} bathrooms`;
+  document.getElementById('d-desc').textContent = listing.desc;
+  document.getElementById('d-host-av').textContent = listing.host.charAt(0);
+  document.getElementById('d-host-name').textContent = `Hosted by ${listing.host}`;
+  document.getElementById('d-host-since').textContent = `${listing.superhost ? 'Superhost · ' : ''}Hosting since ${listing.hostSince}`;
+  document.getElementById('d-host-stat').textContent = `⭐ ${listing.rating} · ${listing.reviews} reviews`;
+
+  const amenDiv = document.getElementById('d-amenities');
+  amenDiv.innerHTML = listing.amenities.map(a => `<div class="amenity">${a}</div>`).join('');
+
+  // Booking vs waitlist widget
+  const avail = document.getElementById('widget-available');
+  const unavail = document.getElementById('widget-unavailable');
+
+  if (listing.booked) {
+    avail.style.display = 'none';
+    unavail.style.display = 'block';
+    renderWaitlistWidget(listing);
+  } else {
+    avail.style.display = 'block';
+    unavail.style.display = 'none';
+    initBookingWidget(listing);
+  }
+
+  navigate('detail', true);
+
+  // CDP: Listing Viewed
+  cdpTrack('Listing Viewed', {
+    listing_id: listing.id,
+    listing_title: listing.title,
+    listing_type: listing.type,
+    location: listing.location,
+    country: listing.country,
+    price_per_night: listing.price,
+    rating: listing.rating,
+    is_superhost: listing.superhost,
+    is_booked: listing.booked,
+    source,
+    host_id: listing.hostId,
+  });
+
+  cdpPage('Listing Detail', {
+    listing_id: listing.id,
+    listing_type: listing.type,
+    price_per_night: listing.price,
+    is_booked: listing.booked,
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   BOOKING WIDGET
+═══════════════════════════════════════════════════ */
+function initBookingWidget(listing) {
+  document.getElementById('w-price').textContent = '$' + listing.price;
+
+  const today = new Date();
+  const ci = new Date(today); ci.setDate(today.getDate() + 7);
+  const co = new Date(ci); co.setDate(ci.getDate() + 5);
+  document.getElementById('w-checkin').value = ci.toISOString().split('T')[0];
+  document.getElementById('w-checkout').value = co.toISOString().split('T')[0];
+  state.guestCount = 1;
+  document.getElementById('w-guest-count').textContent = 1;
+  document.getElementById('w-guest-display').textContent = '1 guest';
+
+  recalcPrice();
+}
+
+function recalcPrice() {
+  const l = state.currentListing;
+  if (!l) return;
+  const ci = document.getElementById('w-checkin').value;
+  const co = document.getElementById('w-checkout').value;
+  const nights = calcNights(ci, co) || 1;
+  const sub = l.price * nights;
+  const cleaning = l.cleaning || 100;
+  const fee = Math.round(sub * 0.11);
+  const total = sub + cleaning + fee;
+
+  document.getElementById('price-breakdown').innerHTML = `
+    <div class="pb-row"><span>$${l.price} × ${nights} night${nights>1?'s':''}</span><span>$${sub.toLocaleString()}</span></div>
+    <div class="pb-row"><span>Cleaning fee</span><span>$${cleaning}</span></div>
+    <div class="pb-row"><span>Service fee (11%)</span><span>$${fee}</span></div>
+    <div class="pb-row total"><span>Total</span><span>$${total.toLocaleString()}</span></div>`;
+
+  // Store for checkout
+  state.checkoutData = { nights, subtotal: sub, cleaning, fee, total, checkin: ci, checkout: co };
+}
+
+function changeGuests(delta) {
+  const l = state.currentListing;
+  const max = l ? l.guests : 16;
+  state.guestCount = Math.max(1, Math.min(max, state.guestCount + delta));
+  document.getElementById('w-guest-count').textContent = state.guestCount;
+  document.getElementById('w-guest-display').textContent = state.guestCount + ' guest' + (state.guestCount > 1 ? 's' : '');
+}
+
+function startReserve() {
+  if (!state.user) {
+    // Must be logged in to reserve — open login modal
+    cdpTrack('Reserve Clicked While Anonymous', {
+      listing_id: state.currentListing?.id,
+      listing_title: state.currentListing?.title,
+      price_per_night: state.currentListing?.price,
+    });
+    openModal('login', () => startReserve());
+    return;
+  }
+
+  const l = state.currentListing;
+  const ci = document.getElementById('w-checkin').value;
+  const co = document.getElementById('w-checkout').value;
+  const { nights, total } = state.checkoutData;
+
+  cdpTrack('Checkout Started', {
+    listing_id: l.id,
+    listing_title: l.title,
+    listing_type: l.type,
+    checkin: ci,
+    checkout: co,
+    nights,
+    guests: state.guestCount,
+    total_value: total,
+    price_per_night: l.price,
+    user_id: state.user.id,
+  });
+
+  // Prefill checkout
+  document.getElementById('co-dates').textContent = formatDateRange(ci, co);
+  document.getElementById('co-guests-display').textContent = state.guestCount + ' guest' + (state.guestCount > 1 ? 's' : '');
+  document.getElementById('co-thumb').textContent = l.emoji;
+  document.getElementById('co-listing-type').textContent = `Entire ${l.type} · ${l.location}`;
+  document.getElementById('co-listing-name').textContent = l.title;
+  document.getElementById('co-rating-stars').textContent = `⭐ ${l.rating} · ${l.reviews} reviews`;
+  document.getElementById('co-nightly-row').innerHTML = `<span>$${l.price} × ${nights} night${nights>1?'s':''}</span><span>$${(l.price*nights).toLocaleString()}</span>`;
+  document.getElementById('co-cleaning').textContent = `$${state.checkoutData.cleaning}`;
+  document.getElementById('co-fee').textContent = `$${state.checkoutData.fee}`;
+  document.getElementById('co-total').textContent = `$${state.checkoutData.total.toLocaleString()}`;
+
+  // Prefill known user details
+  if (state.user) {
+    const [fn, ...ln] = (state.user.name || '').split(' ');
+    document.getElementById('co-first').value = fn || '';
+    document.getElementById('co-last').value = ln.join(' ') || '';
+    document.getElementById('co-email').value = state.user.email || '';
+  }
+
+  navigate('checkout');
+}
+
+/* ═══════════════════════════════════════════════════
+   CHECKOUT EVENTS
+═══════════════════════════════════════════════════ */
+let coEmailDebounce = null;
+function coEmailChange() {
+  clearTimeout(coEmailDebounce);
+  coEmailDebounce = setTimeout(() => {
+    const email = document.getElementById('co-email').value;
+    if (email.includes('@') && email.includes('.')) {
+      cdpTrack('Checkout Email Entered', {
+        listing_id: state.currentListing?.id,
+        email_domain: email.split('@')[1],
+      });
+    }
+  }, 1000);
+}
+
+function coFieldChange() {
+  const first = document.getElementById('co-first').value;
+  const last = document.getElementById('co-last').value;
+  if (first && last) {
+    cdpTrack('Checkout Details Filled', {
+      listing_id: state.currentListing?.id,
+      fields_complete: true,
+    });
+  }
+}
+
+function formatCard(el) {
+  let v = el.value.replace(/\D/g,'').slice(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function formatExpiry(el) {
+  let v = el.value.replace(/\D/g,'').slice(0,4);
+  if (v.length > 2) v = v.slice(0,2) + ' / ' + v.slice(2);
+  el.value = v;
+}
+
+function confirmBooking() {
+  const first = document.getElementById('co-first').value.trim();
+  const last = document.getElementById('co-last').value.trim();
+  const email = document.getElementById('co-email').value.trim();
+
+  if (!first || !last || !email) {
+    showToast('Please fill in all required fields');
+    return;
+  }
+
+  const l = state.currentListing;
+  const bookingRef = 'SN-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  const { nights, total, checkin, checkout } = state.checkoutData;
+
+  // Add to trips
+  state.trips.unshift({
+    id: bookingRef, listingId: l.id, emoji: l.emoji,
+    title: l.title, location: l.location,
+    checkin, checkout, nights, total, status: 'upcoming',
+  });
+
+  // CDP: Booking Confirmed
+  cdpTrack('Booking Confirmed', {
+    booking_id: bookingRef,
+    listing_id: l.id,
+    listing_title: l.title,
+    listing_type: l.type,
+    location: l.location,
+    country: l.country,
+    checkin,
+    checkout,
+    nights,
+    guests: state.guestCount,
+    total_value: total,
+    price_per_night: l.price,
+    host_id: l.hostId,
+    is_superhost: l.superhost,
+    pre_login_events_count: state.preLoginEvents.length,
+    user_id: state.user?.id,
+  });
+
+  // Identify with updated traits
+  if (state.user) {
+    cdpIdentify(state.user.id, {
+      total_bookings: state.trips.length,
+      last_booking_id: bookingRef,
+      last_booking_value: total,
+      last_checkin: checkin,
+    });
+  }
+
+  // Confirmation page
+  document.getElementById('conf-ref').textContent = `Booking ${bookingRef}`;
+  document.getElementById('conf-listing').textContent = l.title;
+  document.getElementById('conf-dates').textContent = formatDateRange(checkin, checkout);
+
+  navigate('confirmation');
+}
+
+/* ═══════════════════════════════════════════════════
+   WAITLIST — UC2
+═══════════════════════════════════════════════════ */
+function renderWaitlistWidget(listing) {
+  // CDP: Listing Unavailable Encountered — the key UC2 signal
+  cdpTrack('Listing Unavailable Encountered', {
+    listing_id: listing.id,
+    listing_title: listing.title,
+    listing_type: listing.type,
+    location: listing.location,
+    price_per_night: listing.price,
+    is_identified: !!state.user,
+    source: state.previousPage,
+  });
+
+  // Render alternatives (exclude booked ones, same type priority)
+  const alts = LISTINGS.filter(l => !l.booked && l.id !== listing.id)
+    .sort((a, b) => {
+      // same type first
+      const aScore = (a.type === listing.type ? 2 : 0) + (Math.abs(a.price - listing.price) < 100 ? 1 : 0);
+      const bScore = (b.type === listing.type ? 2 : 0) + (Math.abs(b.price - listing.price) < 100 ? 1 : 0);
+      return bScore - aScore;
+    })
+    .slice(0, 3);
+
+  const altDiv = document.getElementById('alt-listings');
+  altDiv.innerHTML = '';
+  alts.forEach(alt => {
+    const el = document.createElement('div');
+    el.className = 'alt-card';
+    el.innerHTML = `
+      <div class="alt-thumb">${alt.emoji}</div>
+      <div class="alt-info">
+        <div class="alt-name">${alt.title}</div>
+        <div class="alt-loc">📍 ${alt.location}</div>
+      </div>
+      <div class="alt-price">$${alt.price}/night</div>`;
+    el.addEventListener('click', () => {
+      cdpTrack('Alternative Listing Clicked', {
+        original_listing_id: listing.id,
+        alternative_listing_id: alt.id,
+        alternative_type: alt.type,
+        source: 'waitlist_widget',
+        price_delta: alt.price - listing.price,
+      });
+      viewListing(alt, 'waitlist_suggestion');
+    });
+    altDiv.appendChild(el);
+  });
+
+  // Pre-fill waitlist email if logged in
+  if (state.user) {
+    document.getElementById('wl-email').value = state.user.email || '';
+  }
+}
+
+function joinWaitlist() {
+  const email = document.getElementById('wl-email').value.trim();
+  const checkin = document.getElementById('wl-checkin').value;
+  const checkout = document.getElementById('wl-checkout').value;
+  const l = state.currentListing;
+
+  if (!email || !email.includes('@')) {
+    showToast('Please enter a valid email');
+    return;
+  }
+
+  state.waitlistJoins.push({ listing_id: l.id, email, checkin, checkout });
+
+  // CDP: Waitlist Joined — core UC2 event
+  cdpTrack('Waitlist Joined', {
+    listing_id: l.id,
+    listing_title: l.title,
+    listing_type: l.type,
+    location: l.location,
+    price_per_night: l.price,
+    email,
+    email_domain: email.split('@')[1],
+    preferred_checkin: checkin || null,
+    preferred_checkout: checkout || null,
+    is_identified: !!state.user,
+    user_id: state.user?.id || null,
+    pre_login_events_count: state.preLoginEvents.length,
+  });
+
+  // If not identified, alias email as a soft identifier
+  if (!state.user) {
+    analytics.identify({ email, waitlist_listing_id: l.id });
+    posthog.setPersonProperties({ email });
+  }
+
+  // Show success state
+  document.getElementById('waitlist-form-area').innerHTML = `
+    <div class="waitlist-success">
+      <div style="font-size:32px;margin-bottom:8px">✉️</div>
+      <h4>You're on the waitlist!</h4>
+      <p>We'll notify you at <strong>${email}</strong> the moment ${l.title} becomes available${checkin ? ` for your dates (${formatDateRange(checkin, checkout)})` : ''}.</p>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════════════
+   WISHLIST
+═══════════════════════════════════════════════════ */
+function toggleWishlist(e, id) {
+  e.stopPropagation();
+  const listing = LISTINGS.find(l => l.id === id);
+  const wasWished = state.wishlist.has(id);
+
+  if (wasWished) {
+    state.wishlist.delete(id);
+    cdpTrack('Listing Removed from Wishlist', { listing_id: id, listing_type: listing?.type });
+    showToast('Removed from wishlist');
+  } else {
+    state.wishlist.add(id);
+    cdpTrack('Listing Wishlisted', {
+      listing_id: id,
+      listing_title: listing?.title,
+      listing_type: listing?.type,
+      price_per_night: listing?.price,
+      wishlist_size: state.wishlist.size,
+      is_identified: !!state.user,
+    });
+    showToast('Saved to wishlist ♥');
+  }
+
+  // Re-render current view to reflect new heart state
+  const btn = e.target.closest('.wish-btn');
+  if (btn) {
+    btn.classList.toggle('wishlisted', !wasWished);
+    btn.textContent = wasWished ? '♡' : '♥';
+    btn.title = wasWished ? 'Save' : 'Saved';
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   AUTH — UC1 STITCH
+═══════════════════════════════════════════════════ */
+let postLoginCallback = null;
+
+function openModal(tab = 'login', callback = null) {
+  postLoginCallback = callback;
+  document.getElementById('auth-modal').classList.add('open');
+  switchModalTab(tab);
+}
+
+function closeModal() {
+  document.getElementById('auth-modal').classList.remove('open');
+  postLoginCallback = null;
+}
+
+function switchModalTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('modal-body').innerHTML = tab === 'login' ? loginForm() : signupForm();
+}
+
+function loginForm() {
+  return `
+    <div class="modal-form">
+      <div class="modal-field"><label>Email</label><input type="email" id="m-email" placeholder="you@example.com"/></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="m-pw" placeholder="••••••••"/></div>
+      <button class="modal-submit" onclick="doLogin()">Continue</button>
+    </div>
+    <p class="modal-hint">New to StayNest? <a onclick="switchModalTab('signup')">Sign up</a></p>`;
+}
+
+function signupForm() {
+  return `
+    <div class="modal-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="modal-field"><label>First name</label><input type="text" id="m-first" placeholder="Alex"/></div>
+        <div class="modal-field"><label>Last name</label><input type="text" id="m-last" placeholder="Johnson"/></div>
+      </div>
+      <div class="modal-field"><label>Email</label><input type="email" id="m-email" placeholder="you@example.com"/></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="m-pw" placeholder="Create a password"/></div>
+      <button class="modal-submit" onclick="doSignup()">Create account</button>
+    </div>
+    <p class="modal-hint">Already have an account? <a onclick="switchModalTab('login')">Log in</a></p>`;
+}
+
+function doLogin() {
+  const email = document.getElementById('m-email').value.trim();
+  const pw = document.getElementById('m-pw').value;
+  if (!email || !pw) { showToast('Please fill in all fields'); return; }
+
+  // Simulate login — derive name from email
+  const name = email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+  const userId = 'user_' + btoa(email).replace(/[^a-z0-9]/gi,'').slice(0,10);
+
+  finalizeAuth(userId, name, email, 'login');
+}
+
+function doSignup() {
+  const first = document.getElementById('m-first').value.trim();
+  const last = document.getElementById('m-last').value.trim();
+  const email = document.getElementById('m-email').value.trim();
+  const pw = document.getElementById('m-pw').value;
+  if (!first || !email || !pw) { showToast('Please fill in all fields'); return; }
+
+  const name = [first, last].filter(Boolean).join(' ');
+  const userId = 'user_' + genId('');
+
+  finalizeAuth(userId, name, email, 'signup');
+}
+
+function finalizeAuth(userId, name, email, method) {
+  const prevAnonId = state.anonymousId;
+  state.user = { id: userId, name, email };
+  state.loginCount++;
+
+  // ══════════════════════════════════════════
+  // UC1: THE STITCH — alias anonymous → user
+  // This is where the CDP merges the pre-login
+  // journey (all search, view, wishlist events)
+  // into the identified profile.
+  // ══════════════════════════════════════════
+  cdpAlias(userId, prevAnonId);
+
+  cdpIdentify(userId, {
+    name,
+    email,
+    method,
+    signup_source: state.currentPage,
+    device_type: getDeviceType(),
+    pre_login_event_count: state.preLoginEvents.length,
+    pre_login_pages_viewed: state.preLoginEvents.filter(e => e.event === 'Listing Viewed').length,
+    wishlist_size_at_login: state.wishlist.size,
+    anonymous_id_stitched: prevAnonId,
+  });
+
+  cdpTrack(method === 'signup' ? 'Account Created' : 'Logged In', {
+    method,
+    user_id: userId,
+    anonymous_id_stitched: prevAnonId,
+    pre_login_event_count: state.preLoginEvents.length,
+    wishlist_size: state.wishlist.size,
+    device_type: getDeviceType(),
+  });
+
+  // Update UI
+  updateNavAuth();
+  closeModal();
+  showToast(method === 'signup' ? `Welcome to StayNest, ${name.split(' ')[0]}! 🎉` : `Welcome back, ${name.split(' ')[0]}!`);
+
+  if (postLoginCallback) postLoginCallback();
+}
+
+function updateNavAuth() {
+  if (state.user) {
+    document.getElementById('nav-auth').style.display = 'none';
+    document.getElementById('nav-user').style.display = 'block';
+    document.getElementById('nav-user-name').textContent = state.user.name.split(' ')[0];
+    document.getElementById('nav-avatar').textContent = state.user.name.charAt(0).toUpperCase();
+    document.getElementById('host-nav-btn').style.display = 'block';
+    document.getElementById('become-host-btn').style.display = 'none';
+    document.getElementById('dash-name').textContent = state.user.name.split(' ')[0];
+  } else {
+    document.getElementById('nav-auth').style.display = 'block';
+    document.getElementById('nav-user').style.display = 'none';
+    document.getElementById('host-nav-btn').style.display = 'none';
+    document.getElementById('become-host-btn').style.display = 'block';
+  }
+}
+
+function logout() {
+  cdpTrack('Logged Out', { user_id: state.user?.id });
+  state.user = null;
+  state.anonymousId = genId('anon'); // fresh anon id
+  state.preLoginEvents = [];
+  updateNavAuth();
+  navigate('home');
+  showToast('Logged out successfully');
+}
+
+/* ═══════════════════════════════════════════════════
+   GUEST DASHBOARD
+═══════════════════════════════════════════════════ */
+function initGuestDash() {
+  if (!state.user) { openModal('login', () => navigate('guest-dashboard')); return; }
+  document.getElementById('dash-name').textContent = state.user.name.split(' ')[0];
+  renderTripsTab();
+  cdpTrack('Guest Dashboard Viewed', { user_id: state.user.id, trips_count: state.trips.length, wishlist_size: state.wishlist.size });
+}
+
+function guestTab(tab, btn) {
+  document.querySelectorAll('#guest-tab-content').forEach(() => {});
+  document.querySelectorAll('.dash-nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  cdpTrack('Dashboard Tab Clicked', { tab, user_id: state.user?.id });
+  if (tab === 'trips') renderTripsTab();
+  else if (tab === 'wishlist') renderWishlistTab();
+  else if (tab === 'profile') renderProfileTab();
+}
+
+function renderTripsTab() {
+  const c = document.getElementById('guest-tab-content');
+  const upcoming = state.trips.filter(t => t.status === 'upcoming');
+  const past = state.trips.filter(t => t.status === 'completed');
+
+  c.innerHTML = `
+    <div class="dash-stat-row">
+      <div class="stat-box"><div class="num">${state.trips.length}</div><div class="lbl">Total trips</div></div>
+      <div class="stat-box"><div class="num">${upcoming.length}</div><div class="lbl">Upcoming</div></div>
+      <div class="stat-box"><div class="num">${state.wishlist.size}</div><div class="lbl">Wishlisted</div></div>
+    </div>
+    <h3 style="font-family:var(--font-d);margin-bottom:16px">Your trips</h3>
+    ${state.trips.map(t => `
+      <div class="trip-card">
+        <div class="trip-thumb">${t.emoji}</div>
+        <div class="trip-info">
+          <div class="trip-name">${t.title}</div>
+          <div class="trip-dates">📍 ${t.location} · ${formatDateRange(t.checkin, t.checkout)}</div>
+          <div class="trip-status ${t.status === 'upcoming' ? 'status-upcoming' : 'status-completed'}">${t.status === 'upcoming' ? '⏳ Upcoming' : '✓ Completed'}</div>
+        </div>
+        <div class="trip-actions">
+          <div style="text-align:right">
+            <div style="font-weight:600">$${t.total.toLocaleString()}</div>
+            <div style="font-size:12px;color:var(--ink-3)">${t.nights} night${t.nights>1?'s':''}</div>
+            ${t.status === 'completed' ? `<button class="btn btn-ghost btn-xs" style="margin-top:8px" onclick="leaveReview('${t.listingId}')">Leave review</button>` : ''}
+          </div>
+        </div>
+      </div>`).join('') || '<p style="color:var(--ink-3)">No trips yet. Start exploring! <a onclick="navigate(\'home\')" style="color:var(--rose);cursor:pointer;text-decoration:underline">Browse stays →</a></p>'}`;
+}
+
+function renderWishlistTab() {
+  const c = document.getElementById('guest-tab-content');
+  const items = LISTINGS.filter(l => state.wishlist.has(l.id));
+  c.innerHTML = `
+    <h3 style="font-family:var(--font-d);margin-bottom:16px">Wishlist (${items.length})</h3>
+    ${items.length ? `<div class="wishlist-grid">${items.map(l => `
+      <div class="wl-card" onclick="viewListing(LISTINGS.find(x=>x.id==='${l.id}'), 'wishlist')">
+        <div class="wl-thumb">${l.emoji}</div>
+        <div class="wl-body">
+          <div class="wl-name">${l.title}</div>
+          <div class="wl-loc">📍 ${l.location}</div>
+          <div class="wl-price">$${l.price} / night</div>
+        </div>
+      </div>`).join('')}</div>` : '<p style="color:var(--ink-3)">Nothing saved yet. Tap ♡ on any listing to save it.</p>'}`;
+}
+
+function renderProfileTab() {
+  const u = state.user;
+  const c = document.getElementById('guest-tab-content');
+  c.innerHTML = `
+    <h3 style="font-family:var(--font-d);margin-bottom:20px">Your profile</h3>
+    <div style="display:flex;gap:20px;align-items:center;padding:24px;background:var(--surface-2);border-radius:var(--r12);margin-bottom:20px">
+      <div style="width:72px;height:72px;border-radius:50%;background:var(--rose);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-family:var(--font-d);font-weight:700;flex-shrink:0">${u.name.charAt(0)}</div>
+      <div>
+        <div style="font-family:var(--font-d);font-size:1.2rem;font-weight:600">${u.name}</div>
+        <div style="color:var(--ink-3);font-size:14px">${u.email}</div>
+        <div style="font-size:13px;margin-top:4px">Member since ${new Date().getFullYear()}</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="showToast('Profile editing coming soon')">Edit profile</button>
+      <button class="btn btn-ghost btn-sm" onclick="showToast('Payment settings coming soon')">Payment methods</button>
+      <button class="btn btn-ghost btn-sm" onclick="showToast('Notification preferences saved')">Notifications</button>
+    </div>`;
+}
+
+function leaveReview(listingId) {
+  cdpTrack('Review Initiated', { listing_id: listingId, user_id: state.user?.id });
+  showToast('Review submitted! Thank you 🙏');
+}
+
+/* ═══════════════════════════════════════════════════
+   HOST DASHBOARD
+═══════════════════════════════════════════════════ */
+function initHostDash() {
+  if (!state.user) { openModal('login', () => navigate('host-dashboard')); return; }
+  renderHostOverview();
+  cdpTrack('Host Dashboard Viewed', { user_id: state.user?.id });
+}
+
+function hostTab(tab, btn) {
+  document.querySelectorAll('.dash-nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  cdpTrack('Host Dashboard Tab Clicked', { tab, user_id: state.user?.id });
+  if (tab === 'overview') renderHostOverview();
+  else if (tab === 'listings') renderHostListings();
+  else if (tab === 'bookings') renderHostBookings();
+  else if (tab === 'earnings') renderHostEarnings();
+}
+
+function renderHostOverview() {
+  const c = document.getElementById('host-tab-content');
+  c.innerHTML = `
+    <div class="host-stat-row">
+      <div class="stat-box"><div class="num">$8,240</div><div class="lbl">Revenue this year</div></div>
+      <div class="stat-box"><div class="num">74%</div><div class="lbl">Occupancy rate</div></div>
+      <div class="stat-box"><div class="num">4.93</div><div class="lbl">Average rating</div></div>
+      <div class="stat-box"><div class="num">3</div><div class="lbl">Pending requests</div></div>
+    </div>
+    <h3 style="font-family:var(--font-d);margin-bottom:16px">Your listings</h3>
+    ${renderListingCards()}
+    <h3 style="font-family:var(--font-d);margin:24px 0 16px">Pending requests</h3>
+    ${renderReqCards()}`;
+}
+
+function renderListingCards() {
+  return state.hostListings.map(l => `
+    <div class="host-listing-card">
+      <div class="hlc-header">
+        <div class="hlc-thumb">${l.emoji}</div>
+        <div class="hlc-info">
+          <div class="hlc-name">${l.title}</div>
+          <div class="hlc-loc">📍 ${l.location}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-ghost btn-xs" onclick="cdpTrack('Host Listing Edited',{listing_id:'${l.id}',user_id:state.user?.id})">Edit</button>
+          <button class="btn btn-ghost btn-xs" onclick="viewListing(LISTINGS.find(x=>x.id==='${l.id}'),'host_dashboard')">Preview</button>
+        </div>
+      </div>
+      <div class="hlc-stats">
+        <div class="hlc-stat"><strong>⭐ ${l.rating}</strong>Rating</div>
+        <div class="hlc-stat"><strong>${l.reviews}</strong>Reviews</div>
+        <div class="hlc-stat"><strong>$${l.price}/night</strong>Rate</div>
+        <div class="hlc-stat" style="flex:1">
+          <strong>Occupancy</strong>
+          <div class="occ-bar"><div class="occ-fill" style="width:74%"></div></div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderReqCards() {
+  return HOST_BOOKINGS.map((r,i) => `
+    <div class="req-card">
+      <div class="nav-avatar" style="width:40px;height:40px;font-size:16px;flex-shrink:0">${r.guest.charAt(0)}</div>
+      <div class="req-info">
+        <div class="req-guest">${r.guest}</div>
+        <div class="req-dates">${r.listing} · ${r.dates} · ${r.nights} nights · $${r.total}</div>
+        <div style="font-size:12px;margin-top:4px;color:${r.status==='confirmed'?'var(--teal)':'var(--amber)'};font-weight:600;text-transform:uppercase;letter-spacing:.04em">${r.status}</div>
+      </div>
+      <div class="req-actions">
+        ${r.status==='pending' ? `
+          <button class="btn btn-teal btn-xs" onclick="hostAction('accept',${i})">Accept</button>
+          <button class="btn btn-ghost btn-xs" onclick="hostAction('decline',${i})">Decline</button>
+        ` : `<span style="font-size:13px;color:var(--teal)">✓ Confirmed</span>`}
+      </div>
+    </div>`).join('');
+}
+
+function hostAction(action, idx) {
+  HOST_BOOKINGS[idx].status = action === 'accept' ? 'confirmed' : 'declined';
+  cdpTrack(`Booking Request ${action === 'accept' ? 'Accepted' : 'Declined'}`, {
+    guest: HOST_BOOKINGS[idx].guest,
+    listing: HOST_BOOKINGS[idx].listing,
+    user_id: state.user?.id,
+  });
+  showToast(action === 'accept' ? 'Booking confirmed ✓' : 'Booking declined');
+  renderHostOverview();
+}
+
+function renderHostListings() {
+  document.getElementById('host-tab-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3 style="font-family:var(--font-d)">Your listings (${state.hostListings.length})</h3>
+      <button class="btn btn-rose btn-sm" onclick="addListing()">+ Add listing</button>
+    </div>
+    ${renderListingCards()}`;
+}
+
+function renderHostBookings() {
+  document.getElementById('host-tab-content').innerHTML = `
+    <h3 style="font-family:var(--font-d);margin-bottom:16px">All reservations</h3>
+    ${renderReqCards()}`;
+}
+
+function renderHostEarnings() {
+  const months = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+  const vals = [980,1240,1100,890,1450,1680,760,1140];
+  const max = Math.max(...vals);
+  document.getElementById('host-tab-content').innerHTML = `
+    <div class="dash-stat-row" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-box"><div class="num">$8,240</div><div class="lbl">This year</div></div>
+      <div class="stat-box"><div class="num">$1,140</div><div class="lbl">This month</div></div>
+      <div class="stat-box"><div class="num">$342</div><div class="lbl">Pending payout</div></div>
+    </div>
+    <h3 style="font-family:var(--font-d);margin-bottom:16px">Monthly earnings</h3>
+    <div style="background:var(--surface-2);border-radius:var(--r12);padding:24px">
+      <div style="display:flex;align-items:flex-end;gap:8px;height:140px;margin-bottom:8px">
+        ${months.map((m,i) => `
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div style="width:100%;height:${Math.round(vals[i]/max*120)}px;background:var(--rose);border-radius:4px 4px 0 0;opacity:${i===months.length-1?'1':'.6'};transition:opacity .2s;cursor:pointer" title="$${vals[i]}" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='${i===months.length-1?'1':'.6'}'"></div>
+          </div>`).join('')}
+      </div>
+      <div style="display:flex;gap:8px">
+        ${months.map(m => `<div style="flex:1;text-align:center;font-size:11px;color:var(--ink-3)">${m}</div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function addListing() {
+  cdpTrack('Host Add Listing Clicked', { user_id: state.user?.id });
+  showToast('Listing creation flow coming soon!');
+}
+
+function switchToHost() {
+  if (!state.user) { openModal('login', () => navigate('host-dashboard')); return; }
+  navigate('host-dashboard');
+}
+
+/* ═══════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════ */
+function formatDateRange(ci, co) {
+  if (!ci) return '';
+  const options = { month: 'short', day: 'numeric' };
+  const s = new Date(ci + 'T00:00:00').toLocaleDateString('en-US', options);
+  if (!co) return s;
+  const e = new Date(co + 'T00:00:00').toLocaleDateString('en-US', options);
+  return `${s} – ${e}`;
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+(function init() {
+  // Close modal on overlay click
+  document.getElementById('auth-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // UC1: Fire initial anonymous page view — the journey begins
+  cdpPage('Home', { landing: true });
+
+  // Set default search dates
+  initHome();
+})();
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done"
