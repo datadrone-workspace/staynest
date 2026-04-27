@@ -3,795 +3,812 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>StayNest — Unique places to stay</title>
+<title>StayNest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 
-<!-- ╔══════════════════════════════════════╗
-     ║  SEGMENT  — swap YOUR_WRITE_KEY     ║
-     ╚══════════════════════════════════════╝ -->
+<!-- ▸▸▸ SEGMENT — replace SEGMENT_WRITE_KEY_HERE ◂◂◂ -->
 <script>
 !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/"+key+"/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="73BOmEDbKJV5ybbOEKHAUz0jmCC5VucF";analytics.SNIPPET_VERSION="5.2.0";
 analytics.load("73BOmEDbKJV5ybbOEKHAUz0jmCC5VucF");
 }}();
 </script>
 
-<!-- ╔══════════════════════════════════════╗
-     ║  POSTHOG  — swap YOUR_POSTHOG_KEY   ║
-     ╚══════════════════════════════════════╝ -->
+<!-- ▸▸▸ POSTHOG — replace POSTHOG_API_KEY_HERE ◂◂◂ -->
 <script>
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-posthog.init('YOUR_POSTHOG_KEY',{api_host:'https://us.i.posthog.com', person_profiles: 'identified_only'});
+posthog.init('POSTHOG_API_KEY_HERE', {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'always',
+  capture_pageview: false,
+  capture_pageleave: true,
+  session_recording: { maskAllInputs: false, maskInputFn: (text, element) => element?.type === 'password' ? '***' : text }
+});
 </script>
 
 <style>
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    TOKENS
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-:root {
-  --ink:       #1a1a1a;
-  --ink-2:     #444;
-  --ink-3:     #888;
-  --ink-4:     #bbb;
-  --surface:   #ffffff;
-  --surface-2: #f7f7f7;
-  --surface-3: #efefef;
-  --border:    #e0e0e0;
-  --rose:      #e8533f;
-  --rose-dk:   #c9432f;
-  --rose-lt:   #fdf1ef;
-  --teal:      #0a7c6b;
-  --teal-lt:   #eaf4f2;
-  --amber:     #f59e0b;
-  --amber-lt:  #fffbeb;
-  --r4: 4px; --r8: 8px; --r12: 12px; --r16: 16px; --r24: 24px; --r99: 999px;
-  --shadow-s: 0 1px 4px rgba(0,0,0,.08);
-  --shadow-m: 0 4px 16px rgba(0,0,0,.10);
-  --shadow-l: 0 12px 40px rgba(0,0,0,.13);
-  --font-d: 'Playfair Display', Georgia, serif;
-  --font-b: 'Outfit', sans-serif;
-  --nav-h: 72px;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root{
+  --bg:#FAFAF8;
+  --surface:#FFFFFF;
+  --surface2:#F4F3EF;
+  --surface3:#ECEAE4;
+  --border:#E2E0DA;
+  --border2:#D0CEC7;
+  --text:#1C1B18;
+  --text2:#5C5A54;
+  --text3:#9C9A94;
+  --text4:#C4C2BC;
+  --accent:#D4521F;
+  --accent2:#B8431A;
+  --accent-lt:#FDF1EC;
+  --teal:#1A6B5C;
+  --teal-lt:#EAF3F1;
+  --gold:#B8930A;
+  --gold-lt:#FBF6E6;
+  --font-d:'Fraunces',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --nav:68px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--font-b);color:var(--ink);background:var(--surface);font-size:15px;line-height:1.6;min-height:100vh}
-img{display:block;max-width:100%}
-button{cursor:pointer;font-family:var(--font-b)}
-input,select,textarea{font-family:var(--font-b)}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh}
+button,input,select{font-family:var(--font-b)}
 a{color:inherit;text-decoration:none}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   LAYOUT UTILITIES
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
 .page{display:none}.page.active{display:block}
-.flex{display:flex}.flex-col{flex-direction:column}
-.gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.gap-24{gap:24px}
-.items-center{align-items:center}.justify-between{justify-content:space-between}
-.text-sm{font-size:13px}.text-xs{font-size:11px}.text-ink2{color:var(--ink-2)}.text-ink3{color:var(--ink-3)}
-.font-600{font-weight:600}.mt-4{margin-top:4px}.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
-.w-full{width:100%}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    NAV
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .nav{
-  position:sticky;top:0;z-index:200;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(16px);
+  position:sticky;top:0;z-index:300;
+  height:var(--nav);
+  background:rgba(250,250,248,.94);
+  backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
-  height:var(--nav-h);
 }
 .nav-inner{
-  max-width:1200px;margin:0 auto;padding:0 24px;
-  height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  max-width:1160px;margin:0 auto;padding:0 28px;
+  height:100%;display:flex;align-items:center;gap:20px;
 }
 .logo{
-  font-family:var(--font-d);font-size:1.55rem;font-weight:700;
-  color:var(--rose);letter-spacing:-.01em;cursor:pointer;white-space:nowrap;
-  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-d);font-size:1.5rem;font-weight:700;
+  color:var(--accent);cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;gap:9px;
+  font-style:italic;
 }
-.logo-icon{
-  width:32px;height:32px;background:var(--rose);border-radius:50% 50% 50% 4px;
+.logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%}
+
+/* pill search in nav */
+.nav-pill{
+  flex:1;max-width:380px;
+  border:1.5px solid var(--border2);border-radius:40px;
+  display:flex;align-items:center;height:42px;padding:0 6px 0 18px;
+  background:var(--surface);cursor:pointer;
+  transition:box-shadow .2s,border-color .2s;
+}
+.nav-pill:hover{border-color:var(--text2);box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.nav-pill-text{flex:1;font-size:13px;color:var(--text3)}
+.nav-pill-btn{
+  width:32px;height:32px;border-radius:50%;background:var(--accent);
+  border:none;color:#fff;font-size:13px;
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:16px;flex-shrink:0;
-}
-
-/* Nav search (compact) */
-.nav-search{
-  flex:1;max-width:420px;
-  border:1.5px solid var(--border);border-radius:var(--r99);
-  display:flex;align-items:center;height:44px;
-  padding:0 4px 0 16px;
-  box-shadow:var(--shadow-s);
-  cursor:pointer;transition:box-shadow .2s;
-}
-.nav-search:hover{box-shadow:var(--shadow-m)}
-.nav-search-text{font-size:14px;color:var(--ink-3);flex:1}
-.nav-search-btn{
-  width:34px;height:34px;border-radius:50%;
-  background:var(--rose);border:none;color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:14px;
-  transition:background .2s;flex-shrink:0;
-}
-.nav-search-btn:hover{background:var(--rose-dk)}
-
-.nav-right{display:flex;align-items:center;gap:8px}
-.nav-link{
-  background:none;border:none;padding:8px 14px;border-radius:var(--r99);
-  font-size:14px;font-weight:500;color:var(--ink);transition:background .15s;white-space:nowrap;
-}
-.nav-link:hover{background:var(--surface-2)}
-.nav-user{
-  border:1.5px solid var(--border);border-radius:var(--r99);
-  padding:6px 6px 6px 12px;display:flex;align-items:center;gap:8px;
-  background:var(--surface);transition:box-shadow .2s;
-}
-.nav-user:hover{box-shadow:var(--shadow-m)}
-.nav-avatar{
-  width:30px;height:30px;border-radius:50%;
-  background:var(--ink);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:600;
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   BUTTONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 24px;border-radius:var(--r8);border:none;
-  font-family:var(--font-b);font-size:15px;font-weight:500;
-  cursor:pointer;transition:all .2s;white-space:nowrap;
-}
-.btn-rose{background:var(--rose);color:#fff}
-.btn-rose:hover{background:var(--rose-dk);transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,83,63,.3)}
-.btn-outline{background:none;border:1.5px solid var(--ink);color:var(--ink)}
-.btn-outline:hover{background:var(--ink);color:#fff}
-.btn-ghost{background:none;border:1.5px solid var(--border);color:var(--ink)}
-.btn-ghost:hover{border-color:var(--ink)}
-.btn-teal{background:var(--teal);color:#fff}
-.btn-teal:hover{background:#086055;transform:translateY(-1px)}
-.btn-sm{padding:9px 18px;font-size:13px}
-.btn-xs{padding:6px 14px;font-size:12px}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HOME — HERO SEARCH
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.hero{
-  padding:48px 24px 0;
-  max-width:1200px;margin:0 auto;
-}
-.hero-tagline{
-  font-family:var(--font-d);
-  font-size:clamp(2rem,4vw,3.2rem);
-  font-weight:700;line-height:1.18;
-  margin-bottom:8px;
-}
-.hero-tagline em{font-style:italic;color:var(--rose)}
-.hero-sub{color:var(--ink-3);font-size:16px;margin-bottom:32px}
-
-/* Search widget */
-.search-widget{
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  border-radius:var(--r16);
-  box-shadow:var(--shadow-l);
-  display:flex;align-items:stretch;
-  margin-bottom:0;overflow:hidden;
-}
-.sw-field{
-  flex:1;padding:18px 20px;border-right:1px solid var(--border);
-  display:flex;flex-direction:column;gap:2px;min-width:0;cursor:pointer;
   transition:background .15s;
 }
-.sw-field:last-of-type{border-right:none}
-.sw-field:hover{background:var(--surface-2)}
-.sw-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
-.sw-input{
+.nav-pill-btn:hover{background:var(--accent2)}
+.nav-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.nav-btn{
+  background:none;border:none;padding:8px 14px;
+  border-radius:40px;font-size:14px;color:var(--text2);
+  cursor:pointer;transition:background .15s;white-space:nowrap;
+}
+.nav-btn:hover{background:var(--surface2)}
+.nav-user-btn{
+  display:flex;align-items:center;gap:9px;
+  border:1.5px solid var(--border2);border-radius:40px;
+  padding:5px 5px 5px 14px;background:var(--surface);
+  cursor:pointer;transition:box-shadow .2s;
+}
+.nav-user-btn:hover{box-shadow:0 2px 12px rgba(0,0,0,.1)}
+.nav-av{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--text);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:600;flex-shrink:0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME HERO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero{
+  max-width:1160px;margin:0 auto;
+  padding:56px 28px 0;
+}
+.hero-title{
+  font-family:var(--font-d);
+  font-size:clamp(2.2rem,4.5vw,3.6rem);
+  font-weight:300;line-height:1.12;
+  letter-spacing:-.02em;
+  margin-bottom:10px;
+  max-width:700px;
+}
+.hero-title em{font-style:italic;font-weight:700;color:var(--accent)}
+.hero-sub{color:var(--text3);font-size:16px;margin-bottom:36px}
+
+/* search box */
+.search-box{
+  background:var(--surface);
+  border:1.5px solid var(--border2);
+  border-radius:20px;
+  box-shadow:0 4px 32px rgba(0,0,0,.08);
+  display:flex;align-items:stretch;
+  overflow:hidden;
+  max-width:860px;
+}
+.sb-field{
+  flex:1;padding:20px 22px;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:3px;
+  cursor:text;transition:background .15s;min-width:0;
+}
+.sb-field:last-of-type{border-right:none}
+.sb-field:hover{background:var(--surface2)}
+.sb-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
+.sb-input{
   border:none;outline:none;background:none;
-  font-family:var(--font-b);font-size:15px;color:var(--ink-2);
+  font-family:var(--font-b);font-size:15px;color:var(--text2);
   width:100%;
 }
-.sw-input::placeholder{color:var(--ink-4)}
-.sw-input[type=date]{color:var(--ink-2)}
-.sw-search-btn{
-  margin:8px;padding:0 28px;
-  background:var(--rose);color:#fff;border:none;
-  border-radius:var(--r12);font-family:var(--font-b);
-  font-size:15px;font-weight:600;cursor:pointer;
-  display:flex;align-items:center;gap:8px;
-  transition:background .2s;white-space:nowrap;
+.sb-input::placeholder{color:var(--text4)}
+.sb-input[type=date]{appearance:none;-webkit-appearance:none}
+.sb-go{
+  display:flex;align-items:center;justify-content:center;
+  padding:0 20px;background:none;border:none;cursor:pointer;
 }
-.sw-search-btn:hover{background:var(--rose-dk)}
+.sb-go-inner{
+  background:var(--accent);color:#fff;
+  border-radius:14px;padding:14px 22px;
+  font-family:var(--font-b);font-size:15px;font-weight:500;
+  display:flex;align-items:center;gap:8px;
+  transition:background .15s,transform .1s;
+  white-space:nowrap;
+}
+.sb-go:hover .sb-go-inner{background:var(--accent2);transform:translateY(-1px)}
 
-/* Category pills */
-.category-row{
-  display:flex;gap:8px;padding:24px 0 0;
+/* categories */
+.cats{
+  display:flex;gap:6px;padding:28px 0 0;
   overflow-x:auto;scrollbar-width:none;
 }
-.category-row::-webkit-scrollbar{display:none}
-.cat-pill{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  padding:12px 20px;border-radius:var(--r12);
+.cats::-webkit-scrollbar{display:none}
+.cat{
+  flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:12px 18px;border-radius:14px;
   border:1.5px solid var(--border);background:var(--surface);
-  cursor:pointer;transition:all .2s;white-space:nowrap;
-  font-size:13px;font-weight:500;color:var(--ink-2);
-  flex-shrink:0;
+  cursor:pointer;transition:all .18s;
+  font-size:12px;font-weight:500;color:var(--text2);
 }
-.cat-pill .icon{font-size:20px}
-.cat-pill:hover{border-color:var(--ink);color:var(--ink);background:var(--surface-2)}
-.cat-pill.active{border-color:var(--ink);background:var(--ink);color:#fff}
+.cat .icon{font-size:22px}
+.cat:hover{border-color:var(--text2);color:var(--text)}
+.cat.on{background:var(--text);color:#fff;border-color:var(--text)}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   LISTINGS GRID
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.listings-section{padding:32px 0 80px}
-.section-title{font-family:var(--font-d);font-size:1.5rem;font-weight:600;margin-bottom:4px}
-.section-sub{color:var(--ink-3);font-size:14px;margin-bottom:24px}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LISTINGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section{padding:36px 0 80px}
+.section-head{
+  display:flex;align-items:flex-end;
+  justify-content:space-between;margin-bottom:24px;
+}
+.section-title{font-family:var(--font-d);font-size:1.4rem;font-weight:500}
+.section-count{font-size:13px;color:var(--text3)}
 
-.listings-grid{
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:24px;
+  grid-template-columns:repeat(auto-fill,minmax(272px,1fr));
+  gap:28px;
 }
 
-/* Card */
-.card{cursor:pointer;border-radius:var(--r12);overflow:hidden;transition:transform .2s}
-.card:hover{transform:translateY(-3px)}
-.card-img{
-  aspect-ratio:4/3;background:var(--surface-3);
-  position:relative;overflow:hidden;border-radius:var(--r12);
+/* card */
+.lcard{cursor:pointer}
+.lcard-img{
+  border-radius:16px;overflow:hidden;
+  aspect-ratio:19/14;background:var(--surface2);
+  position:relative;transition:transform .25s;
 }
-.card-img .placeholder{
-  width:100%;height:100%;display:flex;align-items:center;
-  justify-content:center;font-size:64px;
-}
-.card-img.booked{filter:grayscale(.4)}
-.sold-out-banner{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,.45);
+.lcard:hover .lcard-img{transform:scale(1.015)}
+.lcard-img .ph{
+  width:100%;height:100%;
   display:flex;align-items:center;justify-content:center;
-  border-radius:var(--r12);
+  font-size:72px;
 }
-.sold-out-tag{
-  background:#fff;color:var(--ink);
-  font-size:13px;font-weight:600;
-  padding:8px 18px;border-radius:var(--r99);
-  letter-spacing:.02em;
+.lcard-img .booked-overlay{
+  position:absolute;inset:0;
+  background:rgba(28,27,24,.5);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:16px;
 }
-.wish-btn{
+.booked-tag{
+  background:rgba(255,255,255,.95);color:var(--text);
+  font-size:13px;font-weight:600;padding:8px 18px;
+  border-radius:40px;letter-spacing:.02em;
+}
+.wish{
   position:absolute;top:12px;right:12px;
   width:34px;height:34px;border-radius:50%;
-  background:rgba(255,255,255,.85);border:none;
-  font-size:16px;backdrop-filter:blur(4px);
+  background:rgba(255,255,255,.88);border:none;
+  font-size:16px;backdrop-filter:blur(8px);
   display:flex;align-items:center;justify-content:center;
-  transition:all .2s;color:var(--ink);
+  transition:all .18s;color:var(--text);z-index:2;
 }
-.wish-btn:hover{background:#fff;transform:scale(1.1)}
-.wish-btn.wishlisted{color:var(--rose)}
-.superhost-badge{
+.wish:hover{background:#fff;transform:scale(1.1)}
+.wish.on{color:var(--accent)}
+.sh-badge{
   position:absolute;top:12px;left:12px;
-  background:#fff;color:var(--ink);
-  font-size:11px;font-weight:600;
-  padding:4px 10px;border-radius:var(--r99);
+  background:rgba(255,255,255,.92);color:var(--gold);
+  font-size:11px;font-weight:600;padding:4px 10px;
+  border-radius:40px;letter-spacing:.02em;backdrop-filter:blur(6px);
   display:flex;align-items:center;gap:4px;
 }
-.card-body{padding:12px 2px 0}
-.card-location{font-size:13px;color:var(--ink-3);margin-bottom:2px}
-.card-title{font-weight:600;font-size:15px;margin-bottom:2px}
-.card-dates{font-size:13px;color:var(--ink-3)}
-.card-price{margin-top:6px;font-size:15px}
-.card-price strong{font-weight:600}
-.card-price span{color:var(--ink-3);font-size:13px}
-.card-rating{display:flex;align-items:center;gap:4px;font-size:13px;float:right;margin-top:6px}
+.lcard-body{padding:12px 2px 0}
+.lcard-loc{font-size:12px;color:var(--text3);margin-bottom:3px}
+.lcard-title{font-weight:500;font-size:15px;color:var(--text);margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lcard-price{margin-top:6px;font-size:14px;
+  display:flex;align-items:center;justify-content:space-between}
+.lcard-price strong{font-weight:600;font-size:15px}
+.lcard-price .per{color:var(--text3);font-size:13px}
+.lcard-rating{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text2)}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   LISTING DETAIL
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.detail-wrap{max-width:1100px;margin:0 auto;padding:24px 24px 80px}
-.back-link{
-  display:inline-flex;align-items:center;gap:6px;
-  background:none;border:none;color:var(--ink);font-size:14px;
-  padding:0;margin-bottom:20px;font-weight:500;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DETAIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.detail{max-width:1080px;margin:0 auto;padding:28px 28px 80px}
+.back{
+  display:inline-flex;align-items:center;gap:7px;
+  background:none;border:none;font-family:var(--font-b);
+  font-size:14px;color:var(--text2);cursor:pointer;
+  margin-bottom:22px;padding:0;
   text-decoration:underline;text-underline-offset:3px;
 }
-.back-link:hover{color:var(--rose)}
-.detail-title{font-family:var(--font-d);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;margin-bottom:8px}
-.detail-meta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--ink-2);margin-bottom:20px}
-.detail-meta-row .stars{display:flex;align-items:center;gap:4px;font-weight:600}
-
-/* Photo grid */
-.photo-grid{
+.back:hover{color:var(--accent)}
+.dtitle{
+  font-family:var(--font-d);
+  font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:500;margin-bottom:10px;
+}
+.dmeta{
+  display:flex;align-items:center;flex-wrap:wrap;gap:14px;
+  font-size:14px;color:var(--text2);margin-bottom:22px;
+}
+.dmeta .stars{font-weight:600;display:flex;align-items:center;gap:4px}
+.photos{
   display:grid;grid-template-columns:2fr 1fr;
-  grid-template-rows:280px 200px;gap:8px;
-  border-radius:var(--r16);overflow:hidden;margin-bottom:40px;
+  grid-template-rows:260px 190px;gap:8px;
+  border-radius:20px;overflow:hidden;margin-bottom:44px;
 }
-.photo-cell{background:var(--surface-3);overflow:hidden}
+.photo-cell{background:var(--surface2);overflow:hidden}
 .photo-cell:first-child{grid-row:1/3}
-.photo-cell .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:80px}
-
-.detail-grid{display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:start}
-.detail-left h3{font-family:var(--font-d);font-size:1.2rem;font-weight:600;margin-bottom:12px}
-.divider{border:none;border-top:1px solid var(--border);margin:28px 0}
-
-/* Amenities */
+.photo-cell .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:84px}
+.detail-grid{display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:start}
+.dl h3{font-family:var(--font-d);font-size:1.15rem;font-weight:500;margin-bottom:14px}
+.dl p{color:var(--text2);line-height:1.8}
+.hr{border:none;border-top:1px solid var(--border);margin:28px 0}
 .amenity-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.amenity{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2)}
-
-/* Host row */
-.host-row{display:flex;align-items:center;gap:16px;padding:20px;background:var(--surface-2);border-radius:var(--r12)}
-.host-av{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.3rem;font-weight:700;flex-shrink:0}
-
-/* Booking widget */
-.book-widget{
-  position:sticky;top:calc(var(--nav-h) + 24px);
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r16);padding:28px;box-shadow:var(--shadow-m);
+.amenity{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
+.host-row{
+  display:flex;align-items:center;gap:16px;
+  padding:20px;background:var(--surface2);border-radius:14px;
 }
-.widget-price{margin-bottom:20px}
-.widget-price .amount{font-family:var(--font-d);font-size:1.8rem;font-weight:700}
-.widget-price .per{font-size:14px;color:var(--ink-3)}
-.date-grid{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--border);border-radius:var(--r12);overflow:hidden;margin-bottom:8px}
-.date-cell{padding:12px 14px;border-right:1px solid var(--border)}
-.date-cell:last-child{border-right:none}
-.date-cell label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
-.date-cell input{border:none;outline:none;background:none;font-family:var(--font-b);font-size:14px;color:var(--ink-2);width:100%}
-.guest-row{
-  border:1.5px solid var(--border);border-radius:var(--r12);
+.hav{
+  width:50px;height:50px;border-radius:50%;
+  background:var(--text);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);font-size:1.2rem;flex-shrink:0;
+}
+
+/* booking widget */
+.bwidget{
+  position:sticky;top:calc(var(--nav) + 20px);
+  background:var(--surface);border:1.5px solid var(--border2);
+  border-radius:20px;padding:26px;
+  box-shadow:0 4px 24px rgba(0,0,0,.07);
+}
+.bw-price{margin-bottom:20px}
+.bw-price .amt{font-family:var(--font-d);font-size:1.8rem;font-weight:700}
+.bw-price .per{font-size:14px;color:var(--text3)}
+.dates-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1.5px solid var(--border2);border-radius:12px;
+  overflow:hidden;margin-bottom:8px;
+}
+.dc{padding:12px 14px;border-right:1px solid var(--border)}
+.dc:last-child{border-right:none}
+.dc label{display:block;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text);margin-bottom:4px}
+.dc input{border:none;outline:none;background:none;font-family:var(--font-b);font-size:14px;color:var(--text2);width:100%}
+.grow{
+  border:1.5px solid var(--border2);border-radius:12px;
   padding:12px 14px;margin-bottom:16px;
   display:flex;justify-content:space-between;align-items:center;
 }
-.guest-row label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
-.guest-ctrl{display:flex;align-items:center;gap:12px}
-.guest-ctrl button{
-  width:28px;height:28px;border-radius:50%;
-  border:1.5px solid var(--border);background:none;
-  font-size:16px;display:flex;align-items:center;justify-content:center;
-  transition:border-color .2s;
+.grow label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px}
+.gctrl{display:flex;align-items:center;gap:12px}
+.gctrl button{
+  width:26px;height:26px;border-radius:50%;
+  border:1.5px solid var(--border2);background:none;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s;cursor:pointer;
 }
-.guest-ctrl button:hover{border-color:var(--ink)}
-.reserve-btn{
-  width:100%;padding:16px;
-  background:var(--rose);color:#fff;border:none;
-  border-radius:var(--r12);font-family:var(--font-b);
-  font-size:16px;font-weight:600;cursor:pointer;
-  transition:background .2s;margin-bottom:10px;
+.gctrl button:hover{border-color:var(--text)}
+.rbtn{
+  width:100%;padding:15px;
+  background:var(--accent);color:#fff;border:none;
+  border-radius:12px;font-family:var(--font-b);
+  font-size:16px;font-weight:500;cursor:pointer;
+  transition:background .15s;margin-bottom:10px;
 }
-.reserve-btn:hover{background:var(--rose-dk)}
-.no-charge{text-align:center;font-size:13px;color:var(--ink-3);margin-bottom:16px}
-.price-breakdown{border-top:1px solid var(--border);padding-top:16px}
-.pb-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px}
-.pb-row.total{font-weight:600;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;font-size:15px}
+.rbtn:hover{background:var(--accent2)}
+.ncharge{text-align:center;font-size:13px;color:var(--text3);margin-bottom:16px}
+.pb{border-top:1px solid var(--border);padding-top:16px}
+.pb-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px;color:var(--text2)}
+.pb-row.tot{font-weight:600;color:var(--text);border-top:1px solid var(--border);padding-top:12px;margin-top:4px;font-size:15px}
 
-/* Unavailable widget */
-.unavail-widget{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r16);padding:28px;box-shadow:var(--shadow-m);
+/* waitlist widget */
+.wwidget{
+  position:sticky;top:calc(var(--nav) + 20px);
+  background:var(--surface);border:1.5px solid var(--border2);
+  border-radius:20px;padding:26px;
+  box-shadow:0 4px 24px rgba(0,0,0,.07);
 }
-.unavail-banner{
-  background:var(--surface-2);border-radius:var(--r12);
+.unavail-head{
+  background:var(--surface2);border-radius:14px;
   padding:20px;text-align:center;margin-bottom:20px;
 }
-.unavail-icon{font-size:32px;margin-bottom:8px}
-.unavail-title{font-family:var(--font-d);font-size:1.1rem;font-weight:600;margin-bottom:4px}
-.unavail-sub{font-size:13px;color:var(--ink-3)}
-.waitlist-form{display:flex;flex-direction:column;gap:10px}
-.waitlist-input{
-  border:1.5px solid var(--border);border-radius:var(--r8);
+.unavail-head .icon{font-size:30px;margin-bottom:8px}
+.unavail-head h4{font-family:var(--font-d);font-size:1.05rem;font-weight:500;margin-bottom:4px}
+.unavail-head p{font-size:13px;color:var(--text3)}
+.wl-form{display:flex;flex-direction:column;gap:8px}
+.wl-input{
+  border:1.5px solid var(--border2);border-radius:10px;
   padding:12px 14px;font-family:var(--font-b);font-size:14px;
-  outline:none;transition:border-color .2s;
+  outline:none;transition:border-color .15s;background:var(--surface);color:var(--text);
 }
-.waitlist-input:focus{border-color:var(--rose)}
-.waitlist-btn{
-  width:100%;padding:14px;background:var(--teal);color:#fff;
-  border:none;border-radius:var(--r8);font-family:var(--font-b);
-  font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;
+.wl-input:focus{border-color:var(--accent)}
+.wl-btn{
+  width:100%;padding:14px;
+  background:var(--teal);color:#fff;border:none;
+  border-radius:10px;font-family:var(--font-b);
+  font-size:15px;font-weight:500;cursor:pointer;
+  transition:background .15s;
 }
-.waitlist-btn:hover{background:#086055}
-.waitlist-success{
+.wl-btn:hover{background:#145849}
+.wl-success{
   background:var(--teal-lt);border:1.5px solid var(--teal);
-  border-radius:var(--r12);padding:20px;text-align:center;
+  border-radius:14px;padding:20px;text-align:center;
 }
-.waitlist-success h4{color:var(--teal);font-family:var(--font-d);font-size:1.1rem;margin-bottom:6px}
-.waitlist-success p{font-size:13px;color:var(--ink-2)}
-.alt-section{margin-top:24px}
-.alt-section h4{font-weight:600;font-size:14px;margin-bottom:12px}
-.alt-card{
+.wl-success h4{color:var(--teal);font-family:var(--font-d);font-size:1.05rem;margin-bottom:6px}
+.wl-success p{font-size:13px;color:var(--text2)}
+.alts{margin-top:24px}
+.alts h4{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text2)}
+.alt{
   display:flex;gap:12px;align-items:center;
-  padding:12px;border:1.5px solid var(--border);border-radius:var(--r12);
-  cursor:pointer;transition:all .2s;margin-bottom:8px;
+  padding:11px;border:1.5px solid var(--border);border-radius:12px;
+  cursor:pointer;transition:all .15s;margin-bottom:8px;
 }
-.alt-card:hover{border-color:var(--rose);box-shadow:var(--shadow-s)}
-.alt-thumb{width:52px;height:52px;border-radius:var(--r8);background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.alt:hover{border-color:var(--accent);background:var(--accent-lt)}
+.alt-thumb{
+  width:48px;height:48px;border-radius:8px;
+  background:var(--surface2);display:flex;align-items:center;
+  justify-content:center;font-size:24px;flex-shrink:0;
+}
 .alt-info{flex:1;min-width:0}
-.alt-name{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.alt-loc{font-size:12px;color:var(--ink-3)}
-.alt-price{font-size:13px;font-weight:600;white-space:nowrap}
+.alt-name{font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alt-loc{font-size:12px;color:var(--text3)}
+.alt-price{font-size:13px;font-weight:600;white-space:nowrap;color:var(--text)}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    CHECKOUT
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.checkout-wrap{max-width:960px;margin:0 auto;padding:40px 24px 80px}
-.checkout-grid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start}
-.checkout-step{margin-bottom:32px}
-.step-label{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.step-num{
-  width:28px;height:28px;border-radius:50%;
-  background:var(--ink);color:#fff;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.co-wrap{max-width:940px;margin:0 auto;padding:40px 28px 80px}
+.co-grid{display:grid;grid-template-columns:1fr 360px;gap:52px;align-items:start}
+.co-title{font-family:var(--font-d);font-size:1.7rem;font-weight:500;margin-bottom:32px}
+.step{margin-bottom:30px}
+.step-h{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.step-n{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--text);color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-size:13px;font-weight:600;flex-shrink:0;
 }
-.step-title{font-family:var(--font-d);font-size:1.15rem;font-weight:600}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-field{display:flex;flex-direction:column;gap:6px}
-.form-field.full{grid-column:1/-1}
-.form-field label{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2)}
-.form-field input,.form-field select{
-  border:1.5px solid var(--border);border-radius:var(--r8);
+.step-t{font-family:var(--font-d);font-size:1.1rem;font-weight:500}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ff{display:flex;flex-direction:column;gap:6px}
+.ff.full{grid-column:1/-1}
+.ff label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text2)}
+.ff input,.ff select{
+  border:1.5px solid var(--border2);border-radius:10px;
   padding:12px 14px;font-family:var(--font-b);font-size:15px;
-  outline:none;transition:border-color .2s;background:var(--surface);color:var(--ink);
+  color:var(--text);outline:none;transition:border-color .15s;
+  background:var(--surface);
 }
-.form-field input:focus,.form-field select:focus{border-color:var(--rose)}
-.checkout-summary{
-  position:sticky;top:calc(var(--nav-h)+24px);
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r16);padding:24px;box-shadow:var(--shadow-m);
+.ff input:focus,.ff select:focus{border-color:var(--accent)}
+.co-summary{
+  position:sticky;top:calc(var(--nav)+24px);
+  background:var(--surface);border:1.5px solid var(--border2);
+  border-radius:20px;padding:24px;
+  box-shadow:0 4px 24px rgba(0,0,0,.07);
 }
-.co-listing-thumb{
-  width:100%;aspect-ratio:3/2;border-radius:var(--r12);
-  background:var(--surface-3);display:flex;align-items:center;justify-content:center;
-  font-size:56px;margin-bottom:16px;overflow:hidden;
+.co-thumb{
+  width:100%;aspect-ratio:4/3;border-radius:14px;
+  background:var(--surface2);display:flex;align-items:center;
+  justify-content:center;font-size:56px;margin-bottom:16px;
 }
+.co-listing-name{font-family:var(--font-d);font-size:1rem;font-weight:500;margin-top:4px;margin-bottom:14px}
+.co-listing-type{font-size:13px;color:var(--text3)}
 .confirm-btn{
-  width:100%;padding:16px;background:var(--rose);color:#fff;
-  border:none;border-radius:var(--r12);font-family:var(--font-b);
-  font-size:16px;font-weight:600;cursor:pointer;
-  margin-top:20px;transition:background .2s;
+  width:100%;padding:15px;background:var(--accent);color:#fff;
+  border:none;border-radius:12px;font-family:var(--font-b);
+  font-size:15px;font-weight:500;cursor:pointer;
+  margin-top:18px;transition:background .15s;
 }
-.confirm-btn:hover{background:var(--rose-dk)}
-.confirm-btn:disabled{background:var(--ink-4);cursor:not-allowed}
+.confirm-btn:hover{background:var(--accent2)}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    CONFIRMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.confirm-wrap{max-width:600px;margin:0 auto;padding:80px 24px;text-align:center}
-.confirm-icon{font-size:64px;margin-bottom:24px}
-.confirm-wrap h2{font-family:var(--font-d);font-size:2rem;margin-bottom:12px}
-.confirm-wrap p{color:var(--ink-2);font-size:16px;line-height:1.7;margin-bottom:8px}
-.booking-ref{
-  background:var(--surface-2);border-radius:var(--r12);
-  padding:20px;margin:24px 0;font-size:14px;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.conf-wrap{max-width:560px;margin:0 auto;padding:80px 28px;text-align:center}
+.conf-icon{font-size:64px;margin-bottom:24px}
+.conf-wrap h2{font-family:var(--font-d);font-size:2rem;font-weight:500;margin-bottom:12px}
+.conf-wrap p{color:var(--text2);font-size:16px;line-height:1.7;margin-bottom:8px}
+.conf-ref{
+  background:var(--surface2);border-radius:14px;
+  padding:18px;margin:24px 0;font-size:14px;
 }
-.booking-ref strong{display:block;font-size:1.1rem;font-family:var(--font-d);margin-bottom:4px}
+.conf-ref strong{display:block;font-family:var(--font-d);font-size:1.1rem;margin-bottom:4px}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DASHBOARD (GUEST)
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.dash-wrap{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
-.dash-grid{display:grid;grid-template-columns:220px 1fr;gap:40px}
-.dash-nav{list-style:none}
-.dash-nav li{margin-bottom:2px}
-.dash-nav button{
-  display:flex;align-items:center;gap:10px;width:100%;
-  padding:10px 14px;border-radius:var(--r8);border:none;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   GUEST DASHBOARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.dash{max-width:1060px;margin:0 auto;padding:40px 28px 80px}
+.dash-head{margin-bottom:34px}
+.dash-head h2{font-family:var(--font-d);font-size:1.7rem;font-weight:500}
+.dash-head p{color:var(--text3);margin-top:4px}
+.dash-layout{display:grid;grid-template-columns:200px 1fr;gap:40px}
+.sidenav{list-style:none}
+.sidenav li{margin-bottom:2px}
+.sidenav button{
+  width:100%;display:flex;align-items:center;gap:9px;
+  padding:10px 12px;border-radius:10px;border:none;
   background:none;font-family:var(--font-b);font-size:14px;
-  color:var(--ink-2);cursor:pointer;transition:all .15s;text-align:left;
+  color:var(--text2);cursor:pointer;transition:all .15s;text-align:left;
 }
-.dash-nav button:hover{background:var(--surface-2);color:var(--ink)}
-.dash-nav button.active{background:var(--surface-2);color:var(--ink);font-weight:600}
-.dash-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
-.stat-box{background:var(--surface-2);border-radius:var(--r12);padding:20px}
-.stat-box .num{font-family:var(--font-d);font-size:1.8rem;font-weight:700}
-.stat-box .lbl{font-size:13px;color:var(--ink-3);margin-top:2px}
-.trip-card{
+.sidenav button:hover{background:var(--surface2);color:var(--text)}
+.sidenav button.on{background:var(--surface2);color:var(--text);font-weight:500}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.sbox{background:var(--surface2);border-radius:14px;padding:18px}
+.sbox .num{font-family:var(--font-d);font-size:1.7rem;font-weight:700}
+.sbox .lbl{font-size:12px;color:var(--text3);margin-top:3px}
+.trip-item{
   display:flex;gap:16px;align-items:center;
-  border:1.5px solid var(--border);border-radius:var(--r12);
-  padding:18px;margin-bottom:12px;
+  border:1.5px solid var(--border);border-radius:14px;
+  padding:16px;margin-bottom:10px;
 }
-.trip-thumb{width:72px;height:72px;border-radius:var(--r8);background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
-.trip-info{flex:1}
-.trip-name{font-weight:600;font-size:15px}
-.trip-dates{font-size:13px;color:var(--ink-3)}
-.trip-status{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:var(--r99);margin-top:6px}
-.status-upcoming{background:var(--amber-lt);color:var(--amber)}
-.status-completed{background:var(--surface-2);color:var(--ink-3)}
-.trip-actions{display:flex;gap:8px;align-items:center}
-
-/* Wishlist */
-.wishlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.wl-card{border:1.5px solid var(--border);border-radius:var(--r12);overflow:hidden;cursor:pointer;transition:all .2s}
-.wl-card:hover{box-shadow:var(--shadow-m);border-color:var(--ink-4)}
-.wl-thumb{aspect-ratio:4/3;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:48px}
+.trip-thumb{
+  width:68px;height:68px;border-radius:10px;
+  background:var(--surface2);display:flex;align-items:center;
+  justify-content:center;font-size:32px;flex-shrink:0;
+}
+.trip-info{flex:1;min-width:0}
+.trip-name{font-weight:500;font-size:15px}
+.trip-loc{font-size:13px;color:var(--text3)}
+.trip-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:600;padding:3px 10px;
+  border-radius:40px;margin-top:6px;
+}
+.tag-up{background:var(--gold-lt);color:var(--gold)}
+.tag-done{background:var(--surface2);color:var(--text3)}
+.wl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.wl-card{
+  border:1.5px solid var(--border);border-radius:14px;
+  overflow:hidden;cursor:pointer;transition:all .18s;
+}
+.wl-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:var(--border2)}
+.wl-img{aspect-ratio:4/3;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:44px}
 .wl-body{padding:12px}
-.wl-name{font-weight:600;font-size:14px}
-.wl-loc{font-size:12px;color:var(--ink-3)}
-.wl-price{font-size:13px;margin-top:4px}
+.wl-name{font-weight:500;font-size:14px}
+.wl-loc{font-size:12px;color:var(--text3)}
+.wl-p{font-size:13px;margin-top:4px;font-weight:500}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    HOST DASHBOARD
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.host-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
-.host-listing-card{
-  border:1.5px solid var(--border);border-radius:var(--r12);
-  overflow:hidden;margin-bottom:16px;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.host-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.hlcard{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.hlcard-top{display:flex;gap:14px;align-items:center;padding:16px}
+.hl-thumb{width:58px;height:58px;border-radius:10px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.hl-info{flex:1}
+.hl-name{font-weight:500;font-size:15px}
+.hl-loc{font-size:13px;color:var(--text3)}
+.hlcard-stats{
+  display:flex;gap:20px;padding:14px 16px;
+  background:var(--surface2);border-top:1px solid var(--border);
 }
-.hlc-header{
-  display:flex;gap:16px;align-items:center;padding:16px;
+.hs{font-size:13px;color:var(--text2)}
+.hs strong{display:block;font-weight:600;color:var(--text);font-size:15px}
+.obar{height:4px;background:var(--surface3);border-radius:2px;margin-top:5px;overflow:hidden}
+.ofill{height:100%;background:var(--teal);border-radius:2px}
+.req{
+  display:flex;gap:14px;align-items:center;
+  border:1.5px solid var(--border);border-radius:14px;
+  padding:16px;margin-bottom:10px;
 }
-.hlc-thumb{width:64px;height:64px;border-radius:var(--r8);background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
-.hlc-info{flex:1}
-.hlc-name{font-weight:600;font-size:15px}
-.hlc-loc{font-size:13px;color:var(--ink-3)}
-.hlc-stats{display:flex;gap:20px;padding:14px 16px;background:var(--surface-2);border-top:1px solid var(--border)}
-.hlc-stat{font-size:13px;color:var(--ink-2)}
-.hlc-stat strong{display:block;font-weight:600;color:var(--ink);font-size:15px}
-.occ-bar{height:4px;background:var(--surface-3);border-radius:2px;margin-top:6px;overflow:hidden}
-.occ-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .6s}
-
-/* Booking requests */
-.req-card{
-  border:1.5px solid var(--border);border-radius:var(--r12);
-  padding:18px;margin-bottom:12px;
-  display:flex;gap:16px;align-items:center;
-}
+.req-av{width:38px;height:38px;border-radius:50%;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .req-info{flex:1}
-.req-guest{font-weight:600;font-size:14px}
-.req-dates{font-size:13px;color:var(--ink-3)}
+.req-guest{font-weight:500;font-size:14px}
+.req-dates{font-size:13px;color:var(--text3)}
+.req-status{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
 .req-actions{display:flex;gap:8px}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    AUTH MODAL
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.5);
-  z-index:500;display:flex;align-items:center;justify-content:center;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.overlay{
+  position:fixed;inset:0;background:rgba(28,27,24,.55);
+  z-index:400;display:flex;align-items:center;justify-content:center;
   padding:24px;opacity:0;pointer-events:none;transition:opacity .25s;
 }
-.modal-overlay.open{opacity:1;pointer-events:auto}
+.overlay.open{opacity:1;pointer-events:auto}
 .modal{
-  background:var(--surface);border-radius:var(--r16);
-  padding:32px;max-width:460px;width:100%;
-  box-shadow:var(--shadow-l);
-  transform:translateY(16px);transition:transform .25s;
+  background:var(--surface);border-radius:20px;
+  padding:32px;max-width:440px;width:100%;
+  box-shadow:0 24px 80px rgba(0,0,0,.18);
+  transform:translateY(12px);transition:transform .25s;
 }
-.modal-overlay.open .modal{transform:translateY(0)}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.modal-title{font-family:var(--font-d);font-size:1.3rem;font-weight:700}
-.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-3);padding:4px;line-height:1}
-.modal-close:hover{color:var(--ink)}
-.modal-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid var(--border)}
-.modal-tab{
+.overlay.open .modal{transform:translateY(0)}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.mtitle{font-family:var(--font-d);font-size:1.25rem;font-weight:500}
+.mclose{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text3);line-height:1;padding:4px}
+.mclose:hover{color:var(--text)}
+.mtabs{display:flex;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.mtab{
   flex:1;padding:10px;background:none;border:none;
   font-family:var(--font-b);font-size:15px;font-weight:500;
-  color:var(--ink-3);cursor:pointer;
+  color:var(--text3);cursor:pointer;
   border-bottom:2px solid transparent;margin-bottom:-1px;
-  transition:all .2s;
+  transition:all .15s;
 }
-.modal-tab.active{color:var(--ink);border-color:var(--ink)}
-.modal-form{display:flex;flex-direction:column;gap:12px}
-.modal-field label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);margin-bottom:6px}
-.modal-field input{
-  width:100%;border:1.5px solid var(--border);border-radius:var(--r8);
+.mtab.on{color:var(--text);border-color:var(--text)}
+.mform{display:flex;flex-direction:column;gap:12px}
+.mf{display:flex;flex-direction:column;gap:6px}
+.mf label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text2)}
+.mf input{
+  border:1.5px solid var(--border2);border-radius:10px;
   padding:12px 14px;font-family:var(--font-b);font-size:15px;
-  outline:none;transition:border-color .2s;
+  outline:none;transition:border-color .15s;color:var(--text);
 }
-.modal-field input:focus{border-color:var(--rose)}
-.modal-submit{
-  width:100%;padding:14px;background:var(--rose);color:#fff;
-  border:none;border-radius:var(--r8);font-family:var(--font-b);
-  font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;
-  transition:background .2s;
+.mf input:focus{border-color:var(--accent)}
+.mf input.err{border-color:#e05252}
+.merr{font-size:12px;color:#e05252;margin-top:-8px}
+.msub{
+  width:100%;padding:14px;background:var(--accent);color:#fff;
+  border:none;border-radius:10px;font-family:var(--font-b);
+  font-size:15px;font-weight:500;cursor:pointer;margin-top:4px;
+  transition:background .15s;
 }
-.modal-submit:hover{background:var(--rose-dk)}
-.modal-divider{text-align:center;font-size:13px;color:var(--ink-3);position:relative;margin:4px 0}
-.modal-hint{font-size:13px;color:var(--ink-3);text-align:center;margin-top:8px}
-.modal-hint a{color:var(--rose);cursor:pointer;text-decoration:underline}
+.msub:hover{background:var(--accent2)}
+.mhint{font-size:13px;color:var(--text3);text-align:center;margin-top:10px}
+.mhint a{color:var(--accent);cursor:pointer;text-decoration:underline}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    TOAST
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 #toast{
-  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--ink);color:#fff;padding:12px 24px;border-radius:var(--r99);
-  font-size:14px;font-weight:500;box-shadow:var(--shadow-l);
-  opacity:0;transition:all .3s;pointer-events:none;z-index:9999;white-space:nowrap;
+  position:fixed;bottom:32px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--text);color:#fff;
+  padding:11px 22px;border-radius:40px;
+  font-size:14px;font-weight:500;
+  box-shadow:0 8px 32px rgba(0,0,0,.18);
+  opacity:0;transition:all .28s;pointer-events:none;z-index:9999;
+  white-space:nowrap;
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RESPONSIVE
-━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-@media(max-width:900px){
-  .detail-grid,.checkout-grid,.dash-grid{grid-template-columns:1fr}
-  .photo-grid{grid-template-columns:1fr;grid-template-rows:300px}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BUTTONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 22px;border-radius:10px;border:none;font-family:var(--font-b);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-accent{background:var(--accent);color:#fff}.btn-accent:hover{background:var(--accent2)}
+.btn-outline{background:none;border:1.5px solid var(--border2);color:var(--text)}.btn-outline:hover{border-color:var(--text)}
+.btn-ghost{background:none;border:1.5px solid var(--border);color:var(--text2)}.btn-ghost:hover{border-color:var(--text2);color:var(--text)}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:#145849}
+.btn-sm{padding:8px 16px;font-size:13px;border-radius:8px}
+.btn-xs{padding:6px 12px;font-size:12px;border-radius:7px}
+
+/* responsive */
+@media(max-width:880px){
+  .detail-grid,.co-grid,.dash-layout{grid-template-columns:1fr}
+  .photos{grid-template-columns:1fr;grid-template-rows:300px}
   .photo-cell:not(:first-child){display:none}
   .photo-cell:first-child{grid-row:auto}
-  .checkout-summary,.book-widget,.unavail-widget{position:static}
-  .host-stat-row{grid-template-columns:1fr 1fr}
+  .bwidget,.wwidget,.co-summary{position:static}
+  .host-stats{grid-template-columns:1fr 1fr}
 }
-@media(max-width:600px){
-  .search-widget{flex-direction:column;border-radius:var(--r12)}
-  .sw-field{border-right:none;border-bottom:1px solid var(--border)}
-  .sw-field:last-of-type{border-bottom:none}
-  .hero-tagline{font-size:1.8rem}
-  .form-grid{grid-template-columns:1fr}
-  .nav-search{display:none}
+@media(max-width:560px){
+  .search-box{flex-direction:column;border-radius:16px}
+  .sb-field{border-right:none;border-bottom:1px solid var(--border)}
+  .sb-field:last-of-type{border-bottom:none}
+  .nav-pill{display:none}
+  .fg{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════ NAV ════════════ -->
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <div class="logo" onclick="navigate('home')">
-      <div class="logo-icon">⌂</div>
-      StayNest
+    <div class="logo" onclick="nav('home')">
+      <div class="logo-dot"></div>StayNest
     </div>
-    <div class="nav-search" onclick="navigate('home')">
-      <span class="nav-search-text" id="nav-search-text">Anywhere · Any week · Add guests</span>
-      <button class="nav-search-btn">🔍</button>
+    <div class="nav-pill" onclick="nav('home')">
+      <span class="nav-pill-text" id="nptext">Anywhere · Any week · Add guests</span>
+      <button class="nav-pill-btn">⌕</button>
     </div>
     <div class="nav-right">
-      <button class="nav-link" onclick="navigate('host-dashboard')" id="host-nav-btn" style="display:none">Switch to hosting</button>
-      <button class="nav-link" onclick="navigate('host-dashboard')" id="become-host-btn">Become a host</button>
-      <div id="nav-auth">
-        <button class="nav-link" style="border:1.5px solid var(--border);border-radius:var(--r99);padding:8px 16px;display:flex;align-items:center;gap:8px" onclick="openModal('login')">
-          <span>☰</span>
-          <div class="nav-avatar">?</div>
-        </button>
+      <button class="nav-btn" id="host-btn" onclick="requireAuth(() => nav('host-dashboard'))">Host your home</button>
+      <div id="nav-anon">
+        <div class="nav-user-btn" onclick="openAuth('login')">
+          <span style="font-size:13px;color:var(--text2)">☰</span>
+          <div class="nav-av">?</div>
+        </div>
       </div>
-      <div id="nav-user" style="display:none">
-        <div class="nav-user" onclick="navigate('guest-dashboard')" style="cursor:pointer">
-          <span style="font-size:14px" id="nav-user-name">Hi</span>
-          <div class="nav-avatar" id="nav-avatar">U</div>
+      <div id="nav-authed" style="display:none">
+        <div class="nav-user-btn" onclick="nav('guest-dashboard')">
+          <span style="font-size:14px;color:var(--text2)" id="nav-name">Hi</span>
+          <div class="nav-av" id="nav-av-letter">U</div>
         </div>
       </div>
     </div>
   </div>
 </nav>
 
-<!-- ════════════ HOME ════════════ -->
+<!-- HOME -->
 <div class="page active" id="page-home">
   <div class="hero wrap">
-    <h1 class="hero-tagline">Find your next<br/><em>unforgettable</em> stay</h1>
-    <p class="hero-sub">Discover unique homes hosted by locals around the world</p>
-    <div class="search-widget">
-      <div class="sw-field">
-        <span class="sw-label">Where</span>
-        <input class="sw-input" id="sw-where" type="text" placeholder="Search destinations" oninput="onSearchInput(this.value)"/>
+    <h1 class="hero-title">Find your next<br/><em>unforgettable</em> stay</h1>
+    <p class="hero-sub">Unique homes hosted by locals, all over the world</p>
+    <div class="search-box">
+      <div class="sb-field">
+        <span class="sb-label">Where</span>
+        <input class="sb-input" id="sw-where" type="text" placeholder="Search destinations" oninput="onSearchType(this.value)"/>
       </div>
-      <div class="sw-field">
-        <span class="sw-label">Check in</span>
-        <input class="sw-input" id="sw-checkin" type="date"/>
+      <div class="sb-field" style="max-width:200px">
+        <span class="sb-label">Check in</span>
+        <input class="sb-input" id="sw-in" type="date"/>
       </div>
-      <div class="sw-field">
-        <span class="sw-label">Check out</span>
-        <input class="sw-input" id="sw-checkout" type="date"/>
+      <div class="sb-field" style="max-width:200px">
+        <span class="sb-label">Check out</span>
+        <input class="sb-input" id="sw-out" type="date"/>
       </div>
-      <div class="sw-field" style="max-width:140px">
-        <span class="sw-label">Guests</span>
-        <input class="sw-input" id="sw-guests" type="number" placeholder="Add guests" min="1" max="16"/>
+      <div class="sb-field" style="max-width:160px">
+        <span class="sb-label">Guests</span>
+        <input class="sb-input" id="sw-guests" type="number" min="1" max="16" placeholder="Add guests"/>
       </div>
-      <button class="sw-search-btn" onclick="doSearch()">🔍 Search</button>
+      <button class="sb-go" onclick="submitSearch()">
+        <div class="sb-go-inner">Search →</div>
+      </button>
     </div>
+    <div class="cats" id="home-cats"></div>
   </div>
-
   <div class="wrap">
-    <div class="category-row" id="cat-row"></div>
-    <div class="listings-section">
-      <div class="section-title">Popular destinations</div>
-      <div class="section-sub" id="home-sub">Showing top picks for you</div>
-      <div class="listings-grid" id="home-grid"></div>
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title" id="home-title">Popular stays</div>
+        <div class="section-count" id="home-count"></div>
+      </div>
+      <div class="grid" id="home-grid"></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ SEARCH RESULTS ════════════ -->
+<!-- RESULTS -->
 <div class="page" id="page-results">
   <div class="wrap" style="padding-top:32px;padding-bottom:80px">
-    <div style="margin-bottom:24px">
-      <h2 class="section-title" id="results-title">Stays for you</h2>
-      <p class="section-sub" id="results-sub">Loading...</p>
+    <div class="section-head" style="margin-bottom:12px">
+      <div>
+        <div class="section-title" id="res-title">Stays</div>
+        <div class="section-count" id="res-sub"></div>
+      </div>
     </div>
-    <div class="category-row" id="results-cat-row" style="margin-bottom:24px"></div>
-    <div class="listings-grid" id="results-grid"></div>
+    <div class="cats" id="res-cats" style="margin-bottom:28px"></div>
+    <div class="grid" id="res-grid"></div>
   </div>
 </div>
 
-<!-- ════════════ LISTING DETAIL ════════════ -->
+<!-- DETAIL -->
 <div class="page" id="page-detail">
-  <div class="detail-wrap">
-    <button class="back-link" onclick="goBack()">← Back</button>
-    <h1 class="detail-title" id="d-title"></h1>
-    <div class="detail-meta-row">
+  <div class="detail">
+    <button class="back" onclick="goBack()">← Back</button>
+    <h1 class="dtitle" id="d-title"></h1>
+    <div class="dmeta">
       <span class="stars" id="d-stars"></span>
-      <span id="d-reviews"></span>
-      <span style="color:var(--ink-4)">·</span>
-      <span id="d-superhost-meta"></span>
-      <span style="color:var(--ink-4)">·</span>
-      <span id="d-location-meta"></span>
+      <span id="d-revs"></span>
+      <span style="color:var(--text4)">·</span>
+      <span id="d-sh"></span>
+      <span style="color:var(--text4)">·</span>
+      <span id="d-loc-meta"></span>
     </div>
-    <div class="photo-grid">
-      <div class="photo-cell"><div class="placeholder" id="d-emoji1"></div></div>
-      <div class="photo-cell"><div class="placeholder" id="d-emoji2" style="font-size:40px"></div></div>
-      <div class="photo-cell"><div class="placeholder" id="d-emoji3" style="font-size:40px"></div></div>
+    <div class="photos">
+      <div class="photo-cell"><div class="ph" id="d-ph1"></div></div>
+      <div class="photo-cell"><div class="ph" id="d-ph2" style="font-size:44px"></div></div>
+      <div class="photo-cell"><div class="ph" id="d-ph3" style="font-size:44px"></div></div>
     </div>
-
     <div class="detail-grid">
-      <div class="detail-left">
-        <h3 id="d-host-headline"></h3>
-        <p style="font-size:14px;color:var(--ink-3);margin-bottom:20px" id="d-specs"></p>
-        <p style="color:var(--ink-2);line-height:1.8" id="d-desc"></p>
-        <hr class="divider"/>
+      <div class="dl">
+        <h3 id="d-hline"></h3>
+        <p style="font-size:13px;color:var(--text3);margin-bottom:18px" id="d-specs"></p>
+        <p id="d-desc"></p>
+        <div class="hr"></div>
         <h3>What this place offers</h3>
-        <div class="amenity-grid mt-16" id="d-amenities"></div>
-        <hr class="divider"/>
+        <div class="amenity-grid mt-16" id="d-amen"></div>
+        <div class="hr"></div>
         <div class="host-row">
-          <div class="host-av" id="d-host-av"></div>
+          <div class="hav" id="d-hav"></div>
           <div>
-            <div style="font-weight:600" id="d-host-name"></div>
-            <div style="font-size:13px;color:var(--ink-3)" id="d-host-since"></div>
-            <div style="font-size:13px;margin-top:4px" id="d-host-stat"></div>
+            <div style="font-weight:500" id="d-hname"></div>
+            <div style="font-size:13px;color:var(--text3)" id="d-hsince"></div>
+            <div style="font-size:13px;margin-top:3px" id="d-hstat"></div>
           </div>
-          <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="cdpTrack('Host Profile Viewed',{host_id:state.currentListing?.hostId})">Contact host</button>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="cdpTrack('Host Profile Viewed',{host_id:S.listing?.hostId})">Message host</button>
         </div>
       </div>
-
-      <!-- BOOKING WIDGET (available) -->
-      <div id="widget-available">
-        <div class="book-widget">
-          <div class="widget-price">
-            <span class="amount" id="w-price"></span>
-            <span class="per"> / night</span>
+      <div>
+        <!-- available widget -->
+        <div id="w-avail">
+          <div class="bwidget">
+            <div class="bw-price"><span class="amt" id="w-price"></span><span class="per"> / night</span></div>
+            <div class="dates-row">
+              <div class="dc"><label>Check-in</label><input type="date" id="w-in" onchange="calcPrice()"/></div>
+              <div class="dc"><label>Check-out</label><input type="date" id="w-out" onchange="calcPrice()"/></div>
+            </div>
+            <div class="grow">
+              <div><label>Guests</label><div id="w-gtext">1 guest</div></div>
+              <div class="gctrl">
+                <button onclick="adjGuests(-1)">−</button>
+                <span id="w-gnum">1</span>
+                <button onclick="adjGuests(1)">+</button>
+              </div>
+            </div>
+            <button class="rbtn" onclick="onReserve()">Reserve</button>
+            <div class="ncharge">You won't be charged yet</div>
+            <div class="pb" id="price-breakdown"></div>
           </div>
-          <div class="date-grid">
-            <div class="date-cell">
-              <label>Check-in</label>
-              <input type="date" id="w-checkin" onchange="recalcPrice()"/>
-            </div>
-            <div class="date-cell">
-              <label>Check-out</label>
-              <input type="date" id="w-checkout" onchange="recalcPrice()"/>
-            </div>
-          </div>
-          <div class="guest-row">
-            <div>
-              <label>Guests</label>
-              <div id="w-guest-display">1 guest</div>
-            </div>
-            <div class="guest-ctrl">
-              <button onclick="changeGuests(-1)">−</button>
-              <span id="w-guest-count">1</span>
-              <button onclick="changeGuests(1)">+</button>
-            </div>
-          </div>
-          <button class="reserve-btn" onclick="startReserve()">Reserve</button>
-          <div class="no-charge">You won't be charged yet</div>
-          <div class="price-breakdown" id="price-breakdown"></div>
         </div>
-      </div>
-
-      <!-- WAITLIST WIDGET (unavailable) -->
-      <div id="widget-unavailable" style="display:none">
-        <div class="unavail-widget">
-          <div class="unavail-banner">
-            <div class="unavail-icon">🔒</div>
-            <div class="unavail-title">This listing is fully booked</div>
-            <div class="unavail-sub">Join the waitlist — we'll notify you if dates open up</div>
-          </div>
-          <div id="waitlist-form-area">
-            <div class="waitlist-form">
-              <input class="waitlist-input" type="email" id="wl-email" placeholder="Your email address"/>
-              <input class="waitlist-input" type="date" id="wl-checkin" placeholder="Preferred check-in"/>
-              <input class="waitlist-input" type="date" id="wl-checkout" placeholder="Preferred check-out"/>
-              <button class="waitlist-btn" onclick="joinWaitlist()">Notify me when available</button>
+        <!-- waitlist widget -->
+        <div id="w-unavail" style="display:none">
+          <div class="wwidget">
+            <div class="unavail-head">
+              <div class="icon">🔒</div>
+              <h4>Fully booked</h4>
+              <p>Join the waitlist — we'll notify you when dates open up</p>
             </div>
-          </div>
-          <div class="alt-section">
-            <h4>✨ Similar places you might love</h4>
-            <div id="alt-listings"></div>
+            <div id="wl-area">
+              <div class="wl-form">
+                <input class="wl-input" type="email" id="wl-email" placeholder="Your email address"/>
+                <input class="wl-input" type="date" id="wl-in" placeholder="Preferred check-in"/>
+                <input class="wl-input" type="date" id="wl-out" placeholder="Preferred check-out"/>
+                <button class="wl-btn" onclick="joinWaitlist()">Notify me when available</button>
+              </div>
+            </div>
+            <div class="alts">
+              <h4>Similar places you might love</h4>
+              <div id="alt-list"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -799,158 +816,130 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- ════════════ CHECKOUT ════════════ -->
+<!-- CHECKOUT -->
 <div class="page" id="page-checkout">
-  <div class="checkout-wrap">
-    <button class="back-link" onclick="navigate('detail')">← Back to listing</button>
-    <h2 style="font-family:var(--font-d);font-size:1.8rem;margin-bottom:32px">Confirm and pay</h2>
-    <div class="checkout-grid">
+  <div class="co-wrap">
+    <button class="back" onclick="nav('detail')">← Back to listing</button>
+    <h2 class="co-title">Confirm and pay</h2>
+    <div class="co-grid">
       <div>
-        <!-- Step 1: Trip details -->
-        <div class="checkout-step">
-          <div class="step-label"><div class="step-num">1</div><h3 class="step-title">Your trip</h3></div>
-          <div style="background:var(--surface-2);border-radius:var(--r12);padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:4px">Dates</div><div id="co-dates" style="font-size:15px"></div></div>
-            <div><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:4px">Guests</div><div id="co-guests-display" style="font-size:15px">1 guest</div></div>
+        <div class="step">
+          <div class="step-h"><div class="step-n">1</div><div class="step-t">Your trip</div></div>
+          <div style="background:var(--surface2);border-radius:14px;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:4px">Dates</div><div id="co-dates"></div></div>
+            <div><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:4px">Guests</div><div id="co-gtext">1 guest</div></div>
           </div>
         </div>
-
-        <!-- Step 2: Personal info -->
-        <div class="checkout-step">
-          <div class="step-label"><div class="step-num">2</div><h3 class="step-title">Your details</h3></div>
-          <div class="form-grid">
-            <div class="form-field">
-              <label>First name</label>
-              <input type="text" id="co-first" placeholder="Alex" oninput="coFieldChange()"/>
-            </div>
-            <div class="form-field">
-              <label>Last name</label>
-              <input type="text" id="co-last" placeholder="Johnson" oninput="coFieldChange()"/>
-            </div>
-            <div class="form-field full">
-              <label>Email</label>
-              <input type="email" id="co-email" placeholder="alex@example.com" oninput="coEmailChange()"/>
-            </div>
-            <div class="form-field full">
-              <label>Phone</label>
-              <input type="tel" id="co-phone" placeholder="+1 (555) 000-0000"/>
-            </div>
+        <div class="step">
+          <div class="step-h"><div class="step-n">2</div><div class="step-t">Your details</div></div>
+          <div class="fg">
+            <div class="ff"><label>First name</label><input type="text" id="co-first" placeholder="Alex" oninput="onCoField()"/></div>
+            <div class="ff"><label>Last name</label><input type="text" id="co-last" placeholder="Johnson"/></div>
+            <div class="ff full"><label>Email</label><input type="email" id="co-email" placeholder="alex@example.com" oninput="onCoEmail()"/></div>
+            <div class="ff full"><label>Phone</label><input type="tel" id="co-phone" placeholder="+1 555 000 0000"/></div>
           </div>
         </div>
-
-        <!-- Step 3: Payment -->
-        <div class="checkout-step">
-          <div class="step-label"><div class="step-num">3</div><h3 class="step-title">Payment</h3></div>
-          <div class="form-grid">
-            <div class="form-field full">
-              <label>Card number</label>
-              <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"/>
-            </div>
-            <div class="form-field">
-              <label>Expiry</label>
-              <input type="text" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)"/>
-            </div>
-            <div class="form-field">
-              <label>CVV</label>
-              <input type="text" placeholder="•••" maxlength="4"/>
-            </div>
+        <div class="step">
+          <div class="step-h"><div class="step-n">3</div><div class="step-t">Payment</div></div>
+          <div class="fg">
+            <div class="ff full"><label>Card number</label><input type="text" id="co-card" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"/></div>
+            <div class="ff"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)"/></div>
+            <div class="ff"><label>CVV</label><input type="text" placeholder="•••" maxlength="4"/></div>
           </div>
-          <button class="confirm-btn" id="confirm-btn" onclick="confirmBooking()">Confirm booking</button>
-          <p style="font-size:12px;color:var(--ink-3);text-align:center;margin-top:10px">By confirming, you agree to our Terms of Service and Privacy Policy</p>
+          <button class="confirm-btn" onclick="confirmBooking()">Confirm booking →</button>
+          <p style="font-size:12px;color:var(--text3);text-align:center;margin-top:10px">By confirming you agree to StayNest's Terms of Service</p>
         </div>
       </div>
-
-      <!-- Summary -->
-      <div class="checkout-summary">
-        <div class="co-listing-thumb" id="co-thumb"></div>
-        <div style="font-size:13px;color:var(--ink-3)" id="co-listing-type"></div>
-        <div style="font-family:var(--font-d);font-size:1.1rem;font-weight:600;margin-top:2px;margin-bottom:12px" id="co-listing-name"></div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:13px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px">
-          <span id="co-rating-stars"></span>
+      <div class="co-summary">
+        <div class="co-thumb" id="co-thumb"></div>
+        <div class="co-listing-type" id="co-type"></div>
+        <div class="co-listing-name" id="co-name"></div>
+        <div style="font-size:13px;color:var(--text3);padding-bottom:14px;border-bottom:1px solid var(--border)" id="co-ratingline"></div>
+        <div style="margin-top:14px">
+          <div class="pb-row" id="co-nrow"></div>
+          <div class="pb-row"><span>Cleaning fee</span><span id="co-clean"></span></div>
+          <div class="pb-row"><span>Service fee</span><span id="co-fee"></span></div>
+          <div class="pb-row tot"><span>Total</span><span id="co-tot"></span></div>
         </div>
-        <div class="pb-row" id="co-nightly-row"></div>
-        <div class="pb-row"><span>Cleaning fee</span><span id="co-cleaning">$0</span></div>
-        <div class="pb-row"><span>Service fee (11%)</span><span id="co-fee">$0</span></div>
-        <div class="pb-row total"><span>Total</span><span id="co-total">$0</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ CONFIRMATION ════════════ -->
+<!-- CONFIRMATION -->
 <div class="page" id="page-confirmation">
-  <div class="confirm-wrap">
-    <div class="confirm-icon">🎉</div>
+  <div class="conf-wrap">
+    <div class="conf-icon">🎉</div>
     <h2>You're all booked!</h2>
-    <p>Your reservation is confirmed. You'll receive a confirmation email shortly with all the details.</p>
-    <div class="booking-ref">
+    <p>Your reservation is confirmed. A confirmation email is on its way.</p>
+    <div class="conf-ref">
       <strong id="conf-ref">Booking #SN-000000</strong>
-      <span id="conf-listing"></span> · <span id="conf-dates"></span>
+      <span id="conf-detail"></span>
     </div>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-outline" onclick="navigate('guest-dashboard')">View my trips</button>
-      <button class="btn btn-rose" onclick="navigate('home')">Explore more stays</button>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="nav('guest-dashboard')">View my trips</button>
+      <button class="btn btn-accent" onclick="nav('home')">Explore more stays</button>
     </div>
   </div>
 </div>
 
-<!-- ════════════ GUEST DASHBOARD ════════════ -->
+<!-- GUEST DASHBOARD -->
 <div class="page" id="page-guest-dashboard">
-  <div class="dash-wrap">
-    <div style="margin-bottom:32px">
-      <h2 style="font-family:var(--font-d);font-size:1.8rem">Welcome back, <em id="dash-name">traveler</em></h2>
-      <p style="color:var(--ink-3)">Manage your trips and account</p>
+  <div class="dash">
+    <div class="dash-head">
+      <h2>Welcome back, <em style="font-style:italic;color:var(--accent)" id="dash-name">traveler</em></h2>
+      <p>Your trips, wishlist, and account</p>
     </div>
-    <div class="dash-grid">
-      <ul class="dash-nav">
-        <li><button class="active" onclick="guestTab('trips',this)">🗺️ Trips</button></li>
-        <li><button onclick="guestTab('wishlist',this)">❤️ Wishlist</button></li>
-        <li><button onclick="guestTab('profile',this)">👤 Profile</button></li>
-        <li><button onclick="navigate('home')">🔍 Explore stays</button></li>
-        <li><button onclick="switchToHost()">🏠 Switch to hosting</button></li>
-        <li><button onclick="logout()" style="color:var(--rose)">→ Log out</button></li>
+    <div class="dash-layout">
+      <ul class="sidenav">
+        <li><button class="on" onclick="gTab('trips',this)">🗺 Trips</button></li>
+        <li><button onclick="gTab('wishlist',this)">♡ Wishlist</button></li>
+        <li><button onclick="gTab('profile',this)">◻ Profile</button></li>
+        <li><button onclick="nav('home')">⌕ Explore</button></li>
+        <li><button onclick="requireAuth(()=>nav('host-dashboard'))">⌂ Switch to hosting</button></li>
+        <li><button onclick="logout()" style="color:var(--accent)">→ Log out</button></li>
       </ul>
-      <div id="guest-tab-content"></div>
+      <div id="g-content"></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ HOST DASHBOARD ════════════ -->
+<!-- HOST DASHBOARD -->
 <div class="page" id="page-host-dashboard">
-  <div class="dash-wrap">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+  <div class="dash">
+    <div class="dash-head" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
       <div>
-        <h2 style="font-family:var(--font-d);font-size:1.8rem">Host dashboard</h2>
-        <p style="color:var(--ink-3)">Manage your properties and reservations</p>
+        <h2>Host dashboard</h2>
+        <p>Manage your listings and reservations</p>
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="btn btn-ghost btn-sm" onclick="navigate('guest-dashboard')">Switch to travelling</button>
-        <button class="btn btn-rose btn-sm" onclick="addListing()">+ Add listing</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="nav('guest-dashboard')">Switch to travelling</button>
+        <button class="btn btn-accent btn-sm" onclick="onAddListing()">+ New listing</button>
       </div>
     </div>
-    <div class="dash-grid">
-      <ul class="dash-nav">
-        <li><button class="active" onclick="hostTab('overview',this)">📊 Overview</button></li>
-        <li><button onclick="hostTab('listings',this)">🏠 Listings</button></li>
-        <li><button onclick="hostTab('bookings',this)">📅 Reservations</button></li>
-        <li><button onclick="hostTab('earnings',this)">💰 Earnings</button></li>
-        <li><button onclick="logout()" style="color:var(--rose)">→ Log out</button></li>
+    <div class="dash-layout">
+      <ul class="sidenav">
+        <li><button class="on" onclick="hTab('overview',this)">▦ Overview</button></li>
+        <li><button onclick="hTab('listings',this)">⌂ Listings</button></li>
+        <li><button onclick="hTab('bookings',this)">◫ Reservations</button></li>
+        <li><button onclick="hTab('earnings',this)">$ Earnings</button></li>
+        <li><button onclick="logout()" style="color:var(--accent)">→ Log out</button></li>
       </ul>
-      <div id="host-tab-content"></div>
+      <div id="h-content"></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ AUTH MODAL ════════════ -->
-<div class="modal-overlay" id="auth-modal">
+<!-- AUTH MODAL -->
+<div class="overlay" id="auth-overlay">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">Welcome to StayNest</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="mhead">
+      <span class="mtitle">Welcome to StayNest</span>
+      <button class="mclose" onclick="closeAuth()">✕</button>
     </div>
-    <div class="modal-tabs">
-      <button class="modal-tab active" id="tab-login" onclick="switchModalTab('login')">Log in</button>
-      <button class="modal-tab" id="tab-signup" onclick="switchModalTab('signup')">Sign up</button>
+    <div class="mtabs">
+      <button class="mtab on" id="mtab-login" onclick="switchTab('login')">Log in</button>
+      <button class="mtab" id="mtab-signup" onclick="switchTab('signup')">Sign up</button>
     </div>
     <div id="modal-body"></div>
   </div>
@@ -960,1213 +949,993 @@ a{color:inherit;text-decoration:none}
 
 <script>
 /* ═══════════════════════════════════════════════════
-   DATA
+   LISTINGS DATA
 ═══════════════════════════════════════════════════ */
-const CATEGORIES = [
-  {id:'all',   icon:'🌍', label:'All'},
-  {id:'beach', icon:'🌊', label:'Beach'},
-  {id:'mountain',icon:'🏔️',label:'Mountain'},
-  {id:'city',  icon:'🏙️', label:'City'},
-  {id:'cabin', icon:'🌲', label:'Cabin'},
-  {id:'unique',icon:'✨', label:'Unique'},
-  {id:'island',icon:'🏝️', label:'Island'},
-  {id:'desert',icon:'🏜️', label:'Desert'},
-];
-
 const LISTINGS = [
-  {
-    id:'L001',emoji:'🏖️',emoji2:'🌅',emoji3:'🛁',
-    title:'Oceanfront Villa with Infinity Pool',
-    location:'Malibu, California',country:'US',
-    type:'beach',price:420,rating:4.92,reviews:128,
-    guests:8,beds:4,baths:3,
-    hostId:'H01',host:'Maria Santos',hostSince:'2019',superhost:true,
-    booked:true,
-    amenities:['🌊 Ocean view','♾️ Infinity pool','🍳 Full kitchen','🚗 Free parking','🐕 Pet friendly','📶 Gigabit WiFi','🎾 Tennis court','🏊 Private pool'],
-    desc:'Wake up to panoramic Pacific views from this stunning clifftop villa. Six-seat infinity pool, chef\'s kitchen with every appliance, and private steps to the beach below. Designed by a local architect — every room frames the ocean.',
-    cleaning:200
-  },
-  {
-    id:'L002',emoji:'🏔️',emoji2:'❄️',emoji3:'🔥',
-    title:'Ski-in Ski-out Alpine Chalet',
-    location:'Aspen, Colorado',country:'US',
-    type:'mountain',price:310,rating:4.88,reviews:94,
-    guests:6,beds:3,baths:2,
-    hostId:'H02',host:'James Kuiper',hostSince:'2020',superhost:true,
-    booked:false,
-    amenities:['🏔️ Mountain view','⛷️ Ski-in/ski-out','🛁 Hot tub','🔥 Fireplace','🍳 Full kitchen','📶 WiFi','🎿 Ski storage','🚗 Parking'],
-    desc:'A cozy alpine chalet steps from the gondola. Spend your mornings on world-class slopes and your evenings in a cedar hot tub watching the stars. Timber interiors, heated floors throughout, and a mudroom built for gear.',
-    cleaning:150
-  },
-  {
-    id:'L003',emoji:'🌆',emoji2:'🌃',emoji3:'🛋️',
-    title:'Designer Penthouse — Skyline Views',
-    location:'New York City, NY',country:'US',
-    type:'city',price:280,rating:4.85,reviews:203,
-    guests:4,beds:2,baths:2,
-    hostId:'H03',host:'Priya Mehta',hostSince:'2018',superhost:false,
-    booked:false,
-    amenities:['🌆 Manhattan skyline','🏋️ Gym access','🤸 Rooftop terrace','📶 Gigabit WiFi','☕ Espresso bar','🚇 Subway at door','🛎️ Concierge','🏊 Rooftop pool'],
-    desc:'Architect-designed penthouse with floor-to-ceiling glass and iconic skyline views from every room. Steps from Central Park, a chef\'s kitchen stocked with essentials, and access to a rooftop pool.',
-    cleaning:120
-  },
-  {
-    id:'L004',emoji:'🌲',emoji2:'🍄',emoji3:'🔥',
-    title:'Off-grid Forest Cabin with Hot Tub',
-    location:'Portland, Oregon',country:'US',
-    type:'cabin',price:165,rating:4.96,reviews:67,
-    guests:4,beds:2,baths:1,
-    hostId:'H04',host:'Lena Thorne',hostSince:'2021',superhost:true,
-    booked:false,
-    amenities:['🌲 Forest seclusion','🛁 Hot tub','🔥 Wood fireplace','🌿 Organic garden','📶 WiFi','🐕 Pet friendly','🚗 Parking','🌙 Stargazing deck'],
-    desc:'Deeply nestled in an old-growth fir forest with complete privacy. Wake to birdsong, spend evenings in a cedar hot tub under the canopy. Solar powered, fully off-grid, yet equipped with everything you need.',
-    cleaning:90
-  },
-  {
-    id:'L005',emoji:'🏝️',emoji2:'🌴',emoji3:'🐚',
-    title:'Overwater Bungalow — Tulum Lagoon',
-    location:'Tulum, Mexico',country:'MX',
-    type:'island',price:380,rating:4.94,reviews:156,
-    guests:2,beds:1,baths:1,
-    hostId:'H05',host:'Carlos Ruiz',hostSince:'2019',superhost:true,
-    booked:true,
-    amenities:['🌊 Overwater deck','🏊 Private plunge pool','🌴 Jungle canopy','🧘 Yoga platform','🤿 Snorkeling gear','🚲 Bikes included','🥭 Welcome basket','📶 WiFi'],
-    desc:'Sleep over the turquoise Tulum lagoon in this palm-thatched bungalow. Glass floor panels reveal the water below. Sunrise paddleboard, cenote access, and a private sundeck.',
-    cleaning:100
-  },
-  {
-    id:'L006',emoji:'🏰',emoji2:'🌸',emoji3:'🍷',
-    title:'17th-Century Manor Estate',
-    location:'Cotswolds, United Kingdom',country:'UK',
-    type:'unique',price:560,rating:4.97,reviews:89,
-    guests:12,beds:6,baths:4,
-    hostId:'H06',host:'Eleanor Hayes',hostSince:'2017',superhost:true,
-    booked:false,
-    amenities:['🏰 Historic architecture','🌸 English gardens','🎱 Billiards room','📚 Library','🍷 Wine cellar','🔥 6 fireplaces','🐴 Equestrian nearby','🚗 Ample parking'],
-    desc:'A lovingly restored 17th-century Cotswolds manor with six ensuite bedrooms, original stone fireplaces, and four acres of manicured gardens. Croquet on the lawn, afternoon tea in the orangery.',
-    cleaning:300
-  },
-  {
-    id:'L007',emoji:'🌊',emoji2:'🪨',emoji3:'🌅',
-    title:'Glass Cottage on Big Sur Cliffs',
-    location:'Big Sur, California',country:'US',
-    type:'beach',price:340,rating:4.90,reviews:112,
-    guests:4,beds:2,baths:2,
-    hostId:'H07',host:'Sam Weston',hostSince:'2020',superhost:false,
-    booked:false,
-    amenities:['🌊 Clifftop ocean views','🪟 Floor-to-ceiling glass','🔥 Firepit','🌅 Sunset terrace','📶 WiFi','🚿 Outdoor shower','🏄 Surfboards','🌿 Herb garden'],
-    desc:'Perched above a dramatic Big Sur coastline, this architect-designed glass cottage makes the Pacific your living room. Sleep to the sound of waves, wake to the sunrise.',
-    cleaning:130
-  },
-  {
-    id:'L008',emoji:'🏜️',emoji2:'⭐',emoji3:'🌵',
-    title:'Desert Adobe — Sedona Red Rocks',
-    location:'Sedona, Arizona',country:'US',
-    type:'desert',price:195,rating:4.89,reviews:78,
-    guests:4,beds:2,baths:2,
-    hostId:'H08',host:'Nina Patel',hostSince:'2021',superhost:true,
-    booked:true,
-    amenities:['🌄 Red rock views','🌡️ Heated pool','⭐ Stargazing deck','🏺 Local art','🧘 Meditation garden','📶 WiFi','🚗 Parking','🦎 Wildlife nearby'],
-    desc:'Handcrafted adobe nestled among Sedona\'s iconic red rock formations. Experience powerful vortex energy, stargazing under pristine skies, and desert silence broken only by coyotes at dusk.',
-    cleaning:100
-  },
+  {id:'L001',e1:'🏖️',e2:'🌅',e3:'🛁',title:'Oceanfront Villa with Infinity Pool',loc:'Malibu, California',country:'US',type:'beach',price:420,rating:4.92,reviews:128,maxGuests:8,beds:4,baths:3,hostId:'H01',host:'Maria Santos',hostYear:2019,superhost:true,booked:true,cleaning:200,
+   amenities:['🌊 Ocean view','♾️ Infinity pool','🍳 Full kitchen','🚗 Free parking','🐕 Pet friendly','📶 Gigabit WiFi','🎾 Tennis court','🏊 Private pool'],
+   desc:'Wake up to panoramic Pacific views from this stunning clifftop villa. Private infinity pool, chef\'s kitchen, and direct beach access. Every room frames the ocean.'},
+  {id:'L002',e1:'🏔️',e2:'❄️',e3:'🔥',title:'Ski-in Ski-out Alpine Chalet',loc:'Aspen, Colorado',country:'US',type:'mountain',price:310,rating:4.88,reviews:94,maxGuests:6,beds:3,baths:2,hostId:'H02',host:'James Kuiper',hostYear:2020,superhost:true,booked:false,cleaning:150,
+   amenities:['🏔️ Mountain view','⛷️ Ski-in/ski-out','🛁 Hot tub','🔥 Fireplace','🍳 Full kitchen','📶 WiFi','🎿 Ski storage','🚗 Parking'],
+   desc:'Steps from the gondola. Spend mornings on world-class slopes and evenings in a cedar hot tub under the stars. Heated floors, mudroom built for gear.'},
+  {id:'L003',e1:'🌆',e2:'🌃',e3:'🛋️',title:'Designer Penthouse — Skyline Views',loc:'New York, NY',country:'US',type:'city',price:280,rating:4.85,reviews:203,maxGuests:4,beds:2,baths:2,hostId:'H03',host:'Priya Mehta',hostYear:2018,superhost:false,booked:false,cleaning:120,
+   amenities:['🌆 Manhattan skyline','🏋️ Gym access','🤸 Rooftop terrace','📶 Gigabit WiFi','☕ Espresso bar','🚇 Subway at door','🛎️ Concierge','🏊 Rooftop pool'],
+   desc:'Floor-to-ceiling glass, iconic skyline views, steps from Central Park. Chef\'s kitchen stocked with essentials, access to a rooftop pool.'},
+  {id:'L004',e1:'🌲',e2:'🍄',e3:'🔥',title:'Off-grid Forest Cabin with Hot Tub',loc:'Portland, Oregon',country:'US',type:'cabin',price:165,rating:4.96,reviews:67,maxGuests:4,beds:2,baths:1,hostId:'H04',host:'Lena Thorne',hostYear:2021,superhost:true,booked:false,cleaning:90,
+   amenities:['🌲 Forest seclusion','🛁 Hot tub','🔥 Wood fireplace','🌿 Organic garden','📶 WiFi','🐕 Pet friendly','🚗 Parking','🌙 Stargazing deck'],
+   desc:'Deeply nestled in old-growth fir forest with complete privacy. Solar-powered, off-grid, yet equipped with everything you need.'},
+  {id:'L005',e1:'🏝️',e2:'🌴',e3:'🐚',title:'Overwater Bungalow — Tulum Lagoon',loc:'Tulum, Mexico',country:'MX',type:'island',price:380,rating:4.94,reviews:156,maxGuests:2,beds:1,baths:1,hostId:'H05',host:'Carlos Ruiz',hostYear:2019,superhost:true,booked:true,cleaning:100,
+   amenities:['🌊 Overwater deck','🏊 Plunge pool','🌴 Jungle canopy','🧘 Yoga platform','🤿 Snorkeling gear','🚲 Bikes','🥭 Welcome basket','📶 WiFi'],
+   desc:'Sleep over the turquoise Tulum lagoon. Glass floor panels reveal the water below. Sunrise paddleboard and cenote access included.'},
+  {id:'L006',e1:'🏰',e2:'🌸',e3:'🍷',title:'17th-Century Cotswolds Manor',loc:'Cotswolds, United Kingdom',country:'UK',type:'unique',price:560,rating:4.97,reviews:89,maxGuests:12,beds:6,baths:4,hostId:'H06',host:'Eleanor Hayes',hostYear:2017,superhost:true,booked:false,cleaning:300,
+   amenities:['🏰 Historic architecture','🌸 English gardens','🎱 Billiards room','📚 Library','🍷 Wine cellar','🔥 6 fireplaces','🐴 Equestrian nearby','🚗 Parking'],
+   desc:'Lovingly restored 17th-century manor, six ensuite bedrooms, original stone fireplaces, four acres of manicured gardens.'},
+  {id:'L007',e1:'🌊',e2:'🪨',e3:'🌅',title:'Glass Cottage on Big Sur Cliffs',loc:'Big Sur, California',country:'US',type:'beach',price:340,rating:4.90,reviews:112,maxGuests:4,beds:2,baths:2,hostId:'H07',host:'Sam Weston',hostYear:2020,superhost:false,booked:false,cleaning:130,
+   amenities:['🌊 Clifftop views','🪟 Floor-to-ceiling glass','🔥 Firepit','🌅 Sunset terrace','📶 WiFi','🚿 Outdoor shower','🏄 Surfboards','🌿 Herb garden'],
+   desc:'Architect-designed glass cottage perched above dramatic Big Sur coastline. The Pacific is your living room.'},
+  {id:'L008',e1:'🏜️',e2:'⭐',e3:'🌵',title:'Desert Adobe — Sedona Red Rocks',loc:'Sedona, Arizona',country:'US',type:'desert',price:195,rating:4.89,reviews:78,maxGuests:4,beds:2,baths:2,hostId:'H08',host:'Nina Patel',hostYear:2021,superhost:true,booked:true,cleaning:100,
+   amenities:['🌄 Red rock views','🌡️ Heated pool','⭐ Stargazing deck','🏺 Local art','🧘 Meditation garden','📶 WiFi','🚗 Parking','🦎 Wildlife tours'],
+   desc:'Handcrafted adobe among Sedona\'s iconic red rocks. Vortex energy, pristine stargazing, desert silence.'},
 ];
 
-const DEMO_TRIPS = [
-  {id:'T001',listingId:'L003',emoji:'🌆',title:'Designer Penthouse',location:'New York, NY',checkin:'2024-11-20',checkout:'2024-11-24',nights:4,total:1272,status:'completed'},
-  {id:'T002',listingId:'L004',emoji:'🌲',title:'Forest Cabin',location:'Portland, OR',checkin:'2025-02-07',checkout:'2025-02-10',nights:3,total:636,status:'completed'},
+const CATS = [
+  {id:'all',icon:'🌍',label:'All'},
+  {id:'beach',icon:'🌊',label:'Beach'},
+  {id:'mountain',icon:'🏔️',label:'Mountain'},
+  {id:'city',icon:'🏙️',label:'City'},
+  {id:'cabin',icon:'🌲',label:'Cabin'},
+  {id:'island',icon:'🏝️',label:'Island'},
+  {id:'unique',icon:'✨',label:'Unique'},
+  {id:'desert',icon:'🏜️',label:'Desert'},
 ];
 
-const HOST_BOOKINGS = [
+const SEED_TRIPS = [
+  {id:'T001',listingId:'L003',e1:'🌆',title:'Designer Penthouse',loc:'New York, NY',ci:'2024-11-20',co:'2024-11-24',nights:4,total:1272,status:'completed'},
+  {id:'T002',listingId:'L004',e1:'🌲',title:'Forest Cabin',loc:'Portland, OR',ci:'2025-02-07',co:'2025-02-10',nights:3,total:636,status:'completed'},
+];
+
+const HOST_REQS = [
   {guest:'Arjun Sharma',listing:'Forest Cabin',dates:'Mar 14–17',nights:3,total:585,status:'confirmed'},
   {guest:'Sophie Liu',listing:'Forest Cabin',dates:'Mar 21–25',nights:4,total:750,status:'pending'},
-  {guest:'Marc Dumont',listing:'Mountain Escape',dates:'Apr 2–6',nights:4,total:1280,status:'confirmed'},
+  {guest:'Marc Dumont',listing:'Mountain Chalet',dates:'Apr 2–6',nights:4,total:1280,status:'confirmed'},
 ];
 
 /* ═══════════════════════════════════════════════════
-   STATE
+   APPLICATION STATE
 ═══════════════════════════════════════════════════ */
-const state = {
-  user: null,           // null = anonymous
-  anonymousId: genId('anon'),
-  sessionStart: Date.now(),
-  currentListing: null,
-  previousPage: 'home',
-  currentPage: 'home',
-  activeCategory: 'all',
-  searchQuery: { where:'', checkin:'', checkout:'', guests:1 },
+const S = {
+  /* auth */
+  user: null,
+  anonId: uid('anon'),
+
+  /* navigation */
+  page: 'home',
+  prevPage: 'home',
+
+  /* listing / booking */
+  listing: null,
+  guests: 1,
+  co: {nights:0,sub:0,cleaning:0,fee:0,total:0,ci:'',out:''},
+
+  /* search */
+  query: {where:'',ci:'',out:'',guests:1},
+
+  /* user data */
   wishlist: new Set(),
-  trips: [...DEMO_TRIPS],
-  guestCount: 1,
-  checkoutData: {},
-  hostListings: [LISTINGS[3], LISTINGS[6]], // Portland cabin + Big Sur
-  // UC1 tracking
-  preLoginEvents: [],   // events fired before login (for demo context)
-  loginCount: 0,
-  // UC2 tracking
-  waitlistJoins: [],
+  trips: [...SEED_TRIPS],
+  activeCat: 'all',
+
+  /* cdp helpers — UC1 */
+  anonEventCount: 0,    // events fired before identity stitch
+  deviceType: '',
+  sessionStart: Date.now(),
+
+  /* auth callback */
+  _authCb: null,
 };
 
-function genId(prefix) {
-  return prefix + '_' + Math.random().toString(36).substr(2, 10);
+function uid(prefix) {
+  return (prefix || '') + '_' + Math.random().toString(36).substr(2, 12);
 }
 
 /* ═══════════════════════════════════════════════════
-   SILENT CDP INSTRUMENTATION
-   — No UI element references these. Pure data layer.
+   CDP LAYER
+   All calls here are the single source of truth.
+   Segment and PostHog are both called in sync.
 ═══════════════════════════════════════════════════ */
-
-// Core wrappers
-function cdpPage(name, props = {}) {
-  const payload = {
-    ...props,
-    session_id: state.sessionStart,
-    is_identified: !!state.user,
-    anonymous_id: state.anonymousId,
-    device_type: getDeviceType(),
-    referrer: document.referrer || 'direct',
-    timestamp: new Date().toISOString(),
-  };
-  analytics.page(name, payload);
-  posthog.capture('$pageview', { page_name: name, ...payload });
+function device() {
+  return window.innerWidth < 768 ? 'mobile' : window.innerWidth < 1024 ? 'tablet' : 'desktop';
 }
 
-function cdpTrack(event, props = {}) {
-  const payload = {
-    ...props,
-    session_id: state.sessionStart,
-    is_identified: !!state.user,
-    anonymous_id: state.anonymousId,
-    device_type: getDeviceType(),
+/* Every event carries this base context */
+function base(extra = {}) {
+  return {
+    anonymous_id: S.anonId,
+    is_authenticated: !!S.user,
+    user_id: S.user ? S.user.id : null,
+    device_type: device(),
+    session_id: S.sessionStart,
     timestamp: new Date().toISOString(),
+    ...extra,
   };
-  if (state.user) payload.user_id = state.user.id;
-
-  analytics.track(event, payload);
-  posthog.capture(event, payload);
-
-  // Track pre-login events for UC1 attribution
-  if (!state.user) {
-    state.preLoginEvents.push({ event, props: payload });
-  }
 }
 
-function cdpIdentify(userId, traits = {}) {
-  analytics.identify(userId, {
-    ...traits,
-    anonymous_id: state.anonymousId,
-    device_type: getDeviceType(),
-    identified_at: new Date().toISOString(),
-  });
+function cdpPage(name, props) {
+  const p = base(props);
+  analytics.page(name, p);
+  posthog.capture('$pageview', { page_name: name, ...p });
+}
+
+function cdpTrack(event, props) {
+  const p = base(props);
+  analytics.track(event, p);
+  posthog.capture(event, p);
+  if (!S.user) S.anonEventCount++;
+}
+
+/*
+  cdpIdentify — called when user logs in or signs up.
+  Sends full trait profile so PostHog/Segment have a
+  complete picture of the user right from stitch moment.
+*/
+function cdpIdentify(userId, traits) {
+  analytics.identify(userId, { ...traits, last_seen: new Date().toISOString() });
   posthog.identify(userId, traits);
 }
 
-function cdpAlias(userId, anonId) {
-  // UC1: The stitch moment — merge anonymous journey into identified profile
-  analytics.alias(userId, anonId);
-  // PostHog handles alias differently — we use identify with $anon_distinct_id
-  posthog.identify(userId, {}, { $anon_distinct_id: anonId });
-}
+/*
+  cdpAlias — UC1: THE IDENTITY STITCH
+  Maps the anonymous browsing session → identified user.
+  Segment merges all prior anonymous events into this user.
+  PostHog does the same via $anon_distinct_id.
 
-function getDeviceType() {
-  return window.innerWidth < 768 ? 'mobile' : window.innerWidth < 1024 ? 'tablet' : 'desktop';
+  This fires once per device on first login/signup.
+  When the same user logs in from a second device,
+  Segment sees the same userId → both anonymous journeys
+  now live under one unified profile.
+*/
+function cdpAlias(userId, anonId) {
+  analytics.alias(userId, anonId);
+  // PostHog: link anon session to identified user
+  posthog.capture('$identify', {
+    distinct_id: userId,
+    $anon_distinct_id: anonId,
+  });
 }
 
 /* ═══════════════════════════════════════════════════
    NAVIGATION
 ═══════════════════════════════════════════════════ */
-function navigate(page, skipTrack = false) {
-  const prev = state.currentPage;
-  state.previousPage = prev;
-  state.currentPage = page;
+const PAGE_NAMES = {
+  home:'Home', results:'Search Results', detail:'Listing Detail',
+  checkout:'Checkout', confirmation:'Booking Confirmation',
+  'guest-dashboard':'Guest Dashboard', 'host-dashboard':'Host Dashboard',
+};
 
+function nav(page) {
+  S.prevPage = S.page;
+  S.page = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  const names = {
-    'home': 'Home', 'results': 'Search Results', 'detail': 'Listing Detail',
-    'checkout': 'Checkout', 'confirmation': 'Booking Confirmation',
-    'guest-dashboard': 'Guest Dashboard', 'host-dashboard': 'Host Dashboard',
-  };
-
-  if (!skipTrack) {
-    cdpPage(names[page] || page, {
-      from_page: names[prev] || prev,
-      listing_id: state.currentListing?.id || null,
-    });
-  }
-
-  // Page-specific init
+  cdpPage(PAGE_NAMES[page] || page, { from: PAGE_NAMES[S.prevPage] || S.prevPage, listing_id: S.listing?.id || null });
   if (page === 'home') initHome();
   if (page === 'results') initResults();
   if (page === 'guest-dashboard') initGuestDash();
   if (page === 'host-dashboard') initHostDash();
 }
 
-function goBack() {
-  navigate(state.previousPage || 'home');
-}
+function goBack() { nav(S.prevPage || 'home'); }
 
 /* ═══════════════════════════════════════════════════
    SEARCH
 ═══════════════════════════════════════════════════ */
-let searchDebounce = null;
-function onSearchInput(val) {
-  clearTimeout(searchDebounce);
-  searchDebounce = setTimeout(() => {
-    if (val.length >= 2) {
-      cdpTrack('Search Typed', {
-        query: val,
-        field: 'destination',
-        char_count: val.length,
-      });
-    }
-  }, 600);
+let _sdt;
+function onSearchType(v) {
+  clearTimeout(_sdt);
+  _sdt = setTimeout(() => {
+    if (v.length >= 2) cdpTrack('Search Typed', { query: v, char_count: v.length });
+  }, 700);
 }
 
-function doSearch() {
+function submitSearch() {
   const where = document.getElementById('sw-where').value.trim();
-  const checkin = document.getElementById('sw-checkin').value;
-  const checkout = document.getElementById('sw-checkout').value;
-  const guests = parseInt(document.getElementById('sw-guests').value) || 1;
-
-  state.searchQuery = { where, checkin, checkout, guests };
-
-  // Update nav search text
-  const parts = [where || 'Anywhere', checkin || 'Any dates', guests + ' guest' + (guests > 1 ? 's' : '')];
-  document.getElementById('nav-search-text').textContent = parts.filter(Boolean).join(' · ');
-
+  const ci    = document.getElementById('sw-in').value;
+  const out   = document.getElementById('sw-out').value;
+  const guests= parseInt(document.getElementById('sw-guests').value) || 1;
+  S.query = { where, ci, out, guests };
+  document.getElementById('nptext').textContent =
+    [where||'Anywhere', ci ? fmtDate(ci):'Any dates', guests+' guest'+(guests>1?'s':'')].join(' · ');
   cdpTrack('Search Submitted', {
     destination: where || 'anywhere',
-    checkin: checkin || null,
-    checkout: checkout || null,
-    guests,
-    has_dates: !!(checkin && checkout),
-    nights: calcNights(checkin, checkout),
+    checkin: ci || null, checkout: out || null,
+    guests, nights: nights(ci,out), has_dates: !!(ci&&out),
   });
-
-  navigate('results');
-}
-
-function calcNights(ci, co) {
-  if (!ci || !co) return null;
-  return Math.round((new Date(co) - new Date(ci)) / 86400000);
+  nav('results');
 }
 
 /* ═══════════════════════════════════════════════════
-   RENDER — CARDS
+   CATEGORY ROWS
 ═══════════════════════════════════════════════════ */
-function renderCard(listing, containerId, source = 'grid') {
-  const wished = state.wishlist.has(listing.id);
-  const booked = listing.booked;
+function buildCats(containerId, onChange) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  CATS.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'cat' + (S.activeCat === c.id ? ' on' : '');
+    d.innerHTML = `<span class="icon">${c.icon}</span>${c.label}`;
+    d.onclick = () => {
+      S.activeCat = c.id;
+      el.querySelectorAll('.cat').forEach(x => x.classList.remove('on'));
+      d.classList.add('on');
+      cdpTrack('Category Selected', { category: c.id });
+      onChange(c.id);
+    };
+    el.appendChild(d);
+  });
+}
 
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.innerHTML = `
-    <div class="card-img ${booked ? 'booked' : ''}">
-      <div class="placeholder">${listing.emoji}</div>
-      ${booked ? `<div class="sold-out-banner"><div class="sold-out-tag">Fully booked</div></div>` : ''}
-      ${!booked ? `<button class="wish-btn ${wished ? 'wishlisted' : ''}" onclick="toggleWishlist(event,'${listing.id}')" title="${wished ? 'Saved' : 'Save'}">${wished ? '♥' : '♡'}</button>` : ''}
-      ${listing.superhost ? `<div class="superhost-badge">⭐ Superhost</div>` : ''}
+/* ═══════════════════════════════════════════════════
+   CARD RENDER
+═══════════════════════════════════════════════════ */
+function renderCard(l, targetId, source) {
+  const wished = S.wishlist.has(l.id);
+  const div = document.createElement('div');
+  div.className = 'lcard';
+  div.innerHTML = `
+    <div class="lcard-img">
+      <div class="ph">${l.e1}</div>
+      ${l.booked ? `<div class="booked-overlay"><div class="booked-tag">Fully booked</div></div>` : `<button class="wish ${wished?'on':''}" id="w-${l.id}" onclick="toggleWish(event,'${l.id}')">${wished?'♥':'♡'}</button>`}
+      ${l.superhost ? `<div class="sh-badge">★ Superhost</div>` : ''}
     </div>
-    <div class="card-body">
-      <div class="card-location">${listing.location}</div>
-      <div class="card-title">${listing.title}</div>
-      <div class="card-price">
-        <strong>$${listing.price}</strong><span> / night</span>
-        <div class="card-rating">⭐ ${listing.rating} <span style="color:var(--ink-4)">(${listing.reviews})</span></div>
+    <div class="lcard-body">
+      <div class="lcard-loc">${l.loc}</div>
+      <div class="lcard-title">${l.title}</div>
+      <div class="lcard-price">
+        <div><strong>$${l.price}</strong><span class="per"> / night</span></div>
+        <div class="lcard-rating">⭐ ${l.rating} <span style="color:var(--text4)">(${l.reviews})</span></div>
       </div>
     </div>`;
-
-  card.addEventListener('click', (e) => {
-    if (e.target.closest('.wish-btn')) return;
-    viewListing(listing, source);
-  });
-
-  document.getElementById(containerId).appendChild(card);
+  div.addEventListener('click', e => { if (e.target.closest('.wish')) return; viewListing(l, source); });
+  document.getElementById(targetId).appendChild(div);
 }
 
 /* ═══════════════════════════════════════════════════
    HOME
 ═══════════════════════════════════════════════════ */
 function initHome() {
-  // Set default dates
-  const today = new Date();
-  const ci = new Date(today); ci.setDate(today.getDate() + 7);
-  const co = new Date(ci); co.setDate(ci.getDate() + 5);
-  document.getElementById('sw-checkin').value = ci.toISOString().split('T')[0];
-  document.getElementById('sw-checkout').value = co.toISOString().split('T')[0];
+  // default dates
+  const t = new Date();
+  const ci = new Date(t); ci.setDate(t.getDate()+7);
+  const co = new Date(ci); co.setDate(ci.getDate()+5);
+  document.getElementById('sw-in').value = ci.toISOString().split('T')[0];
+  document.getElementById('sw-out').value = co.toISOString().split('T')[0];
 
-  // Category row
-  const catRow = document.getElementById('cat-row');
-  catRow.innerHTML = '';
-  CATEGORIES.forEach(c => {
-    const pill = document.createElement('div');
-    pill.className = 'cat-pill' + (state.activeCategory === c.id ? ' active' : '');
-    pill.innerHTML = `<span class="icon">${c.icon}</span>${c.label}`;
-    pill.onclick = () => { state.activeCategory = c.id; filterHome(c.id); pill.closest('.category-row').querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active')); pill.classList.add('active'); };
-    catRow.appendChild(pill);
-  });
-
-  filterHome(state.activeCategory);
+  buildCats('home-cats', cat => renderHome(cat));
+  renderHome(S.activeCat);
 }
 
-function filterHome(cat) {
-  const grid = document.getElementById('home-grid');
-  grid.innerHTML = '';
-  const filtered = cat === 'all' ? LISTINGS : LISTINGS.filter(l => l.type === cat);
-  const sub = document.getElementById('home-sub');
-  sub.textContent = `${filtered.length} stays${cat !== 'all' ? ' · ' + cat : ''}`;
-  filtered.forEach(l => renderCard(l, 'home-grid', 'home'));
-
-  if (cat !== 'all') {
-    cdpTrack('Category Filtered', { category: cat, results_count: filtered.length });
-  }
+function renderHome(cat) {
+  const g = document.getElementById('home-grid');
+  g.innerHTML = '';
+  const list = cat === 'all' ? LISTINGS : LISTINGS.filter(l => l.type === cat);
+  document.getElementById('home-count').textContent = list.length + ' stays';
+  list.forEach(l => renderCard(l, 'home-grid', 'home'));
 }
 
 /* ═══════════════════════════════════════════════════
-   SEARCH RESULTS
+   RESULTS
 ═══════════════════════════════════════════════════ */
 function initResults() {
-  const { where, checkin, checkout, guests } = state.searchQuery;
-
-  document.getElementById('results-title').textContent = where ? `Stays in ${where}` : 'All stays';
-  const nights = calcNights(checkin, checkout);
-  document.getElementById('results-sub').textContent =
-    `${LISTINGS.length} properties available${nights ? ` · ${nights} nights` : ''}`;
-
-  // Category row in results
-  const catRow = document.getElementById('results-cat-row');
-  catRow.innerHTML = '';
-  CATEGORIES.forEach(c => {
-    const pill = document.createElement('div');
-    pill.className = 'cat-pill' + (state.activeCategory === c.id ? ' active' : '');
-    pill.innerHTML = `<span class="icon">${c.icon}</span>${c.label}`;
-    pill.onclick = () => {
-      state.activeCategory = c.id;
-      catRow.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      renderResults(c.id);
-      cdpTrack('Search Results Filtered', { category: c.id });
-    };
-    catRow.appendChild(pill);
-  });
-
-  renderResults(state.activeCategory);
+  const { where, ci, out, guests } = S.query;
+  document.getElementById('res-title').textContent = where ? 'Stays in ' + where : 'All stays';
+  const n = nights(ci, out);
+  document.getElementById('res-sub').textContent = LISTINGS.length + ' properties' + (n ? ` · ${n} nights` : '');
+  buildCats('res-cats', cat => renderRes(cat));
+  renderRes(S.activeCat);
 }
 
-function renderResults(cat) {
-  const grid = document.getElementById('results-grid');
-  grid.innerHTML = '';
-  const filtered = cat === 'all' ? LISTINGS : LISTINGS.filter(l => l.type === cat);
-  filtered.forEach(l => renderCard(l, 'results-grid', 'search_results'));
+function renderRes(cat) {
+  const g = document.getElementById('res-grid');
+  g.innerHTML = '';
+  const list = cat === 'all' ? LISTINGS : LISTINGS.filter(l => l.type === cat);
+  list.forEach(l => renderCard(l, 'res-grid', 'search_results'));
 }
 
 /* ═══════════════════════════════════════════════════
    VIEW LISTING
 ═══════════════════════════════════════════════════ */
-function viewListing(listing, source = 'unknown') {
-  state.currentListing = listing;
+function viewListing(l, source) {
+  S.listing = l;
 
-  // Populate detail UI
-  document.getElementById('d-title').textContent = listing.title;
-  document.getElementById('d-stars').innerHTML = `⭐ ${listing.rating}`;
-  document.getElementById('d-reviews').textContent = `${listing.reviews} reviews`;
-  document.getElementById('d-superhost-meta').textContent = listing.superhost ? '🏅 Superhost' : `Hosted by ${listing.host}`;
-  document.getElementById('d-location-meta').textContent = listing.location;
-  document.getElementById('d-emoji1').textContent = listing.emoji;
-  document.getElementById('d-emoji2').textContent = listing.emoji2;
-  document.getElementById('d-emoji3').textContent = listing.emoji3;
-  document.getElementById('d-host-headline').textContent = `Entire ${listing.type} hosted by ${listing.host}`;
-  document.getElementById('d-specs').textContent = `${listing.guests} guests · ${listing.beds} bedrooms · ${listing.baths} bathrooms`;
-  document.getElementById('d-desc').textContent = listing.desc;
-  document.getElementById('d-host-av').textContent = listing.host.charAt(0);
-  document.getElementById('d-host-name').textContent = `Hosted by ${listing.host}`;
-  document.getElementById('d-host-since').textContent = `${listing.superhost ? 'Superhost · ' : ''}Hosting since ${listing.hostSince}`;
-  document.getElementById('d-host-stat').textContent = `⭐ ${listing.rating} · ${listing.reviews} reviews`;
+  // populate UI
+  document.getElementById('d-title').textContent = l.title;
+  document.getElementById('d-stars').innerHTML = '⭐ ' + l.rating;
+  document.getElementById('d-revs').textContent = l.reviews + ' reviews';
+  document.getElementById('d-sh').textContent = l.superhost ? '🏅 Superhost' : 'Hosted by ' + l.host;
+  document.getElementById('d-loc-meta').textContent = l.loc;
+  document.getElementById('d-ph1').textContent = l.e1;
+  document.getElementById('d-ph2').textContent = l.e2;
+  document.getElementById('d-ph3').textContent = l.e3;
+  document.getElementById('d-hline').textContent = 'Entire ' + l.type + ' hosted by ' + l.host;
+  document.getElementById('d-specs').textContent = l.maxGuests + ' guests · ' + l.beds + ' bedrooms · ' + l.baths + ' bathrooms';
+  document.getElementById('d-desc').textContent = l.desc;
+  document.getElementById('d-hav').textContent = l.host[0];
+  document.getElementById('d-hname').textContent = 'Hosted by ' + l.host;
+  document.getElementById('d-hsince').textContent = (l.superhost ? 'Superhost · ' : '') + 'Hosting since ' + l.hostYear;
+  document.getElementById('d-hstat').textContent = '⭐ ' + l.rating + ' · ' + l.reviews + ' reviews';
+  document.getElementById('d-amen').innerHTML = l.amenities.map(a => `<div class="amenity">${a}</div>`).join('');
 
-  const amenDiv = document.getElementById('d-amenities');
-  amenDiv.innerHTML = listing.amenities.map(a => `<div class="amenity">${a}</div>`).join('');
+  const avail = document.getElementById('w-avail');
+  const unavail = document.getElementById('w-unavail');
 
-  // Booking vs waitlist widget
-  const avail = document.getElementById('widget-available');
-  const unavail = document.getElementById('widget-unavailable');
-
-  if (listing.booked) {
+  if (l.booked) {
     avail.style.display = 'none';
     unavail.style.display = 'block';
-    renderWaitlistWidget(listing);
+    setupWaitlist(l);
   } else {
     avail.style.display = 'block';
     unavail.style.display = 'none';
-    initBookingWidget(listing);
+    setupBookingWidget(l);
   }
 
-  navigate('detail', true);
+  // navigate without double-tracking page
+  S.prevPage = S.page; S.page = 'detail';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // CDP: Listing Viewed
+  cdpPage('Listing Detail', { listing_id: l.id, listing_type: l.type, price: l.price, booked: l.booked });
   cdpTrack('Listing Viewed', {
-    listing_id: listing.id,
-    listing_title: listing.title,
-    listing_type: listing.type,
-    location: listing.location,
-    country: listing.country,
-    price_per_night: listing.price,
-    rating: listing.rating,
-    is_superhost: listing.superhost,
-    is_booked: listing.booked,
+    listing_id: l.id,
+    listing_title: l.title,
+    listing_type: l.type,
+    location: l.loc,
+    country: l.country,
+    price_per_night: l.price,
+    rating: l.rating,
+    review_count: l.reviews,
+    is_superhost: l.superhost,
+    is_fully_booked: l.booked,
     source,
-    host_id: listing.hostId,
-  });
-
-  cdpPage('Listing Detail', {
-    listing_id: listing.id,
-    listing_type: listing.type,
-    price_per_night: listing.price,
-    is_booked: listing.booked,
+    host_id: l.hostId,
   });
 }
 
 /* ═══════════════════════════════════════════════════
    BOOKING WIDGET
 ═══════════════════════════════════════════════════ */
-function initBookingWidget(listing) {
-  document.getElementById('w-price').textContent = '$' + listing.price;
-
-  const today = new Date();
-  const ci = new Date(today); ci.setDate(today.getDate() + 7);
-  const co = new Date(ci); co.setDate(ci.getDate() + 5);
-  document.getElementById('w-checkin').value = ci.toISOString().split('T')[0];
-  document.getElementById('w-checkout').value = co.toISOString().split('T')[0];
-  state.guestCount = 1;
-  document.getElementById('w-guest-count').textContent = 1;
-  document.getElementById('w-guest-display').textContent = '1 guest';
-
-  recalcPrice();
+function setupBookingWidget(l) {
+  document.getElementById('w-price').textContent = '$' + l.price;
+  S.guests = 1;
+  document.getElementById('w-gnum').textContent = 1;
+  document.getElementById('w-gtext').textContent = '1 guest';
+  // default dates
+  const t = new Date();
+  const ci = new Date(t); ci.setDate(t.getDate()+7);
+  const co = new Date(ci); co.setDate(ci.getDate()+5);
+  document.getElementById('w-in').value = ci.toISOString().split('T')[0];
+  document.getElementById('w-out').value = co.toISOString().split('T')[0];
+  calcPrice();
 }
 
-function recalcPrice() {
-  const l = state.currentListing;
-  if (!l) return;
-  const ci = document.getElementById('w-checkin').value;
-  const co = document.getElementById('w-checkout').value;
-  const nights = calcNights(ci, co) || 1;
-  const sub = l.price * nights;
-  const cleaning = l.cleaning || 100;
+function adjGuests(d) {
+  const l = S.listing;
+  S.guests = Math.max(1, Math.min(l ? l.maxGuests : 16, S.guests + d));
+  document.getElementById('w-gnum').textContent = S.guests;
+  document.getElementById('w-gtext').textContent = S.guests + ' guest' + (S.guests > 1 ? 's' : '');
+}
+
+function calcPrice() {
+  const l = S.listing; if (!l) return;
+  const ci = document.getElementById('w-in').value;
+  const co = document.getElementById('w-out').value;
+  const n = nights(ci, co) || 1;
+  const sub = l.price * n;
+  const clean = l.cleaning || 100;
   const fee = Math.round(sub * 0.11);
-  const total = sub + cleaning + fee;
-
+  const tot = sub + clean + fee;
+  S.co = { nights: n, sub, cleaning: clean, fee, total: tot, ci, out: co };
   document.getElementById('price-breakdown').innerHTML = `
-    <div class="pb-row"><span>$${l.price} × ${nights} night${nights>1?'s':''}</span><span>$${sub.toLocaleString()}</span></div>
-    <div class="pb-row"><span>Cleaning fee</span><span>$${cleaning}</span></div>
-    <div class="pb-row"><span>Service fee (11%)</span><span>$${fee}</span></div>
-    <div class="pb-row total"><span>Total</span><span>$${total.toLocaleString()}</span></div>`;
-
-  // Store for checkout
-  state.checkoutData = { nights, subtotal: sub, cleaning, fee, total, checkin: ci, checkout: co };
+    <div class="pb-row"><span>$${l.price} × ${n} night${n>1?'s':''}</span><span>$${fmt(sub)}</span></div>
+    <div class="pb-row"><span>Cleaning fee</span><span>$${fmt(clean)}</span></div>
+    <div class="pb-row"><span>Service fee (11%)</span><span>$${fmt(fee)}</span></div>
+    <div class="pb-row tot"><span>Total</span><span>$${fmt(tot)}</span></div>`;
 }
 
-function changeGuests(delta) {
-  const l = state.currentListing;
-  const max = l ? l.guests : 16;
-  state.guestCount = Math.max(1, Math.min(max, state.guestCount + delta));
-  document.getElementById('w-guest-count').textContent = state.guestCount;
-  document.getElementById('w-guest-display').textContent = state.guestCount + ' guest' + (state.guestCount > 1 ? 's' : '');
-}
-
-function startReserve() {
-  if (!state.user) {
-    // Must be logged in to reserve — open login modal
-    cdpTrack('Reserve Clicked While Anonymous', {
-      listing_id: state.currentListing?.id,
-      listing_title: state.currentListing?.title,
-      price_per_night: state.currentListing?.price,
+function onReserve() {
+  // Must be authenticated to reserve
+  if (!S.user) {
+    cdpTrack('Reserve Attempted Unauthenticated', {
+      listing_id: S.listing?.id,
+      price_per_night: S.listing?.price,
+      anon_event_count: S.anonEventCount,
     });
-    openModal('login', () => startReserve());
+    openAuth('login', () => onReserve());
     return;
   }
-
-  const l = state.currentListing;
-  const ci = document.getElementById('w-checkin').value;
-  const co = document.getElementById('w-checkout').value;
-  const { nights, total } = state.checkoutData;
-
+  const l = S.listing;
+  const { nights: n, total, ci, out } = S.co;
   cdpTrack('Checkout Started', {
     listing_id: l.id,
     listing_title: l.title,
     listing_type: l.type,
-    checkin: ci,
-    checkout: co,
-    nights,
-    guests: state.guestCount,
-    total_value: total,
+    checkin: ci, checkout: out, nights: n,
+    guests: S.guests, total_value: total,
     price_per_night: l.price,
-    user_id: state.user.id,
   });
-
-  // Prefill checkout
-  document.getElementById('co-dates').textContent = formatDateRange(ci, co);
-  document.getElementById('co-guests-display').textContent = state.guestCount + ' guest' + (state.guestCount > 1 ? 's' : '');
-  document.getElementById('co-thumb').textContent = l.emoji;
-  document.getElementById('co-listing-type').textContent = `Entire ${l.type} · ${l.location}`;
-  document.getElementById('co-listing-name').textContent = l.title;
-  document.getElementById('co-rating-stars').textContent = `⭐ ${l.rating} · ${l.reviews} reviews`;
-  document.getElementById('co-nightly-row').innerHTML = `<span>$${l.price} × ${nights} night${nights>1?'s':''}</span><span>$${(l.price*nights).toLocaleString()}</span>`;
-  document.getElementById('co-cleaning').textContent = `$${state.checkoutData.cleaning}`;
-  document.getElementById('co-fee').textContent = `$${state.checkoutData.fee}`;
-  document.getElementById('co-total').textContent = `$${state.checkoutData.total.toLocaleString()}`;
-
+  // Populate checkout
+  document.getElementById('co-dates').textContent = fmtRange(ci, out);
+  document.getElementById('co-gtext').textContent = S.guests + ' guest' + (S.guests > 1 ? 's' : '');
+  document.getElementById('co-thumb').textContent = l.e1;
+  document.getElementById('co-type').textContent = 'Entire ' + l.type + ' · ' + l.loc;
+  document.getElementById('co-name').textContent = l.title;
+  document.getElementById('co-ratingline').textContent = '⭐ ' + l.rating + ' · ' + l.reviews + ' reviews';
+  document.getElementById('co-nrow').innerHTML = `<span>$${l.price} × ${n} night${n>1?'s':''}</span><span>$${fmt(l.price*n)}</span>`;
+  document.getElementById('co-clean').textContent = '$' + fmt(S.co.cleaning);
+  document.getElementById('co-fee').textContent = '$' + fmt(S.co.fee);
+  document.getElementById('co-tot').textContent = '$' + fmt(total);
   // Prefill known user details
-  if (state.user) {
-    const [fn, ...ln] = (state.user.name || '').split(' ');
-    document.getElementById('co-first').value = fn || '';
-    document.getElementById('co-last').value = ln.join(' ') || '';
-    document.getElementById('co-email').value = state.user.email || '';
-  }
-
-  navigate('checkout');
+  document.getElementById('co-first').value = S.user.firstName || '';
+  document.getElementById('co-last').value = S.user.lastName || '';
+  document.getElementById('co-email').value = S.user.email || '';
+  nav('checkout');
 }
 
 /* ═══════════════════════════════════════════════════
    CHECKOUT EVENTS
 ═══════════════════════════════════════════════════ */
-let coEmailDebounce = null;
-function coEmailChange() {
-  clearTimeout(coEmailDebounce);
-  coEmailDebounce = setTimeout(() => {
-    const email = document.getElementById('co-email').value;
-    if (email.includes('@') && email.includes('.')) {
-      cdpTrack('Checkout Email Entered', {
-        listing_id: state.currentListing?.id,
-        email_domain: email.split('@')[1],
-      });
+let _emailT;
+function onCoEmail() {
+  clearTimeout(_emailT);
+  _emailT = setTimeout(() => {
+    const v = document.getElementById('co-email').value;
+    if (v.includes('@') && v.includes('.')) {
+      cdpTrack('Checkout Email Entered', { listing_id: S.listing?.id, email_domain: v.split('@')[1] });
     }
-  }, 1000);
+  }, 900);
 }
-
-function coFieldChange() {
-  const first = document.getElementById('co-first').value;
-  const last = document.getElementById('co-last').value;
-  if (first && last) {
-    cdpTrack('Checkout Details Filled', {
-      listing_id: state.currentListing?.id,
-      fields_complete: true,
-    });
-  }
+function onCoField() {
+  const f = document.getElementById('co-first').value;
+  const l = document.getElementById('co-last').value;
+  if (f && l) cdpTrack('Checkout Details Completed', { listing_id: S.listing?.id });
 }
-
-function formatCard(el) {
-  let v = el.value.replace(/\D/g,'').slice(0,16);
-  el.value = v.replace(/(.{4})/g,'$1 ').trim();
-}
-
-function formatExpiry(el) {
-  let v = el.value.replace(/\D/g,'').slice(0,4);
-  if (v.length > 2) v = v.slice(0,2) + ' / ' + v.slice(2);
-  el.value = v;
-}
+function fmtCard(el) { let v=el.value.replace(/\D/g,'').slice(0,16); el.value=v.replace(/(.{4})/g,'$1 ').trim(); }
+function fmtExp(el) { let v=el.value.replace(/\D/g,'').slice(0,4); if(v.length>2) v=v.slice(0,2)+' / '+v.slice(2); el.value=v; }
 
 function confirmBooking() {
   const first = document.getElementById('co-first').value.trim();
-  const last = document.getElementById('co-last').value.trim();
+  const last  = document.getElementById('co-last').value.trim();
   const email = document.getElementById('co-email').value.trim();
+  if (!first || !last || !email) { toast('Please fill in all required fields'); return; }
 
-  if (!first || !last || !email) {
-    showToast('Please fill in all required fields');
-    return;
-  }
+  const l = S.listing;
+  const ref = 'SN-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  const { nights: n, total, ci, out } = S.co;
 
-  const l = state.currentListing;
-  const bookingRef = 'SN-' + Math.random().toString(36).substr(2,6).toUpperCase();
-  const { nights, total, checkin, checkout } = state.checkoutData;
+  S.trips.unshift({ id: ref, listingId: l.id, e1: l.e1, title: l.title, loc: l.loc, ci, co: out, nights: n, total, status: 'upcoming' });
 
-  // Add to trips
-  state.trips.unshift({
-    id: bookingRef, listingId: l.id, emoji: l.emoji,
-    title: l.title, location: l.location,
-    checkin, checkout, nights, total, status: 'upcoming',
-  });
-
-  // CDP: Booking Confirmed
   cdpTrack('Booking Confirmed', {
-    booking_id: bookingRef,
-    listing_id: l.id,
-    listing_title: l.title,
-    listing_type: l.type,
-    location: l.location,
-    country: l.country,
-    checkin,
-    checkout,
-    nights,
-    guests: state.guestCount,
-    total_value: total,
-    price_per_night: l.price,
-    host_id: l.hostId,
-    is_superhost: l.superhost,
-    pre_login_events_count: state.preLoginEvents.length,
-    user_id: state.user?.id,
+    booking_id: ref,
+    listing_id: l.id, listing_title: l.title, listing_type: l.type,
+    location: l.loc, country: l.country,
+    checkin: ci, checkout: out, nights: n,
+    guests: S.guests, total_value: total, price_per_night: l.price,
+    host_id: l.hostId, is_superhost: l.superhost,
   });
 
-  // Identify with updated traits
-  if (state.user) {
-    cdpIdentify(state.user.id, {
-      total_bookings: state.trips.length,
-      last_booking_id: bookingRef,
+  // Update identify with booking traits
+  if (S.user) {
+    cdpIdentify(S.user.id, {
+      total_bookings: S.trips.length,
+      last_booking_id: ref,
       last_booking_value: total,
-      last_checkin: checkin,
+      last_checkin: ci,
     });
   }
 
-  // Confirmation page
-  document.getElementById('conf-ref').textContent = `Booking ${bookingRef}`;
-  document.getElementById('conf-listing').textContent = l.title;
-  document.getElementById('conf-dates').textContent = formatDateRange(checkin, checkout);
-
-  navigate('confirmation');
+  document.getElementById('conf-ref').textContent = 'Booking ' + ref;
+  document.getElementById('conf-detail').textContent = l.title + ' · ' + fmtRange(ci, out);
+  nav('confirmation');
 }
 
 /* ═══════════════════════════════════════════════════
    WAITLIST — UC2
 ═══════════════════════════════════════════════════ */
-function renderWaitlistWidget(listing) {
-  // CDP: Listing Unavailable Encountered — the key UC2 signal
+function setupWaitlist(l) {
+  // UC2: High-intent user hits dead-end → we capture them
   cdpTrack('Listing Unavailable Encountered', {
-    listing_id: listing.id,
-    listing_title: listing.title,
-    listing_type: listing.type,
-    location: listing.location,
-    price_per_night: listing.price,
-    is_identified: !!state.user,
-    source: state.previousPage,
+    listing_id: l.id, listing_title: l.title,
+    listing_type: l.type, location: l.loc,
+    price_per_night: l.price, is_authenticated: !!S.user,
+    anon_event_count: S.anonEventCount,
+    source: S.prevPage,
   });
 
-  // Render alternatives (exclude booked ones, same type priority)
-  const alts = LISTINGS.filter(l => !l.booked && l.id !== listing.id)
+  // Pre-fill email if logged in
+  if (S.user) document.getElementById('wl-email').value = S.user.email;
+
+  // Smart alternatives: same type first, then by rating
+  const alts = LISTINGS
+    .filter(x => !x.booked && x.id !== l.id)
     .sort((a, b) => {
-      // same type first
-      const aScore = (a.type === listing.type ? 2 : 0) + (Math.abs(a.price - listing.price) < 100 ? 1 : 0);
-      const bScore = (b.type === listing.type ? 2 : 0) + (Math.abs(b.price - listing.price) < 100 ? 1 : 0);
-      return bScore - aScore;
+      const as = (a.type === l.type ? 3 : 0) + (Math.abs(a.price - l.price) < 80 ? 1 : 0) + a.rating;
+      const bs = (b.type === l.type ? 3 : 0) + (Math.abs(b.price - l.price) < 80 ? 1 : 0) + b.rating;
+      return bs - as;
     })
     .slice(0, 3);
 
-  const altDiv = document.getElementById('alt-listings');
-  altDiv.innerHTML = '';
-  alts.forEach(alt => {
+  const div = document.getElementById('alt-list');
+  div.innerHTML = '';
+  alts.forEach(a => {
     const el = document.createElement('div');
-    el.className = 'alt-card';
-    el.innerHTML = `
-      <div class="alt-thumb">${alt.emoji}</div>
-      <div class="alt-info">
-        <div class="alt-name">${alt.title}</div>
-        <div class="alt-loc">📍 ${alt.location}</div>
-      </div>
-      <div class="alt-price">$${alt.price}/night</div>`;
-    el.addEventListener('click', () => {
+    el.className = 'alt';
+    el.innerHTML = `<div class="alt-thumb">${a.e1}</div>
+      <div class="alt-info"><div class="alt-name">${a.title}</div><div class="alt-loc">📍 ${a.loc}</div></div>
+      <div class="alt-price">$${a.price}/night</div>`;
+    el.onclick = () => {
       cdpTrack('Alternative Listing Clicked', {
-        original_listing_id: listing.id,
-        alternative_listing_id: alt.id,
-        alternative_type: alt.type,
+        original_listing_id: l.id,
+        alternative_listing_id: a.id,
+        alternative_type: a.type,
+        price_delta: a.price - l.price,
         source: 'waitlist_widget',
-        price_delta: alt.price - listing.price,
       });
-      viewListing(alt, 'waitlist_suggestion');
-    });
-    altDiv.appendChild(el);
+      viewListing(a, 'waitlist_suggestion');
+    };
+    div.appendChild(el);
   });
 
-  // Pre-fill waitlist email if logged in
-  if (state.user) {
-    document.getElementById('wl-email').value = state.user.email || '';
-  }
+  // Reset waitlist form
+  document.getElementById('wl-area').innerHTML = `
+    <div class="wl-form">
+      <input class="wl-input" type="email" id="wl-email" placeholder="Your email address" value="${S.user?.email||''}"/>
+      <input class="wl-input" type="date" id="wl-in"/>
+      <input class="wl-input" type="date" id="wl-out"/>
+      <button class="wl-btn" onclick="joinWaitlist()">Notify me when available</button>
+    </div>`;
 }
 
 function joinWaitlist() {
   const email = document.getElementById('wl-email').value.trim();
-  const checkin = document.getElementById('wl-checkin').value;
-  const checkout = document.getElementById('wl-checkout').value;
-  const l = state.currentListing;
+  const ci    = document.getElementById('wl-in').value;
+  const co    = document.getElementById('wl-out').value;
+  const l     = S.listing;
+  if (!email || !email.includes('@')) { toast('Please enter a valid email address'); return; }
 
-  if (!email || !email.includes('@')) {
-    showToast('Please enter a valid email');
-    return;
-  }
-
-  state.waitlistJoins.push({ listing_id: l.id, email, checkin, checkout });
-
-  // CDP: Waitlist Joined — core UC2 event
   cdpTrack('Waitlist Joined', {
-    listing_id: l.id,
-    listing_title: l.title,
-    listing_type: l.type,
-    location: l.location,
+    listing_id: l.id, listing_title: l.title,
+    listing_type: l.type, location: l.loc,
     price_per_night: l.price,
-    email,
     email_domain: email.split('@')[1],
-    preferred_checkin: checkin || null,
-    preferred_checkout: checkout || null,
-    is_identified: !!state.user,
-    user_id: state.user?.id || null,
-    pre_login_events_count: state.preLoginEvents.length,
+    preferred_checkin: ci || null,
+    preferred_checkout: co || null,
+    nights_requested: nights(ci, co),
+    is_authenticated: !!S.user,
+    user_id: S.user?.id || null,
+    anon_event_count: S.anonEventCount,
   });
 
-  // If not identified, alias email as a soft identifier
-  if (!state.user) {
-    analytics.identify({ email, waitlist_listing_id: l.id });
-    posthog.setPersonProperties({ email });
+  // Soft-identify by email even if not logged in
+  if (!S.user) {
+    analytics.identify({ email, waitlist_listing_id: l.id, anonymous_id: S.anonId });
+    posthog.setPersonProperties({ email, waitlisted: true });
   }
 
-  // Show success state
-  document.getElementById('waitlist-form-area').innerHTML = `
-    <div class="waitlist-success">
-      <div style="font-size:32px;margin-bottom:8px">✉️</div>
+  document.getElementById('wl-area').innerHTML = `
+    <div class="wl-success">
+      <div style="font-size:28px;margin-bottom:8px">✉️</div>
       <h4>You're on the waitlist!</h4>
-      <p>We'll notify you at <strong>${email}</strong> the moment ${l.title} becomes available${checkin ? ` for your dates (${formatDateRange(checkin, checkout)})` : ''}.</p>
+      <p>We'll notify <strong>${email}</strong> the moment <em>${l.title}</em> has availability${ci ? ' for ' + fmtRange(ci, co) : ''}.</p>
     </div>`;
 }
 
 /* ═══════════════════════════════════════════════════
    WISHLIST
 ═══════════════════════════════════════════════════ */
-function toggleWishlist(e, id) {
+function toggleWish(e, id) {
   e.stopPropagation();
-  const listing = LISTINGS.find(l => l.id === id);
-  const wasWished = state.wishlist.has(id);
-
-  if (wasWished) {
-    state.wishlist.delete(id);
-    cdpTrack('Listing Removed from Wishlist', { listing_id: id, listing_type: listing?.type });
-    showToast('Removed from wishlist');
+  const l = LISTINGS.find(x => x.id === id);
+  const had = S.wishlist.has(id);
+  if (had) {
+    S.wishlist.delete(id);
+    cdpTrack('Listing Removed from Wishlist', { listing_id: id, listing_type: l?.type });
+    toast('Removed from wishlist');
   } else {
-    state.wishlist.add(id);
+    S.wishlist.add(id);
     cdpTrack('Listing Wishlisted', {
-      listing_id: id,
-      listing_title: listing?.title,
-      listing_type: listing?.type,
-      price_per_night: listing?.price,
-      wishlist_size: state.wishlist.size,
-      is_identified: !!state.user,
+      listing_id: id, listing_title: l?.title, listing_type: l?.type,
+      price_per_night: l?.price, wishlist_size: S.wishlist.size, is_authenticated: !!S.user,
     });
-    showToast('Saved to wishlist ♥');
+    toast('Saved to wishlist ♥');
   }
-
-  // Re-render current view to reflect new heart state
-  const btn = e.target.closest('.wish-btn');
-  if (btn) {
-    btn.classList.toggle('wishlisted', !wasWished);
-    btn.textContent = wasWished ? '♡' : '♥';
-    btn.title = wasWished ? 'Save' : 'Saved';
-  }
+  const btn = document.getElementById('w-' + id);
+  if (btn) { btn.classList.toggle('on', !had); btn.textContent = had ? '♡' : '♥'; }
 }
 
 /* ═══════════════════════════════════════════════════
-   AUTH — UC1 STITCH
+   AUTH — UC1 IDENTITY STITCH
 ═══════════════════════════════════════════════════ */
-let postLoginCallback = null;
-
-function openModal(tab = 'login', callback = null) {
-  postLoginCallback = callback;
-  document.getElementById('auth-modal').classList.add('open');
-  switchModalTab(tab);
+function requireAuth(cb) {
+  if (S.user) { cb(); return; }
+  openAuth('login', cb);
 }
 
-function closeModal() {
-  document.getElementById('auth-modal').classList.remove('open');
-  postLoginCallback = null;
+function openAuth(tab = 'login', cb = null) {
+  S._authCb = cb;
+  document.getElementById('auth-overlay').classList.add('open');
+  switchTab(tab);
+}
+function closeAuth() {
+  document.getElementById('auth-overlay').classList.remove('open');
+  S._authCb = null;
+}
+document.getElementById('auth-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeAuth(); });
+
+function switchTab(t) {
+  document.getElementById('mtab-login').classList.toggle('on', t === 'login');
+  document.getElementById('mtab-signup').classList.toggle('on', t === 'signup');
+  document.getElementById('modal-body').innerHTML = t === 'login' ? loginHTML() : signupHTML();
 }
 
-function switchModalTab(tab) {
-  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
-  document.getElementById('modal-body').innerHTML = tab === 'login' ? loginForm() : signupForm();
+function loginHTML() {
+  return `<div class="mform">
+    <div class="mf"><label>Email</label><input type="email" id="m-email" placeholder="you@example.com"/></div>
+    <div class="mf"><label>Password</label><input type="password" id="m-pw" placeholder="••••••••"/></div>
+    <div id="m-err" class="merr" style="display:none"></div>
+    <button class="msub" onclick="doLogin()">Continue →</button>
+  </div>
+  <p class="mhint">New to StayNest? <a onclick="switchTab('signup')">Create account</a></p>`;
 }
 
-function loginForm() {
-  return `
-    <div class="modal-form">
-      <div class="modal-field"><label>Email</label><input type="email" id="m-email" placeholder="you@example.com"/></div>
-      <div class="modal-field"><label>Password</label><input type="password" id="m-pw" placeholder="••••••••"/></div>
-      <button class="modal-submit" onclick="doLogin()">Continue</button>
+function signupHTML() {
+  return `<div class="mform">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="mf"><label>First name</label><input type="text" id="m-first" placeholder="Alex"/></div>
+      <div class="mf"><label>Last name</label><input type="text" id="m-last" placeholder="Johnson"/></div>
     </div>
-    <p class="modal-hint">New to StayNest? <a onclick="switchModalTab('signup')">Sign up</a></p>`;
+    <div class="mf"><label>Email</label><input type="email" id="m-email" placeholder="you@example.com"/></div>
+    <div class="mf"><label>Password</label><input type="password" id="m-pw" placeholder="Create a password"/></div>
+    <div id="m-err" class="merr" style="display:none"></div>
+    <button class="msub" onclick="doSignup()">Create account →</button>
+  </div>
+  <p class="mhint">Already have an account? <a onclick="switchTab('login')">Log in</a></p>`;
 }
 
-function signupForm() {
-  return `
-    <div class="modal-form">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="modal-field"><label>First name</label><input type="text" id="m-first" placeholder="Alex"/></div>
-        <div class="modal-field"><label>Last name</label><input type="text" id="m-last" placeholder="Johnson"/></div>
-      </div>
-      <div class="modal-field"><label>Email</label><input type="email" id="m-email" placeholder="you@example.com"/></div>
-      <div class="modal-field"><label>Password</label><input type="password" id="m-pw" placeholder="Create a password"/></div>
-      <button class="modal-submit" onclick="doSignup()">Create account</button>
-    </div>
-    <p class="modal-hint">Already have an account? <a onclick="switchModalTab('login')">Log in</a></p>`;
+function showErr(msg) {
+  const el = document.getElementById('m-err');
+  if (el) { el.textContent = msg; el.style.display = 'block'; }
 }
 
 function doLogin() {
-  const email = document.getElementById('m-email').value.trim();
-  const pw = document.getElementById('m-pw').value;
-  if (!email || !pw) { showToast('Please fill in all fields'); return; }
-
-  // Simulate login — derive name from email
-  const name = email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g, c => c.toUpperCase());
-  const userId = 'user_' + btoa(email).replace(/[^a-z0-9]/gi,'').slice(0,10);
-
-  finalizeAuth(userId, name, email, 'login');
+  const email = (document.getElementById('m-email')?.value || '').trim();
+  const pw    = (document.getElementById('m-pw')?.value || '');
+  if (!email || !pw) { showErr('Please fill in all fields'); return; }
+  if (!email.includes('@')) { showErr('Please enter a valid email address'); return; }
+  if (pw.length < 4) { showErr('Password must be at least 4 characters'); return; }
+  // Deterministic userId from email so same user always gets same ID across devices
+  // This is the key to cross-device unification — same email → same userId → Segment merges both sessions
+  const userId = 'usr_' + btoa(email.toLowerCase()).replace(/[^a-z0-9]/gi,'').slice(0, 16);
+  const firstName = email.split('@')[0].split(/[._+]/)[0];
+  const lastName  = '';
+  finaliseAuth(userId, firstName, lastName, email, 'login');
 }
 
 function doSignup() {
-  const first = document.getElementById('m-first').value.trim();
-  const last = document.getElementById('m-last').value.trim();
-  const email = document.getElementById('m-email').value.trim();
-  const pw = document.getElementById('m-pw').value;
-  if (!first || !email || !pw) { showToast('Please fill in all fields'); return; }
-
-  const name = [first, last].filter(Boolean).join(' ');
-  const userId = 'user_' + genId('');
-
-  finalizeAuth(userId, name, email, 'signup');
+  const first = (document.getElementById('m-first')?.value || '').trim();
+  const last  = (document.getElementById('m-last')?.value || '').trim();
+  const email = (document.getElementById('m-email')?.value || '').trim();
+  const pw    = (document.getElementById('m-pw')?.value || '');
+  if (!first || !email || !pw) { showErr('Please fill in all fields'); return; }
+  if (!email.includes('@')) { showErr('Please enter a valid email address'); return; }
+  if (pw.length < 4) { showErr('Password must be at least 4 characters'); return; }
+  // Same deterministic userId logic — email is the source of truth
+  const userId = 'usr_' + btoa(email.toLowerCase()).replace(/[^a-z0-9]/gi,'').slice(0, 16);
+  finaliseAuth(userId, first, last, email, 'signup');
 }
 
-function finalizeAuth(userId, name, email, method) {
-  const prevAnonId = state.anonymousId;
-  state.user = { id: userId, name, email };
-  state.loginCount++;
+/*
+  finaliseAuth — the critical function for UC1.
 
-  // ══════════════════════════════════════════
-  // UC1: THE STITCH — alias anonymous → user
-  // This is where the CDP merges the pre-login
-  // journey (all search, view, wishlist events)
-  // into the identified profile.
-  // ══════════════════════════════════════════
+  What happens here:
+  1. cdpAlias(userId, anonId)   → tells Segment "this anonymous session = this user"
+  2. cdpIdentify(userId, traits) → sends the full user profile to both Segment + PostHog
+
+  When this fires on DEVICE A (mobile):
+    alias('usr_abc', 'anon_mobile_xyz') → Segment links mobile session to usr_abc
+
+  When this fires on DEVICE B (desktop) with the same email:
+    alias('usr_abc', 'anon_desktop_123') → Segment links desktop session to usr_abc
+
+  Result in Segment/PostHog: usr_abc has events from BOTH devices unified.
+  The profile shows: searches on mobile → wishlisted on desktop → booked on mobile.
+  That's cross-device identity resolved.
+*/
+function finaliseAuth(userId, firstName, lastName, email, method) {
+  const prevAnonId = S.anonId;
+  S.user = { id: userId, firstName, lastName, email, name: [firstName, lastName].filter(Boolean).join(' ') };
+
+  // ── UC1: STITCH ──
   cdpAlias(userId, prevAnonId);
 
   cdpIdentify(userId, {
-    name,
+    name: S.user.name,
     email,
-    method,
-    signup_source: state.currentPage,
-    device_type: getDeviceType(),
-    pre_login_event_count: state.preLoginEvents.length,
-    pre_login_pages_viewed: state.preLoginEvents.filter(e => e.event === 'Listing Viewed').length,
-    wishlist_size_at_login: state.wishlist.size,
-    anonymous_id_stitched: prevAnonId,
+    first_name: firstName,
+    last_name: lastName,
+    auth_method: method,
+    device_type: device(),
+    signup_source_page: S.page,
+    // Pass anonymous journey context so Segment/PostHog can show what happened before login
+    pre_auth_event_count: S.anonEventCount,
+    pre_auth_wishlist_size: S.wishlist.size,
+    pre_auth_anonymous_id: prevAnonId,
+    // These traits make the unified profile richer
+    wishlist_size: S.wishlist.size,
+    trips_count: S.trips.length,
   });
 
   cdpTrack(method === 'signup' ? 'Account Created' : 'Logged In', {
     method,
-    user_id: userId,
+    // Sending pre_auth_event_count lets you show in PostHog:
+    // "Users who browsed X listings before signup have Y% higher LTV"
+    pre_auth_event_count: S.anonEventCount,
+    pre_auth_wishlist_size: S.wishlist.size,
     anonymous_id_stitched: prevAnonId,
-    pre_login_event_count: state.preLoginEvents.length,
-    wishlist_size: state.wishlist.size,
-    device_type: getDeviceType(),
   });
 
-  // Update UI
   updateNavAuth();
-  closeModal();
-  showToast(method === 'signup' ? `Welcome to StayNest, ${name.split(' ')[0]}! 🎉` : `Welcome back, ${name.split(' ')[0]}!`);
-
-  if (postLoginCallback) postLoginCallback();
+  closeAuth();
+  toast(method === 'signup' ? `Welcome, ${firstName}! 🎉` : `Welcome back, ${firstName}!`);
+  if (S._authCb) { const cb = S._authCb; S._authCb = null; cb(); }
 }
 
 function updateNavAuth() {
-  if (state.user) {
-    document.getElementById('nav-auth').style.display = 'none';
-    document.getElementById('nav-user').style.display = 'block';
-    document.getElementById('nav-user-name').textContent = state.user.name.split(' ')[0];
-    document.getElementById('nav-avatar').textContent = state.user.name.charAt(0).toUpperCase();
-    document.getElementById('host-nav-btn').style.display = 'block';
-    document.getElementById('become-host-btn').style.display = 'none';
-    document.getElementById('dash-name').textContent = state.user.name.split(' ')[0];
-  } else {
-    document.getElementById('nav-auth').style.display = 'block';
-    document.getElementById('nav-user').style.display = 'none';
-    document.getElementById('host-nav-btn').style.display = 'none';
-    document.getElementById('become-host-btn').style.display = 'block';
+  const authed = !!S.user;
+  document.getElementById('nav-anon').style.display = authed ? 'none' : 'block';
+  document.getElementById('nav-authed').style.display = authed ? 'block' : 'none';
+  if (authed) {
+    document.getElementById('nav-name').textContent = S.user.firstName;
+    document.getElementById('nav-av-letter').textContent = S.user.firstName[0].toUpperCase();
+    document.getElementById('dash-name').textContent = S.user.firstName;
   }
 }
 
 function logout() {
-  cdpTrack('Logged Out', { user_id: state.user?.id });
-  state.user = null;
-  state.anonymousId = genId('anon'); // fresh anon id
-  state.preLoginEvents = [];
+  cdpTrack('Logged Out', { user_id: S.user?.id });
+  // Reset Segment + PostHog to anonymous state
+  analytics.reset();
+  posthog.reset();
+  S.user = null;
+  S.anonId = uid('anon');
+  S.anonEventCount = 0;
   updateNavAuth();
-  navigate('home');
-  showToast('Logged out successfully');
+  nav('home');
+  toast('Logged out');
 }
 
 /* ═══════════════════════════════════════════════════
    GUEST DASHBOARD
 ═══════════════════════════════════════════════════ */
 function initGuestDash() {
-  if (!state.user) { openModal('login', () => navigate('guest-dashboard')); return; }
-  document.getElementById('dash-name').textContent = state.user.name.split(' ')[0];
-  renderTripsTab();
-  cdpTrack('Guest Dashboard Viewed', { user_id: state.user.id, trips_count: state.trips.length, wishlist_size: state.wishlist.size });
+  if (!S.user) { openAuth('login', () => nav('guest-dashboard')); return; }
+  document.getElementById('dash-name').textContent = S.user.firstName;
+  gTab('trips', document.querySelector('.sidenav button'));
+  cdpTrack('Guest Dashboard Viewed', { trips_count: S.trips.length, wishlist_size: S.wishlist.size });
 }
 
-function guestTab(tab, btn) {
-  document.querySelectorAll('#guest-tab-content').forEach(() => {});
-  document.querySelectorAll('.dash-nav button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  cdpTrack('Dashboard Tab Clicked', { tab, user_id: state.user?.id });
-  if (tab === 'trips') renderTripsTab();
-  else if (tab === 'wishlist') renderWishlistTab();
-  else if (tab === 'profile') renderProfileTab();
-}
-
-function renderTripsTab() {
-  const c = document.getElementById('guest-tab-content');
-  const upcoming = state.trips.filter(t => t.status === 'upcoming');
-  const past = state.trips.filter(t => t.status === 'completed');
-
-  c.innerHTML = `
-    <div class="dash-stat-row">
-      <div class="stat-box"><div class="num">${state.trips.length}</div><div class="lbl">Total trips</div></div>
-      <div class="stat-box"><div class="num">${upcoming.length}</div><div class="lbl">Upcoming</div></div>
-      <div class="stat-box"><div class="num">${state.wishlist.size}</div><div class="lbl">Wishlisted</div></div>
-    </div>
-    <h3 style="font-family:var(--font-d);margin-bottom:16px">Your trips</h3>
-    ${state.trips.map(t => `
-      <div class="trip-card">
-        <div class="trip-thumb">${t.emoji}</div>
-        <div class="trip-info">
-          <div class="trip-name">${t.title}</div>
-          <div class="trip-dates">📍 ${t.location} · ${formatDateRange(t.checkin, t.checkout)}</div>
-          <div class="trip-status ${t.status === 'upcoming' ? 'status-upcoming' : 'status-completed'}">${t.status === 'upcoming' ? '⏳ Upcoming' : '✓ Completed'}</div>
-        </div>
-        <div class="trip-actions">
-          <div style="text-align:right">
-            <div style="font-weight:600">$${t.total.toLocaleString()}</div>
-            <div style="font-size:12px;color:var(--ink-3)">${t.nights} night${t.nights>1?'s':''}</div>
-            ${t.status === 'completed' ? `<button class="btn btn-ghost btn-xs" style="margin-top:8px" onclick="leaveReview('${t.listingId}')">Leave review</button>` : ''}
-          </div>
-        </div>
-      </div>`).join('') || '<p style="color:var(--ink-3)">No trips yet. Start exploring! <a onclick="navigate(\'home\')" style="color:var(--rose);cursor:pointer;text-decoration:underline">Browse stays →</a></p>'}`;
-}
-
-function renderWishlistTab() {
-  const c = document.getElementById('guest-tab-content');
-  const items = LISTINGS.filter(l => state.wishlist.has(l.id));
-  c.innerHTML = `
-    <h3 style="font-family:var(--font-d);margin-bottom:16px">Wishlist (${items.length})</h3>
-    ${items.length ? `<div class="wishlist-grid">${items.map(l => `
-      <div class="wl-card" onclick="viewListing(LISTINGS.find(x=>x.id==='${l.id}'), 'wishlist')">
-        <div class="wl-thumb">${l.emoji}</div>
-        <div class="wl-body">
-          <div class="wl-name">${l.title}</div>
-          <div class="wl-loc">📍 ${l.location}</div>
-          <div class="wl-price">$${l.price} / night</div>
-        </div>
-      </div>`).join('')}</div>` : '<p style="color:var(--ink-3)">Nothing saved yet. Tap ♡ on any listing to save it.</p>'}`;
-}
-
-function renderProfileTab() {
-  const u = state.user;
-  const c = document.getElementById('guest-tab-content');
-  c.innerHTML = `
-    <h3 style="font-family:var(--font-d);margin-bottom:20px">Your profile</h3>
-    <div style="display:flex;gap:20px;align-items:center;padding:24px;background:var(--surface-2);border-radius:var(--r12);margin-bottom:20px">
-      <div style="width:72px;height:72px;border-radius:50%;background:var(--rose);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-family:var(--font-d);font-weight:700;flex-shrink:0">${u.name.charAt(0)}</div>
-      <div>
-        <div style="font-family:var(--font-d);font-size:1.2rem;font-weight:600">${u.name}</div>
-        <div style="color:var(--ink-3);font-size:14px">${u.email}</div>
-        <div style="font-size:13px;margin-top:4px">Member since ${new Date().getFullYear()}</div>
+function gTab(t, btn) {
+  document.querySelectorAll('#page-guest-dashboard .sidenav button').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  cdpTrack('Dashboard Tab Viewed', { tab: t });
+  const c = document.getElementById('g-content');
+  if (t === 'trips') {
+    const up = S.trips.filter(x => x.status === 'upcoming');
+    const done = S.trips.filter(x => x.status === 'completed');
+    c.innerHTML = `
+      <div class="stats-row">
+        <div class="sbox"><div class="num">${S.trips.length}</div><div class="lbl">Total trips</div></div>
+        <div class="sbox"><div class="num">${up.length}</div><div class="lbl">Upcoming</div></div>
+        <div class="sbox"><div class="num">${S.wishlist.size}</div><div class="lbl">Wishlisted</div></div>
       </div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <button class="btn btn-ghost btn-sm" onclick="showToast('Profile editing coming soon')">Edit profile</button>
-      <button class="btn btn-ghost btn-sm" onclick="showToast('Payment settings coming soon')">Payment methods</button>
-      <button class="btn btn-ghost btn-sm" onclick="showToast('Notification preferences saved')">Notifications</button>
-    </div>`;
-}
-
-function leaveReview(listingId) {
-  cdpTrack('Review Initiated', { listing_id: listingId, user_id: state.user?.id });
-  showToast('Review submitted! Thank you 🙏');
+      <div>
+        ${S.trips.length ? S.trips.map(t => `
+          <div class="trip-item">
+            <div class="trip-thumb">${t.e1}</div>
+            <div class="trip-info">
+              <div class="trip-name">${t.title}</div>
+              <div class="trip-loc">📍 ${t.loc} · ${fmtRange(t.ci, t.co)}</div>
+              <div class="trip-tag ${t.status==='upcoming'?'tag-up':'tag-done'}">${t.status==='upcoming'?'⏳ Upcoming':'✓ Completed'}</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0">
+              <div style="font-weight:600">$${fmt(t.total)}</div>
+              <div style="font-size:12px;color:var(--text3)">${t.nights} night${t.nights>1?'s':''}</div>
+              ${t.status==='completed'?`<button class="btn btn-ghost btn-xs" style="margin-top:8px" onclick="cdpTrack('Review Initiated',{listing_id:'${t.listingId}'});toast('Review submitted 🙏')">Leave review</button>`:''}
+            </div>
+          </div>`).join('') : '<p style="color:var(--text3)">No trips yet. <a style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="nav(\'home\')">Explore stays →</a></p>'}
+      </div>`;
+  } else if (t === 'wishlist') {
+    const items = LISTINGS.filter(l => S.wishlist.has(l.id));
+    c.innerHTML = `<div style="font-family:var(--font-d);font-size:1.2rem;font-weight:500;margin-bottom:18px">Wishlist (${items.length})</div>
+      ${items.length ? `<div class="wl-grid">${items.map(l=>`
+        <div class="wl-card" onclick="viewListing(LISTINGS.find(x=>x.id==='${l.id}'),'wishlist')">
+          <div class="wl-img">${l.e1}</div>
+          <div class="wl-body">
+            <div class="wl-name">${l.title}</div>
+            <div class="wl-loc">${l.loc}</div>
+            <div class="wl-p">$${l.price}/night</div>
+          </div>
+        </div>`).join('')}</div>` : '<p style="color:var(--text3)">Nothing saved yet. Tap ♡ on any listing.</p>'}`;
+  } else {
+    const u = S.user;
+    c.innerHTML = `<div style="font-family:var(--font-d);font-size:1.2rem;font-weight:500;margin-bottom:20px">Your profile</div>
+      <div style="display:flex;gap:18px;align-items:center;background:var(--surface2);padding:22px;border-radius:16px;margin-bottom:20px">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.6rem;font-weight:700;flex-shrink:0">${u.firstName[0]}</div>
+        <div>
+          <div style="font-weight:500;font-size:16px">${u.name}</div>
+          <div style="color:var(--text3);font-size:14px">${u.email}</div>
+          <div style="font-size:13px;margin-top:4px">Member since ${new Date().getFullYear()}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="toast('Coming soon')">Edit profile</button>
+        <button class="btn btn-ghost btn-sm" onclick="toast('Coming soon')">Payment methods</button>
+      </div>`;
+  }
 }
 
 /* ═══════════════════════════════════════════════════
    HOST DASHBOARD
 ═══════════════════════════════════════════════════ */
 function initHostDash() {
-  if (!state.user) { openModal('login', () => navigate('host-dashboard')); return; }
-  renderHostOverview();
-  cdpTrack('Host Dashboard Viewed', { user_id: state.user?.id });
+  if (!S.user) { openAuth('login', () => nav('host-dashboard')); return; }
+  hTab('overview', document.querySelector('#page-host-dashboard .sidenav button'));
+  cdpTrack('Host Dashboard Viewed', { host_id: S.user.id });
 }
 
-function hostTab(tab, btn) {
-  document.querySelectorAll('.dash-nav button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  cdpTrack('Host Dashboard Tab Clicked', { tab, user_id: state.user?.id });
-  if (tab === 'overview') renderHostOverview();
-  else if (tab === 'listings') renderHostListings();
-  else if (tab === 'bookings') renderHostBookings();
-  else if (tab === 'earnings') renderHostEarnings();
-}
-
-function renderHostOverview() {
-  const c = document.getElementById('host-tab-content');
-  c.innerHTML = `
-    <div class="host-stat-row">
-      <div class="stat-box"><div class="num">$8,240</div><div class="lbl">Revenue this year</div></div>
-      <div class="stat-box"><div class="num">74%</div><div class="lbl">Occupancy rate</div></div>
-      <div class="stat-box"><div class="num">4.93</div><div class="lbl">Average rating</div></div>
-      <div class="stat-box"><div class="num">3</div><div class="lbl">Pending requests</div></div>
-    </div>
-    <h3 style="font-family:var(--font-d);margin-bottom:16px">Your listings</h3>
-    ${renderListingCards()}
-    <h3 style="font-family:var(--font-d);margin:24px 0 16px">Pending requests</h3>
-    ${renderReqCards()}`;
-}
-
-function renderListingCards() {
-  return state.hostListings.map(l => `
-    <div class="host-listing-card">
-      <div class="hlc-header">
-        <div class="hlc-thumb">${l.emoji}</div>
-        <div class="hlc-info">
-          <div class="hlc-name">${l.title}</div>
-          <div class="hlc-loc">📍 ${l.location}</div>
+function hTab(t, btn) {
+  document.querySelectorAll('#page-host-dashboard .sidenav button').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  cdpTrack('Host Tab Viewed', { tab: t });
+  const c = document.getElementById('h-content');
+  if (t === 'overview') {
+    c.innerHTML = `
+      <div class="host-stats">
+        <div class="sbox"><div class="num">$8,240</div><div class="lbl">Revenue YTD</div></div>
+        <div class="sbox"><div class="num">74%</div><div class="lbl">Occupancy</div></div>
+        <div class="sbox"><div class="num">4.93</div><div class="lbl">Avg rating</div></div>
+        <div class="sbox"><div class="num">2</div><div class="lbl">Active listings</div></div>
+      </div>
+      <div style="font-family:var(--font-d);font-size:1.15rem;font-weight:500;margin-bottom:14px">Your listings</div>
+      ${hostListingCards()}
+      <div style="font-family:var(--font-d);font-size:1.15rem;font-weight:500;margin:24px 0 14px">Reservation requests</div>
+      ${hostReqCards()}`;
+  } else if (t === 'listings') {
+    c.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-family:var(--font-d);font-size:1.15rem;font-weight:500">Your listings</div>
+      <button class="btn btn-accent btn-sm" onclick="onAddListing()">+ Add listing</button></div>
+      ${hostListingCards()}`;
+  } else if (t === 'bookings') {
+    c.innerHTML = `<div style="font-family:var(--font-d);font-size:1.15rem;font-weight:500;margin-bottom:14px">All reservations</div>${hostReqCards()}`;
+  } else {
+    const months = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+    const vals = [980,1240,1100,890,1450,1680,760,1140];
+    const mx = Math.max(...vals);
+    c.innerHTML = `
+      <div class="stats-row">
+        <div class="sbox"><div class="num">$8,240</div><div class="lbl">This year</div></div>
+        <div class="sbox"><div class="num">$1,140</div><div class="lbl">This month</div></div>
+        <div class="sbox"><div class="num">$342</div><div class="lbl">Next payout</div></div>
+      </div>
+      <div style="font-family:var(--font-d);font-size:1.15rem;font-weight:500;margin-bottom:14px">Monthly earnings</div>
+      <div style="background:var(--surface2);border-radius:16px;padding:24px">
+        <div style="display:flex;align-items:flex-end;gap:7px;height:130px;margin-bottom:8px">
+          ${vals.map((v,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div title="$${v}" style="width:100%;height:${Math.round(v/mx*120)}px;background:var(--accent);border-radius:4px 4px 0 0;opacity:${i===vals.length-1?1:.55};cursor:pointer;transition:opacity .15s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity='${i===vals.length-1?1:.55}'"></div>
+          </div>`).join('')}
         </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button class="btn btn-ghost btn-xs" onclick="cdpTrack('Host Listing Edited',{listing_id:'${l.id}',user_id:state.user?.id})">Edit</button>
-          <button class="btn btn-ghost btn-xs" onclick="viewListing(LISTINGS.find(x=>x.id==='${l.id}'),'host_dashboard')">Preview</button>
+        <div style="display:flex;gap:7px">${months.map(m=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--text3)">${m}</div>`).join('')}</div>
+      </div>`;
+  }
+}
+
+function hostListingCards() {
+  return [
+    {id:'L004',e:'🌲',name:'Forest Cabin',loc:'Portland, OR',rating:4.96,reviews:67,price:165,occ:82},
+    {id:'L007',e:'🌊',name:'Glass Cottage',loc:'Big Sur, CA',rating:4.90,reviews:112,price:340,occ:66},
+  ].map(l=>`
+    <div class="hlcard">
+      <div class="hlcard-top">
+        <div class="hl-thumb">${l.e}</div>
+        <div class="hl-info"><div class="hl-name">${l.name}</div><div class="hl-loc">📍 ${l.loc}</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost btn-xs" onclick="cdpTrack('Host Listing Edit Clicked',{listing_id:'${l.id}'});toast('Edit mode coming soon')">Edit</button>
+          <button class="btn btn-ghost btn-xs" onclick="viewListing(LISTINGS.find(x=>x.id==='${l.id}'),'host_preview')">Preview</button>
         </div>
       </div>
-      <div class="hlc-stats">
-        <div class="hlc-stat"><strong>⭐ ${l.rating}</strong>Rating</div>
-        <div class="hlc-stat"><strong>${l.reviews}</strong>Reviews</div>
-        <div class="hlc-stat"><strong>$${l.price}/night</strong>Rate</div>
-        <div class="hlc-stat" style="flex:1">
-          <strong>Occupancy</strong>
-          <div class="occ-bar"><div class="occ-fill" style="width:74%"></div></div>
+      <div class="hlcard-stats">
+        <div class="hs"><strong>⭐ ${l.rating}</strong>Rating</div>
+        <div class="hs"><strong>${l.reviews}</strong>Reviews</div>
+        <div class="hs"><strong>$${l.price}/night</strong>Rate</div>
+        <div class="hs" style="flex:1"><strong>Occupancy</strong>
+          <div class="obar"><div class="ofill" style="width:${l.occ}%"></div></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">${l.occ}%</div>
         </div>
       </div>
     </div>`).join('');
 }
 
-function renderReqCards() {
-  return HOST_BOOKINGS.map((r,i) => `
-    <div class="req-card">
-      <div class="nav-avatar" style="width:40px;height:40px;font-size:16px;flex-shrink:0">${r.guest.charAt(0)}</div>
+function hostReqCards() {
+  return HOST_REQS.map((r,i)=>`
+    <div class="req">
+      <div class="req-av">${r.guest[0]}</div>
       <div class="req-info">
         <div class="req-guest">${r.guest}</div>
-        <div class="req-dates">${r.listing} · ${r.dates} · ${r.nights} nights · $${r.total}</div>
-        <div style="font-size:12px;margin-top:4px;color:${r.status==='confirmed'?'var(--teal)':'var(--amber)'};font-weight:600;text-transform:uppercase;letter-spacing:.04em">${r.status}</div>
+        <div class="req-dates">${r.listing} · ${r.dates} · ${r.nights} nights · $${fmt(r.total)}</div>
+        <div class="req-status" style="color:${r.status==='confirmed'?'var(--teal)':r.status==='pending'?'var(--gold)':'#e05252'}">${r.status}</div>
       </div>
       <div class="req-actions">
-        ${r.status==='pending' ? `
+        ${r.status==='pending'?`
           <button class="btn btn-teal btn-xs" onclick="hostAction('accept',${i})">Accept</button>
           <button class="btn btn-ghost btn-xs" onclick="hostAction('decline',${i})">Decline</button>
-        ` : `<span style="font-size:13px;color:var(--teal)">✓ Confirmed</span>`}
+        `:`<span style="font-size:13px;color:var(--teal)">✓ ${r.status}</span>`}
       </div>
     </div>`).join('');
 }
 
-function hostAction(action, idx) {
-  HOST_BOOKINGS[idx].status = action === 'accept' ? 'confirmed' : 'declined';
-  cdpTrack(`Booking Request ${action === 'accept' ? 'Accepted' : 'Declined'}`, {
-    guest: HOST_BOOKINGS[idx].guest,
-    listing: HOST_BOOKINGS[idx].listing,
-    user_id: state.user?.id,
+function hostAction(action, i) {
+  HOST_REQS[i].status = action === 'accept' ? 'confirmed' : 'declined';
+  cdpTrack('Booking Request ' + (action === 'accept' ? 'Accepted' : 'Declined'), {
+    guest: HOST_REQS[i].guest, listing: HOST_REQS[i].listing,
   });
-  showToast(action === 'accept' ? 'Booking confirmed ✓' : 'Booking declined');
-  renderHostOverview();
+  toast(action === 'accept' ? 'Booking accepted ✓' : 'Booking declined');
+  hTab('bookings', null);
 }
 
-function renderHostListings() {
-  document.getElementById('host-tab-content').innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h3 style="font-family:var(--font-d)">Your listings (${state.hostListings.length})</h3>
-      <button class="btn btn-rose btn-sm" onclick="addListing()">+ Add listing</button>
-    </div>
-    ${renderListingCards()}`;
-}
-
-function renderHostBookings() {
-  document.getElementById('host-tab-content').innerHTML = `
-    <h3 style="font-family:var(--font-d);margin-bottom:16px">All reservations</h3>
-    ${renderReqCards()}`;
-}
-
-function renderHostEarnings() {
-  const months = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
-  const vals = [980,1240,1100,890,1450,1680,760,1140];
-  const max = Math.max(...vals);
-  document.getElementById('host-tab-content').innerHTML = `
-    <div class="dash-stat-row" style="grid-template-columns:repeat(3,1fr)">
-      <div class="stat-box"><div class="num">$8,240</div><div class="lbl">This year</div></div>
-      <div class="stat-box"><div class="num">$1,140</div><div class="lbl">This month</div></div>
-      <div class="stat-box"><div class="num">$342</div><div class="lbl">Pending payout</div></div>
-    </div>
-    <h3 style="font-family:var(--font-d);margin-bottom:16px">Monthly earnings</h3>
-    <div style="background:var(--surface-2);border-radius:var(--r12);padding:24px">
-      <div style="display:flex;align-items:flex-end;gap:8px;height:140px;margin-bottom:8px">
-        ${months.map((m,i) => `
-          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-            <div style="width:100%;height:${Math.round(vals[i]/max*120)}px;background:var(--rose);border-radius:4px 4px 0 0;opacity:${i===months.length-1?'1':'.6'};transition:opacity .2s;cursor:pointer" title="$${vals[i]}" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='${i===months.length-1?'1':'.6'}'"></div>
-          </div>`).join('')}
-      </div>
-      <div style="display:flex;gap:8px">
-        ${months.map(m => `<div style="flex:1;text-align:center;font-size:11px;color:var(--ink-3)">${m}</div>`).join('')}
-      </div>
-    </div>`;
-}
-
-function addListing() {
-  cdpTrack('Host Add Listing Clicked', { user_id: state.user?.id });
-  showToast('Listing creation flow coming soon!');
-}
-
-function switchToHost() {
-  if (!state.user) { openModal('login', () => navigate('host-dashboard')); return; }
-  navigate('host-dashboard');
+function onAddListing() {
+  cdpTrack('Add Listing Clicked', { host_id: S.user?.id });
+  toast('Listing creation coming soon!');
 }
 
 /* ═══════════════════════════════════════════════════
-   UTILS
+   HELPERS
 ═══════════════════════════════════════════════════ */
-function formatDateRange(ci, co) {
+function nights(ci, co) {
+  if (!ci || !co) return null;
+  return Math.max(0, Math.round((new Date(co) - new Date(ci)) / 86400000));
+}
+function fmt(n) { return n?.toLocaleString() || '0'; }
+function fmtDate(d) {
+  if (!d) return '';
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+function fmtRange(ci, co) {
   if (!ci) return '';
-  const options = { month: 'short', day: 'numeric' };
-  const s = new Date(ci + 'T00:00:00').toLocaleDateString('en-US', options);
-  if (!co) return s;
-  const e = new Date(co + 'T00:00:00').toLocaleDateString('en-US', options);
-  return `${s} – ${e}`;
+  const s = fmtDate(ci);
+  const e = fmtDate(co);
+  // Same month?
+  const dm = new Date(ci+'T00:00:00'), dc = new Date(co+'T00:00:00');
+  if (dm.getMonth() === dc.getMonth()) return s + '–' + dc.getDate();
+  return e ? s + ' – ' + e : s;
 }
 
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+let _toastT;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(_toastT);
+  _toastT = setTimeout(() => el.classList.remove('show'), 3000);
 }
 
 /* ═══════════════════════════════════════════════════
-   INIT
+   BOOT
 ═══════════════════════════════════════════════════ */
-(function init() {
-  // Close modal on overlay click
-  document.getElementById('auth-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-
-  // UC1: Fire initial anonymous page view — the journey begins
-  cdpPage('Home', { landing: true });
-
-  // Set default search dates
+(function boot() {
+  // UC1: Fire initial page view with anonymous_id
+  // This is event #1 in the anonymous journey
+  cdpPage('Home', { landing: true, referrer: document.referrer || 'direct' });
   initHome();
 })();
 </script>
 </body>
 </html>
-HTMLEOF
-echo "Done"
